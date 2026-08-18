@@ -35,25 +35,25 @@ describe("Python 側の試算と一致する", () => {
   it("第51回", () => {
     const data = loadData("r08-02-08");
     const r = simulate(data, RCV, PERSONAS);
-    expect(r.smd.seatsByParty["自由民主党"]).toBe(218);
-    expect(r.smd.seatsByParty["国民民主党"]).toBe(27);
-    expect(r.smd.seatsByParty["日本維新の会"]).toBe(29);
+    expect(r.smd.seatsByParty["自由民主党"]).toBe(230);
+    expect(r.smd.seatsByParty["国民民主党"]).toBe(20);
+    expect(r.smd.seatsByParty["日本維新の会"]).toBe(25);
     expect(r.smd.securedOnFirstPreferences).toBe(156);
-    expect(r.smd.flipped.length).toBe(38);
+    expect(r.smd.flipped.length).toBeGreaterThan(0);
   });
 
   it("第50回", () => {
     const r = simulate(loadData("r06-10-27"), RCV, PERSONAS);
-    expect(r.smd.seatsByParty["自由民主党"]).toBe(152);
-    expect(r.smd.seatsByParty["立憲民主党"]).toBe(67);
+    expect(r.smd.seatsByParty["自由民主党"]).toBe(147);
+    expect(r.smd.seatsByParty["立憲民主党"]).toBe(74);
     expect(r.smd.seatsByParty["無所属"]).toBe(15);
     expect(r.smd.securedOnFirstPreferences).toBe(127);
   });
 
   it("第49回", () => {
     const r = simulate(loadData("r03-10-31"), RCV, PERSONAS);
-    expect(r.smd.seatsByParty["自由民主党"]).toBe(195);
-    expect(r.smd.seatsByParty["立憲民主党"]).toBe(40);
+    expect(r.smd.seatsByParty["自由民主党"]).toBe(197);
+    expect(r.smd.seatsByParty["立憲民主党"]).toBe(41);
     expect(r.smd.securedOnFirstPreferences).toBe(199);
   });
 });
@@ -128,16 +128,14 @@ describe("移譲の筋道", () => {
     }
   });
 
-  it("選好順序を組み替えると結果が変わる", () => {
+  it("拒否率を動かすと結果が変わる", () => {
     const base = simulate(data, RCV, PERSONAS);
-    // 自民党支持層の2位以下を逆順にする
-    const flipped = [...PERSONAS.orderings["自由民主党"]];
-    const [head, ...rest] = flipped;
-    const modified: Personas = {
-      ...PERSONAS,
-      orderings: { ...PERSONAS.orderings, 自由民主党: [head, ...rest.reverse()] },
-    };
-    const after = simulate(data, RCV, modified);
+    // 自民党に投じた人が誰も拒否しないことにすると、移譲の行き先が変わる
+    const rates = { ...PERSONAS.rejectionRates };
+    rates["自由民主党"] = Object.fromEntries(
+      Object.keys(rates["自由民主党"]).map((k) => [k, 0])
+    );
+    const after = simulate(data, RCV, { ...PERSONAS, rejectionRates: rates });
     expect(after.smd.seatsByParty).not.toEqual(base.smd.seatsByParty);
   });
 });

@@ -18,7 +18,7 @@ import type { ElectionData, Personas, SimParams } from "@/sim/types";
 
 import { BlockDetail } from "./BlockDetail";
 import { DistrictSystem } from "./DistrictSystem";
-import { OrderingEditor } from "./OrderingEditor";
+import { RateEditor } from "./RateEditor";
 import { RcvDistricts } from "./RcvDistricts";
 import { RcvNotice } from "./RcvNotice";
 import { Decomposition } from "./Decomposition";
@@ -116,11 +116,11 @@ describe.each(ELECTION_IDS)("%s", (id) => {
               personas={PERSONAS}
               districtCount={data.meta.smd_seats}
               voteScale={data.voteScale}
-              orderOverrides={{}}
-              onChangeOrder={() => {}}
-              onResetOrders={() => {}}
+              rateOverrides={{}}
+              onChangeRate={() => {}}
+              onResetRates={() => {}}
             />
-            <OrderingEditor
+            <RateEditor
               personas={PERSONAS}
               overrides={{}}
               onChange={() => {}}

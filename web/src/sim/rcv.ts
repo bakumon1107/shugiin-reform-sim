@@ -12,7 +12,63 @@
  * 党派の選好順序で次に来る党派の候補へ移す。移す先が無ければ死票になる。
  */
 
-import type { District, IrvRound, Personas, SmdOutcome } from "./types";
+import type { District, IrvRound, Layer, Personas, SmdOutcome } from "./types";
+
+/**
+ * 拒否率から有権者の層を作る（入れ子モデル）。
+ *
+ * 拒否率の高い順に政党を並べ、有権者ごとに一様乱数 u を引いて「拒否率が u より高い
+ * 政党すべて」を拒否集合とする。こうすると
+ *
+ *   ・各政党の拒否率（周辺分布）が定義どおり正確に再現される
+ *   ・拒否集合が入れ子になるので、「自民は拒否するが保守は拒否しない」のような
+ *     整合しない組み合わせが出ない
+ *
+ * が同時に成り立つ。同率は党名順にして、実行するたびに結果が変わらないようにする。
+ */
+export function buildLayers(rates: Record<string, number>): Layer[] {
+  const order = Object.entries(rates).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const out: Layer[] = [];
+  let prev = 100;
+  const rejects: string[] = [];
+  for (const [party, rate] of order) {
+    if (prev - rate > 0) out.push({ rejects: new Set(rejects), weight: (prev - rate) / 100 });
+    rejects.push(party);
+    prev = rate;
+  }
+  if (prev > 0) out.push({ rejects: new Set(rejects), weight: prev / 100 });
+  return out;
+}
+
+/**
+ * 拒否率から選好順序を作り直す。
+ *
+ * 順序は「拒否されていない順」に並べただけのものなので、拒否率が動けば順序も動く。
+ * 両方を別々に持つと、拒否率だけ差し替えたときに順序が古いまま残る。ここで必ず
+ * 作り直すことで、渡す側がどちらか片方だけを変えても食い違わないようにする。
+ *
+ * 拒否率を持たない政党（無所属）は、元の順序での位置をそのまま保つ。
+ */
+export function orderingsFromRates(personas: Personas): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const [voter, stored] of Object.entries(personas.orderings)) {
+    const rates = personas.rejectionRates[voter];
+    if (!rates) {
+      out[voter] = stored;
+      continue;
+    }
+    const ranked = Object.keys(rates)
+      .filter((p) => p !== voter)
+      .sort((a, b) => rates[a] - rates[b] || a.localeCompare(b));
+    const result = [voter, ...ranked];
+    for (const p of stored) {
+      if (p === voter || p in rates) continue;
+      result.splice(stored.indexOf(p), 0, p);
+    }
+    out[voter] = result;
+  }
+  return out;
+}
 
 /** 1選挙区の優先順位付投票。各回の途中経過も返す。 */
 export function irvDistrict(
@@ -26,31 +82,46 @@ export function irvDistrict(
   log: IrvRound[];
 } {
   const log: IrvRound[] = [];
-  const live = new Map<string, number>();
+  const layers = new Map<string, Layer[]>();
+  for (const [party, rates] of Object.entries(personas.rejectionRates)) {
+    layers.set(party, buildLayers(rates));
+  }
+  const orderings = orderingsFromRates(personas);
   const partyOf = new Map<string, string>();
+  for (const c of district.candidates) partyOf.set(c.name, c.party);
+
+  // 候補 → その候補が抱えている票の内訳（元の党派と層）
+  type Held = { src: string; layer: number; votes: number };
+  const held = new Map<string, Held[]>();
   for (const c of district.candidates) {
-    // 同姓同名は原典側で区別されているのでキーは氏名でよい
-    live.set(c.name, c.votes);
-    partyOf.set(c.name, c.party);
+    const ls = layers.get(c.party);
+    held.set(
+      c.name,
+      ls && ls.length > 0
+        ? ls.map((l, i) => ({ src: c.party, layer: i, votes: c.votes * l.weight }))
+        : [{ src: c.party, layer: 0, votes: c.votes }]
+    );
   }
 
+  const sum = (bag: Held[]) => bag.reduce((a, b) => a + b.votes, 0);
   let exhausted = 0;
   let rounds = 0;
 
   for (;;) {
     rounds += 1;
+    const totals = new Map<string, number>();
+    for (const [name, bag] of held) totals.set(name, sum(bag));
     let total = 0;
-    for (const v of live.values()) total += v;
+    for (const v of totals.values()) total += v;
 
-    // 首位。同数は氏名順で決定的にする。
     let leader = "";
-    for (const [name, v] of live) {
-      if (leader === "" || v > live.get(leader)! || (v === live.get(leader)! && name < leader)) {
+    for (const [name, v] of totals) {
+      if (leader === "" || v > totals.get(leader)! || (v === totals.get(leader)! && name < leader)) {
         leader = name;
       }
     }
 
-    const standing = [...live.entries()]
+    const standing = [...totals.entries()]
       .sort((a, b) => b[1] - a[1])
       .map(([name, votes]) => ({
         name,
@@ -59,20 +130,19 @@ export function irvDistrict(
         share: total > 0 ? (votes / total) * 100 : 0,
       }));
 
-    // 継続票の過半数を取ったら当選。候補が1人になったときも確定。
-    if (live.size === 1 || live.get(leader)! * 2 > total) {
+    if (held.size === 1 || totals.get(leader)! * 2 > total) {
       log.push({ standing, eliminated: null, movedTo: null });
       return { winner: leader, winnerParty: partyOf.get(leader)!, rounds, exhausted, log };
     }
 
     // 最下位を落とす。同数は党派名・氏名の順で決定的にする。
     let loser = "";
-    for (const [name, v] of live) {
+    for (const [name, v] of totals) {
       if (loser === "") {
         loser = name;
         continue;
       }
-      const lv = live.get(loser)!;
+      const lv = totals.get(loser)!;
       if (
         v < lv ||
         (v === lv && partyOf.get(name)! < partyOf.get(loser)!) ||
@@ -82,42 +152,62 @@ export function irvDistrict(
       }
     }
 
-    const moving = live.get(loser)!;
-    const loserParty = partyOf.get(loser)!;
-    live.delete(loser);
+    const bag = held.get(loser)!;
+    const movedVotes = sum(bag);
+    held.delete(loser);
+    const liveParties = new Set([...held.keys()].map((n) => partyOf.get(n)!));
+    const movedTo: string[] = [];
 
-    const order = personas.orderings[loserParty];
-    if (!order) {
-      // 選好順序を持たない党派（諸派など）は移譲先が分からないので死票
-      exhausted += moving;
-      log.push({ standing, eliminated: { name: loser, party: loserParty, votes: moving }, movedTo: null });
-      continue;
+    for (const { src, layer, votes } of bag) {
+      const ls = layers.get(src);
+      if (!ls) {
+        if (personas.orderings[src]) {
+          // 順序はあるが拒否率が無い（無所属）。手がかりが無いので均等に割る。
+          for (const n of held.keys()) {
+            held.get(n)!.push({ src, layer: 0, votes: votes / held.size });
+          }
+        } else {
+          exhausted += votes; // 諸派。行き先が分からない。
+        }
+        continue;
+      }
+
+      const rejects = ls[layer].rejects;
+      let targets: string[] = [];
+      for (const party of orderings[src] ?? []) {
+        if (rejects.has(party) || !liveParties.has(party)) continue;
+        targets = [...held.keys()].filter((n) => partyOf.get(n) === party);
+        break;
+      }
+      if (targets.length === 0) {
+        exhausted += votes;
+        continue;
+      }
+      movedTo.push(partyOf.get(targets[0])!);
+      let base = 0;
+      for (const n of targets) base += totals.get(n)!;
+      for (const n of targets) {
+        const share = base > 0 ? totals.get(n)! / base : 1 / targets.length;
+        held.get(n)!.push({ src, layer, votes: votes * share });
+      }
     }
 
-    // 順序の上から、まだ残っている候補のいる党派を探す
-    let targets: string[] = [];
-    for (const party of order) {
-      targets = [...live.keys()].filter((n) => partyOf.get(n) === party);
-      if (targets.length > 0) break;
-    }
-    if (targets.length === 0) {
-      exhausted += moving;
-      log.push({ standing, eliminated: { name: loser, party: loserParty, votes: moving }, movedTo: null });
-      continue;
-    }
     log.push({
       standing,
-      eliminated: { name: loser, party: loserParty, votes: moving },
-      movedTo: partyOf.get(targets[0])!,
+      eliminated: { name: loser, party: partyOf.get(loser)!, votes: movedVotes },
+      // 層ごとに行き先が分かれるので、いちばん多く流れた党派を代表として出す
+      movedTo: movedTo.length > 0 ? mode(movedTo) : null,
     });
-    // 同じ党派の候補が複数残っていれば現在の得票で按分する
-    let base = 0;
-    for (const n of targets) base += live.get(n)!;
-    for (const n of targets) {
-      const share = base > 0 ? live.get(n)! / base : 1 / targets.length;
-      live.set(n, live.get(n)! + moving * share);
-    }
   }
+}
+
+/** いちばん多く現れた要素。同数なら先に出てきた方。 */
+function mode(xs: string[]): string {
+  const count = new Map<string, number>();
+  for (const x of xs) count.set(x, (count.get(x) ?? 0) + 1);
+  let best = xs[0];
+  for (const [x, n] of count) if (n > (count.get(best) ?? 0)) best = x;
+  return best;
 }
 
 /**

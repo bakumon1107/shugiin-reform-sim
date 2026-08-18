@@ -410,53 +410,132 @@ def adams(populations: dict[str, int], total: int) -> dict[str, int]:
 PERSONAS_PATH = ROOT / "research" / "personas" / "personas.json"
 
 
-def load_personas() -> dict[str, list[str]] | None:
-    """仮想ペルソナの選好順序。無ければ ``None``。"""
+def load_personas() -> dict | None:
+    """仮想ペルソナ（選好順序と拒否率）。無ければ ``None``。"""
     if not PERSONAS_PATH.exists():
         return None
-    return json.loads(PERSONAS_PATH.read_text(encoding="utf-8"))["orderings"]
+    return json.loads(PERSONAS_PATH.read_text(encoding="utf-8"))
 
 
-def irv(candidates: list[dict], orderings: dict[str, list[str]]) -> tuple[str, str, int]:
-    """1選挙区の優先順位付投票。当選者の氏名・党派と、要した回数を返す。
+def build_layers(rates: dict[str, int]) -> list[tuple[frozenset[str], Decimal]]:
+    """拒否率から有権者の層を作る（入れ子モデル）。
+
+    拒否率の高い順に政党を並べ、有権者ごとに一様乱数 u を引いて「拒否率が u より
+    高い政党すべて」を拒否集合とする。こうすると
+
+      ・各政党の拒否率（周辺分布）が定義どおり正確に再現される
+      ・拒否集合が入れ子になるので、「自民は拒否するが保守は拒否しない」のような
+        整合しない組み合わせが出ない
+
+    が同時に成り立つ。同率は党名順にして、実行するたびに結果が変わらないようにする。
+    """
+    order = sorted(rates.items(), key=lambda x: (-x[1], x[0]))
+    out: list[tuple[frozenset[str], Decimal]] = []
+    prev = 100
+    rejects: list[str] = []
+    for party, rate in order:
+        if prev - rate > 0:
+            out.append((frozenset(rejects), Decimal(prev - rate) / 100))
+        rejects.append(party)
+        prev = rate
+    if prev > 0:
+        out.append((frozenset(rejects), Decimal(prev) / 100))
+    return out
+
+
+def orderings_from_rates(personas: dict) -> dict[str, list[str]]:
+    """拒否率から選好順序を作り直す。
+
+    順序は「拒否されていない順」に並べただけのものなので、拒否率が動けば順序も動く。
+    両方を別々に持つと、拒否率だけ差し替えたときに順序が古いまま残る。ここで必ず
+    作り直すことで、渡す側がどちらか片方だけを変えても食い違わないようにする。
+
+    拒否率を持たない政党（無所属）は、元の順序での位置をそのまま保つ。
+    """
+    out: dict[str, list[str]] = {}
+    for voter, stored in personas["orderings"].items():
+        rates = personas["rejectionRates"].get(voter)
+        if not rates:
+            out[voter] = list(stored)
+            continue
+        ranked = sorted((p for p in rates if p != voter), key=lambda p: (rates[p], p))
+        result = [voter] + ranked
+        for p in stored:
+            if p == voter or p in rates:
+                continue
+            result.insert(stored.index(p), p)
+        out[voter] = result
+    return out
+
+
+def irv(candidates: list[dict], personas: dict) -> tuple[str, str, int, Decimal]:
+    """1選挙区の優先順位付投票。当選者の氏名・党派、要した回数、死票を返す。
 
     **これは投票結果ではなく仮定が生む数字である。** 有権者の順位付けデータは存在せず、
-    調査から作った仮想の選好順序で代用している。
+    調査から作った仮想のペルソナで代用している。
 
-    過半数を取る候補が出るまで最下位を落とし、その票を落ちた候補の党派の選好順序で
-    次に来る党派の候補へ移す。移す先が無ければ死票になる。
+    同じ党に投じた人でも拒否の仕方は違うので、票を丸ごと1つの党へ流さず、拒否率から
+    作った層ごとに行き先を決める。層が拒否していない中で最上位の党へ移し、残る候補を
+    その層が全部拒否していれば死票にする。移譲された票は元の層のまま持ち回るので、
+    次に落ちたときもその層の選好で動く。
+
+    拒否率を持たない党派（無所属）は、行き先の手がかりが無いので残る候補へ均等に割る。
+    順序も拒否率も無い党派（諸派）は死票。
     """
-    live = {c["name"]: Decimal(c["votes"]) for c in candidates}
+    orderings = orderings_from_rates(personas)
+    layers = {p: build_layers(r) for p, r in personas["rejectionRates"].items()}
     party_of = {c["name"]: c["party"] for c in candidates}
+
+    def split(c: dict) -> list[tuple[str, int, Decimal]]:
+        ls = layers.get(c["party"])
+        if not ls:  # 層を持たない党派は1つの塊のまま
+            return [(c["party"], 0, Decimal(c["votes"]))]
+        return [(c["party"], i, Decimal(c["votes"]) * w) for i, (_, w) in enumerate(ls)]
+
+    # 候補 → [(元の党派, 層番号, 票数)]
+    held: dict[str, list] = {c["name"]: split(c) for c in candidates}
+    exhausted = Decimal(0)
     rounds = 0
 
     while True:
         rounds += 1
-        total = sum(live.values())
-        leader = min(live, key=lambda n: (-live[n], n))
-        if len(live) == 1 or live[leader] * 2 > total:
-            return leader, party_of[leader], rounds
+        totals = {n: sum(v for _, _, v in bag) for n, bag in held.items()}
+        total = sum(totals.values())
+        leader = min(totals, key=lambda n: (-totals[n], n))
+        if len(held) == 1 or totals[leader] * 2 > total:
+            return leader, party_of[leader], rounds, exhausted
 
-        loser = min(live, key=lambda n: (live[n], party_of[n], n))
-        moving = live.pop(loser)
-        order = orderings.get(party_of[loser])
-        if order is None:
-            continue  # 選好順序を持たない党派は移譲先が分からないので死票
+        loser = min(totals, key=lambda n: (totals[n], party_of[n], n))
+        bag = held.pop(loser)
+        live_parties = {party_of[n] for n in held}
 
-        targets: list[str] = []
-        for party in order:
-            targets = [n for n in live if party_of[n] == party]
-            if targets:
+        for src, layer_i, votes in bag:
+            if src not in layers:
+                if src in orderings:
+                    # 順序はあるが拒否率が無い（無所属）。均等に割る。
+                    for n in held:
+                        held[n].append((src, 0, votes / len(held)))
+                else:
+                    exhausted += votes  # 諸派。行き先が分からない。
+                continue
+
+            rejects = layers[src][layer_i][0]
+            targets: list[str] = []
+            for party in orderings.get(src, []):
+                if party in rejects or party not in live_parties:
+                    continue
+                targets = [n for n in held if party_of[n] == party]
                 break
-        if not targets:
-            continue
-        base = sum(live[n] for n in targets)
-        for n in targets:
-            share = live[n] / base if base else Decimal(1) / len(targets)
-            live[n] += moving * share
+            if not targets:
+                exhausted += votes
+                continue
+            base = sum(totals[n] for n in targets)
+            for n in targets:
+                share = totals[n] / base if base else Decimal(1) / len(targets)
+                held[n].append((src, layer_i, votes * share))
 
 
-def solve_smd(payload: dict, params: Params, orderings: dict | None) -> dict:
+def solve_smd(payload: dict, params: Params, personas: dict | None) -> dict:
     """小選挙区の当落を決める。優先順位付投票では現行と変わる。"""
     if params.smd_voting == "plurality":
         return {
@@ -469,15 +548,15 @@ def solve_smd(payload: dict, params: Params, orderings: dict | None) -> dict:
         }
     if params.smd_voting != "rcv":
         raise ExportError(f"未知の小選挙区の投票方式: {params.smd_voting}")
-    if orderings is None:
-        raise ExportError("優先順位付投票にはペルソナの選好順序が要る")
+    if personas is None:
+        raise ExportError("優先順位付投票にはペルソナが要る")
 
     winners: dict[str, str] = {}
     winner_votes: dict[str, int] = {}
     seats: dict[str, int] = defaultdict(int)
     by_block: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for d in payload["smd"]["districts"]:
-        name, party, _ = irv(d["candidates"], orderings)
+        name, party, _, _ = irv(d["candidates"], personas)
         winners[d["district_id"]] = name
         winner_votes[d["district_id"]] = next(
             (c["votes"] for c in d["candidates"] if c["name"] == name), d["top_votes"]
@@ -497,14 +576,14 @@ def solve_smd(payload: dict, params: Params, orderings: dict | None) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def simulate(payload: dict, params: Params, orderings: dict | None = None) -> dict:
+def simulate(payload: dict, params: Params, personas: dict | None = None) -> dict:
     """1回分のデータに制度パラメータを当てはめ、比例代表の議席を解く。
 
     小選挙区の当落は ``solve_smd`` で先に決める。優先順位付投票を選ぶと現行と変わり、
     比例名簿の当選資格（小選挙区で当選した者は比例に回れない）と惜敗率の分母にも
     波及する。
     """
-    smd = solve_smd(payload, params, orderings)
+    smd = solve_smd(payload, params, personas)
 
     blocks_in = payload["blocks"]
     total_pr = payload["meta"]["pr_seats"] + params.pr_seat_delta
@@ -944,17 +1023,17 @@ def web_payload(payload: dict) -> dict:
     }
 
 
-def golden_payload(payload: dict, orderings: dict | None) -> dict:
+def golden_payload(payload: dict, personas: dict | None) -> dict:
     """TS エンジンが再現すべき期待値。"""
     return {
         "election_id": payload["meta"]["election_id"],
         "presets": {
-            name: simulate(payload, params, orderings) for name, params in PRESETS.items()
+            name: simulate(payload, params, personas) for name, params in PRESETS.items()
         },
     }
 
 
-def export(cfg: ElectionConfig, orderings: dict | None) -> int:
+def export(cfg: ElectionConfig, personas: dict | None) -> int:
     payload = load(cfg)
     problems = self_check(payload)
     for p in problems[:20]:
@@ -972,7 +1051,7 @@ def export(cfg: ElectionConfig, orderings: dict | None) -> int:
     )
     golden = GOLDEN_DIR / f"{cfg.election_id}.golden.json"
     golden.write_text(
-        json.dumps(golden_payload(payload, orderings), ensure_ascii=False, indent=1),
+        json.dumps(golden_payload(payload, personas), ensure_ascii=False, indent=1),
         encoding="utf-8",
     )
 
@@ -992,14 +1071,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     ids = [args.election_id] if args.election_id else list(elections.ELECTIONS)
-    orderings = load_personas()
-    if orderings is None:
+    personas = load_personas()
+    if personas is None:
         # 黙って落とすと、TS 側のゴールデンから優先順位付投票の照合が消えたまま
         # テストが緑になる。止める。
         print(f"[FAIL] 選好順序が無い: {PERSONAS_PATH.relative_to(ROOT)}")
         print("       python research/personas/build_personas.py で生成する")
         return 1
-    status = max(export(elections.get(i), orderings) for i in ids)
+    status = max(export(elections.get(i), personas) for i in ids)
     if status:
         return status
 

@@ -60,9 +60,26 @@ export type District = {
  * 調査から作った**仮想のペルソナ**であって、実際の投票データではない。
  * `research/personas/README.md` を参照。
  */
+/** 拒否の仕方が同じ有権者のまとまり。 */
+export type Layer = {
+  /** この層が拒否している政党 */
+  rejects: Set<string>;
+  /** その党に投じた人のうち、この層が占める割合（0〜1） */
+  weight: number;
+};
+
 export type Personas = {
   method: string;
   source: string;
+  /**
+   * 政党ごとの拒否率（%）。画面から編集できる。無所属は手がかりが無いので持たない
+   * （落ちた票は残る候補へ均等に割る）。
+   */
+  rejectionRates: Record<string, Record<string, number>>;
+  /** 拒否率を丸めた刻み。目視の誤差に合わせてある。 */
+  roundedTo: number;
+  /** 出典のURL */
+  sourceUrls?: string[];
   /** 調査に出てこないため想定で置いた政党と、その理由 */
   derived: Record<string, string>;
   caveats: string[];

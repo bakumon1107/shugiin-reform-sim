@@ -76,6 +76,15 @@ DERIVED: dict[str, dict] = {
 
 INDEPENDENT = "無所属"
 
+#: 拒否率を丸める刻み。
+#:
+#: 元の値は公開されたグラフから目視で読んでおり ±2 ポイント程度の誤差がある。
+#: 出典は判明したが、こちらが読み取った値が正確になるわけではない。1%刻みで出すと
+#: 原典の数値そのものだと誤解されるので、誤差幅に合わせて丸める。丸めた値は原典の
+#: 再現ではなく、そこから出発するための概算値として扱う。
+ROUND_TO = 5
+
+
 #: 他党の順序の中で無所属をどこに置くか。0.0 が先頭、0.5 が中間、1.0 が最下位。
 #:
 #: 無所属は政党ではなく、保守系から革新系まで人によって位置が違うので、一律に置くと
@@ -126,15 +135,17 @@ def build() -> dict:
 
     # --- 調査から直に出る10党の順序 ---
     surveyed: dict[str, list[str]] = {}
+    rounded_rows: dict[str, list[int]] = {}
     mean_rate: dict[str, float] = {c: 0.0 for c in columns}
     n_rows = 0
     for voted, values in raw["rows"].items():
         if len(values) != len(columns):
             raise BuildError(f"{voted}: 値の数が列数と合わない")
-        rates = dict(zip(columns, values))
+        rates = {c: round(v / ROUND_TO) * ROUND_TO for c, v in zip(columns, values)}
         # 平均の拒否率は、比例票を持たない区分も含めた全回答から取る
         for c in columns:
             mean_rate[c] += rates[c]
+        rounded_rows[voted] = [rates[c] for c in columns]
         n_rows += 1
         if voted in NAME:
             surveyed[NAME[voted]] = base_ordering(voted, rates)
@@ -173,19 +184,60 @@ def build() -> dict:
         if set(order) != universe or len(order) != len(universe):
             raise BuildError(f"{party}: 順序に重複か欠落がある（{len(order)}件）")
 
+    # 派生させる政党の拒否率も作る。層を組むのに要る。
+    #
+    # 派生元と**完全に同じ**に揃える。行（その党に投じた人が誰を拒否するか）だけでなく
+    # 列（他党の支持層からどう見られるか）も同じにしないと表が正方にならず、拒否率を
+    # 画面で編集するときに空欄が出る。
+    COPY = {
+        "立憲民主党": "中道改革連合",
+        "公明党": "自由民主党",
+        "減税日本・ゆうこく連合": "日本保守党",
+    }
+
+    rates_out: dict[str, dict[str, int]] = {
+        NAME[row]: dict(zip((NAME[c] for c in columns), vals))
+        for row, vals in rounded_rows.items()
+        if row in NAME
+    }
+    # 列を足す（どの支持層から見ても、派生元と同じに見える）
+    for derived, base in COPY.items():
+        for row in rates_out.values():
+            row[derived] = row[base]
+    # 行を足す（派生元の行をそのまま複製する）
+    for derived, base in COPY.items():
+        rates_out[derived] = dict(rates_out[base])
+
+    square = set(rates_out)
+    for party, row in rates_out.items():
+        if set(row) != square:
+            raise BuildError(f"{party}: 拒否率の表が正方でない（{len(row)}列）")
+
     return {
         "method": (
             "比例投票先ごとに、各政党の拒否率が低い順に並べたもの。投じた政党を先頭に"
-            "固定し、以降は拒否されていない順。同率は党名順。拒否率の数値そのものは"
-            "保持しない。調査に出てこない政党は derived の規則で近い政党から派生させた。"
+            f"固定し、以降は拒否されていない順。同率は党名順。拒否率は目視の誤差に合わせて"
+            f"{ROUND_TO}%刻みに丸めてあり、調査の再現ではなく出発点としての概算値。"
+            "調査に出てこない政党は derived の規則で近い政党から派生させた。"
         ),
         "source": (
-            "第三者の調査『比例投票先 × 拒否政党』。グラフ画像から目視で読み取った"
-            "（誤差 ±2 ポイント程度）。調査主体・実施時期・標本数・設問文は未確認。"
-            "調査は第51回（2026年）の政党構成で行われている。"
+            "選挙ドットコム × JX通信社の合同調査（2026年2月26日公開）。設問は"
+            "「絶対投票したくない政党を選んでください」（複数選択可）。"
+            "ここでの数値は公開されたグラフから目視で読み取ったうえ、誤差に合わせて"
+            f"{ROUND_TO}%刻みに丸めた概算値であり、原典の数値そのものではない。"
+            "実施時期・標本数・調査方法は公開情報に記載がなく未確認。"
+            "調査は第51回（2026年2月8日）の政党構成による。"
         ),
+        "sourceUrls": [
+            "https://go2senkyo.com/articles/2026/02/28/130298.html",
+            "https://www.youtube.com/watch?v=rZUJwFl6-PU",
+        ],
         "derived": {
-            party: rule["why"] for party, rule in DERIVED.items()
+            "立憲民主党": "中道改革連合と完全に同じものとして扱う（拒否率の行も列も同一）",
+            "公明党": "自由民主党と完全に同じものとして扱う（拒否率の行も列も同一）。"
+                      "長く連立を組んでおり、支持層の見え方が近いとみなす",
+            "減税日本・ゆうこく連合":
+                "日本保守党と完全に同じものとして扱う（拒否率の行も列も同一）",
         } | {
             INDEPENDENT: "特定の位置を持たないので、どの順序でも中間に置く。"
                          "自身の順序は全体を通して拒否されにくい順",
@@ -199,10 +251,18 @@ def build() -> dict:
             "知名度が効くが、それは反映されていない。",
             "拒否している政党にも順位をつける前提になっている。実際には順位をつけずに"
             "投票用紙を打ち切る人がいるはずで、その場合は票が移譲されずに死票になる。",
-            "立憲民主党・公明党・減税日本・無所属は調査に出てこないため、近い政党から"
-            "派生させた想定である。これらを含む試算は仮定がさらに重い。",
+            "立憲民主党・公明党・減税日本は調査に出てこないため、それぞれ中道改革連合・"
+            "自由民主党・日本保守党と完全に同じ拒否率を割り当てている。実際には差が"
+            "あるはずで、これらを含む試算は仮定がさらに重い。無所属は手がかりが無いため"
+            "拒否率を持たせず、落ちた票は残る候補へ均等に割っている。",
+            "設問は「絶対投票したくない政党」を選ぶ形式なので、拒否した政党には順位を"
+            "つけないものとして扱っている。残る候補を全部拒否している層の票は死票になる。",
         ],
         "orderings": orderings,
+        # 各政党の拒否率（%）。画面から編集できるようにするための初期値。
+        # 無所属は手がかりが無いので持たせない（落ちた票は残る候補へ均等に割る）。
+        "rejectionRates": rates_out,
+        "roundedTo": ROUND_TO,
     }
 
 

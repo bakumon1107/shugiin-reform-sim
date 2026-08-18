@@ -260,7 +260,11 @@ describe("シミュレータのページ", () => {
       expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined();
       // 第51回は 156議席が第1選好で確定、38議席が入れ替わる
       expect(screen.getByText("仮定によらず確定").parentElement!.textContent).toContain("156");
-      expect(screen.getByText("実際に動いた").parentElement!.textContent).toContain("38");
+      // 層別に移譲するので、動く議席数は仮定の置き方で変わる。0でないことだけ見る。
+      const moved = Number(
+        screen.getByText("実際に動いた").parentElement!.querySelector(".tnum")!.textContent
+      );
+      expect(moved).toBeGreaterThan(0);
     });
     // 選挙区ごとの途中経過も出る
     expect(screen.getByRole("heading", { name: "選挙区ごとの途中経過" })).toBeDefined();
@@ -279,7 +283,27 @@ describe("シミュレータのページ", () => {
     expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined();
   });
 
-  it("順序を持たない政党がある選挙回では、その旨と得票が出る", async () => {
+  it("拒否率を動かすと議席が変わる", async () => {
+    const { user } = await setup();
+    await user.click(screen.getByRole("button", { name: /^RCV/ }));
+    await waitFor(() => expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined());
+
+    await user.click(screen.getByText(/使っている拒否率を見る・動かす/));
+    const before = readParty("自由民主党").proposal;
+
+    // 共産党の候補は多くの選挙区で先に脱落するので、そこの行き先を変えると効く。
+    // 共産党に投じた人が自民党をまったく拒否しないことにすると、票が自民へ流れる。
+    const input = await screen.findByLabelText<HTMLInputElement>(
+      "日本共産党に投じた人のうち自由民主党を拒否する割合"
+    );
+    fireEvent.change(input, { target: { value: "0" } });
+
+    await waitFor(() => expect(readParty("自由民主党").proposal).not.toBe(before), {
+      timeout: 15000,
+    });
+  }, 30000);
+
+  it("調査に出てこない政党がある選挙回では、その旨と得票が出る", async () => {
     const { user } = await setup();
 
     await user.click(screen.getByRole("button", { name: /^RCV/ }));
@@ -287,16 +311,16 @@ describe("シミュレータのページ", () => {
 
     // 第51回で順序を持たないのは諸派だけなので、赤い警告は出ない
     expect(
-      screen.queryByText("この選挙回には、選好順序を持たない大きな政党があります")
+      screen.queryByText("この選挙回には、調査に出てこない大きな政党があります")
     ).toBeNull();
-    expect(screen.getAllByText(/選好順序を持たない諸派/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/拒否率が分からない諸派/).length).toBeGreaterThan(0);
 
     // 第47回（2014）は民主党・維新の党が調査に無いので警告が出る
     await user.selectOptions(screen.getByLabelText("選挙回"), "h26-12-14");
     await waitFor(
       () => {
         const box = screen
-          .getByText("この選挙回には、選好順序を持たない大きな政党があります")
+          .getByText("この選挙回には、調査に出てこない大きな政党があります")
           .parentElement!;
         expect(box.textContent).toContain("民主党");
         expect(box.textContent).toContain("維新の党");

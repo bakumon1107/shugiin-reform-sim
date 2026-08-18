@@ -59,9 +59,9 @@ export default function Home() {
   // 与党の選び直しは選挙回ごとに覚える。既定値は選挙時点の連立。
   const [rulingOverride, setRulingOverride] = useState<Record<string, string[]>>({});
   const [personas, setPersonas] = useState<Personas | null>(null);
-  // 読み手が組み替えた選好順序。優先順位付投票の数字はこの並びに依存するので、
+  // 読み手が動かした拒否率。優先順位付投票の数字はこの値が決めているので、
   // 仮定を隠して1つの答えを出すより、握らせて動かしてもらう。
-  const [orderOverrides, setOrderOverrides] = useState<Record<string, string[]>>({});
+  const [rateOverrides, setRateOverrides] = useState<Record<string, Record<string, number>>>({});
 
   useEffect(() => {
     fetch("/data/index.json")
@@ -100,12 +100,17 @@ export default function Home() {
   const preset = PRESETS.find((p) => p.id === presetId);
   const isCustom = preset ? !sameParams(params, preset.params) : true;
 
-  // 読み手の組み替えを反映した選好順序
+  // 読み手が動かした拒否率を反映する。順序も層もここから作り直される。
   const effectivePersonas = useMemo<Personas | null>(() => {
     if (!personas) return null;
-    if (Object.keys(orderOverrides).length === 0) return personas;
-    return { ...personas, orderings: { ...personas.orderings, ...orderOverrides } };
-  }, [personas, orderOverrides]);
+    if (Object.keys(rateOverrides).length === 0) return personas;
+    const rates: Personas["rejectionRates"] = {};
+    for (const [voter, row] of Object.entries(personas.rejectionRates)) {
+      rates[voter] = { ...row, ...(rateOverrides[voter] ?? {}) };
+    }
+    // 選好順序は拒否率から導出されるので、ここでは率だけ差し替えればよい
+    return { ...personas, rejectionRates: rates };
+  }, [personas, rateOverrides]);
 
   const view = useMemo(() => {
     if (!data) return null;
@@ -297,11 +302,14 @@ export default function Home() {
               personas={effectivePersonas}
               districtCount={data.meta.smd_seats}
               voteScale={data.voteScale}
-              orderOverrides={orderOverrides}
-              onChangeOrder={(party, order) =>
-                setOrderOverrides((prev) => ({ ...prev, [party]: order }))
+              rateOverrides={rateOverrides}
+              onChangeRate={(voter, target, rate) =>
+                setRateOverrides((prev) => ({
+                  ...prev,
+                  [voter]: { ...(prev[voter] ?? {}), [target]: rate },
+                }))
               }
-              onResetOrders={() => setOrderOverrides({})}
+              onResetRates={() => setRateOverrides({})}
             />
           )}
 

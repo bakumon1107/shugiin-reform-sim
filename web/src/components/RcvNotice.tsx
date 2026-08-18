@@ -1,6 +1,6 @@
 "use client";
 
-import { OrderingEditor } from "./OrderingEditor";
+import { RateEditor } from "./RateEditor";
 import type { Personas, SimResult } from "@/sim/types";
 
 /**
@@ -15,17 +15,17 @@ export function RcvNotice({
   personas,
   districtCount,
   voteScale,
-  orderOverrides,
-  onChangeOrder,
-  onResetOrders,
+  rateOverrides,
+  onChangeRate,
+  onResetRates,
 }: {
   smd: SimResult["smd"];
   personas: Personas | null;
   districtCount: number;
   voteScale: number;
-  orderOverrides: Record<string, string[]>;
-  onChangeOrder: (party: string, order: string[]) => void;
-  onResetOrders: () => void;
+  rateOverrides: Record<string, Record<string, number>>;
+  onChangeRate: (voter: string, target: string, rate: number) => void;
+  onResetRates: () => void;
 }) {
   const moved = smd.flipped.length;
   const secured = smd.securedOnFirstPreferences;
@@ -45,8 +45,8 @@ export function RcvNotice({
       <p className="mt-2 max-w-3xl text-[13px] leading-relaxed">
         有権者が候補者にどう順位をつけたかのデータは<strong>存在しません</strong>。
         投票用紙に残るのは第1希望だけで、第2希望以降はどこにも記録されていません。
-        ここでは「どの政党を拒否しているか」を尋ねた調査から作った
-        <strong>仮想の選好順序</strong>で代用しています。
+        ここでは<strong>「絶対投票したくない政党」を尋ねた調査の拒否率</strong>から、
+        有権者の層と選好順序を組み立てて代用しています。
         <strong>実際の投票結果ではなく、予測でもありません。</strong>
         ペルソナの置き方を変えれば数字は変わります。
       </p>
@@ -84,7 +84,7 @@ export function RcvNotice({
       </div>
 
       {/*
-        順序を持たない党が諸派だけなら影響は小さいが、調査に無い大政党（第47回の民主党、
+        調査に出てこない党が諸派だけなら影響は小さいが、大政党（第47回の民主党、
         第48回の希望の党など）が含まれると結果が大きく歪む。得票規模で扱いを分ける。
       */}
       {major.length > 0 && (
@@ -93,12 +93,12 @@ export function RcvNotice({
           style={{ border: "1px solid var(--critical)", background: "var(--surface)" }}
         >
           <div className="text-[13px] font-semibold" style={{ color: "var(--critical)" }}>
-            この選挙回には、選好順序を持たない大きな政党があります
+            この選挙回には、調査に出てこない大きな政党があります
           </div>
           <p className="mt-1 max-w-3xl text-[12px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
             元にした調査は第51回（2026年）の政党構成で行われているため、それ以前の回に出てくる
-            政党の一部は順序を持ちません。該当する党の票は移譲されずに死票となり、他党からも票が
-            回ってきません。<strong>下記の得票が大きいほど、この回の試算は歪んでいます。</strong>
+            政党の一部は拒否率が分かりません。該当する党の票は移譲されずに死票となり、
+            他党からも票が回ってきません。<strong>下記の得票が大きいほど、この回の試算は歪んでいます。</strong>
           </p>
           <ul className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
             {major.map((p) => (
@@ -116,7 +116,7 @@ export function RcvNotice({
 
       {minor.length > 0 && (
         <p className="mt-2 text-[11px]" style={{ color: "var(--ink-muted)" }}>
-          選好順序を持たない諸派: {minor.map((p) => p.party).join("・")}
+          拒否率が分からない諸派: {minor.map((p) => p.party).join("・")}
           （合計 {Math.round(minor.reduce((a, b) => a + b.votes, 0) / voteScale).toLocaleString("ja-JP")}票）。
           落選時に票が移譲されず死票になります。
         </p>
@@ -128,27 +128,35 @@ export function RcvNotice({
           <span className="tnum">
             {Math.round(smd.exhausted / voteScale).toLocaleString("ja-JP")}
           </span>
-          （選好順序を持たない諸派の候補が落ちたとき）
+          （拒否率が分からない諸派の候補が落ちたとき）
         </p>
       )}
 
       {personas && (
         <details className="mt-3">
           <summary className="text-[12px] font-medium">
-            使っている選好順序をすべて見る（{Object.keys(personas.orderings).length}政党）
+            使っている拒否率を見る・動かす（{Object.keys(personas.rejectionRates).length}政党）
           </summary>
           <p className="mt-2 text-[11px]" style={{ color: "var(--ink-muted)" }}>
             {personas.method}
           </p>
           <p className="mt-1 text-[11px]" style={{ color: "var(--ink-muted)" }}>
             出典: {personas.source}
+            {personas.sourceUrls?.map((u) => (
+              <span key={u}>
+                {" "}
+                <a href={u} target="_blank" rel="noreferrer">
+                  {u.includes("youtube") ? "動画" : "記事"}
+                </a>
+              </span>
+            ))}
           </p>
           <div className="mt-3">
-            <OrderingEditor
+            <RateEditor
               personas={personas}
-              overrides={orderOverrides}
-              onChange={onChangeOrder}
-              onReset={onResetOrders}
+              overrides={rateOverrides}
+              onChange={onChangeRate}
+              onReset={onResetRates}
             />
           </div>
           <div className="mt-3">
