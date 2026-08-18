@@ -2,6 +2,16 @@
  "election_id": "r03-10-31",
  "presets": {
   "baseline": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -10,7 +20,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -1514,6 +1525,16 @@
    "tie_blocks": []
   },
   "ldp": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -1522,7 +1543,8 @@
     "dual_min_sekihai_rate": "30",
     "list_exhaustion": "vacant",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -2771,6 +2793,16 @@
    "tie_blocks": []
   },
   "ldp_sekihai50": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -2779,7 +2811,8 @@
     "dual_min_sekihai_rate": "50",
     "list_exhaustion": "vacant",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -4003,6 +4036,16 @@
    "tie_blocks": []
   },
   "mirai": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -4011,7 +4054,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -5543,6 +5587,16 @@
    "tie_blocks": []
   },
   "modified_sainte_lague": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 14,
@@ -5551,7 +5605,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -7080,6 +7135,16 @@
    "tie_blocks": []
   },
   "modified_sainte_lague_10": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 10,
@@ -7088,7 +7153,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -8620,6 +8686,16 @@
    "tie_blocks": []
   },
   "modified_sainte_lague_21": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 21,
@@ -8628,7 +8704,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -10106,6 +10183,16 @@
    "tie_blocks": []
   },
   "renyo": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -10114,7 +10201,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "renyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -11634,6 +11722,16 @@
    "tie_blocks": []
   },
   "heiyo": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -11642,7 +11740,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -13162,6 +13261,16 @@
    "tie_blocks": []
   },
   "heiyo_expand": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -13170,7 +13279,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "expand"
+    "heiyo_overhang": "expand",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -14792,6 +14902,16 @@
    "tie_blocks": []
   },
   "renyo_sainte_lague": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -14800,7 +14920,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "renyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -16346,6 +16467,16 @@
    "tie_blocks": []
   },
   "heiyo_vacant_45": {
+   "smd_seats_by_party": {
+    "立憲民主党": 57,
+    "自由民主党": 187,
+    "公明党": 9,
+    "無所属": 12,
+    "国民民主党": 6,
+    "日本維新の会": 16,
+    "日本共産党": 1,
+    "社会民主党": 1
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -16354,7 +16485,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "vacant",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -17567,6 +17699,4341 @@
     "れいわ新選組": 9
    },
    "vacancies": 3,
+   "tie_blocks": []
+  },
+  "rcv": {
+   "smd_seats_by_party": {
+    "自由民主党": 195,
+    "立憲民主党": 40,
+    "公明党": 8,
+    "無所属": 14,
+    "国民民主党": 6,
+    "日本維新の会": 26
+   },
+   "params": {
+    "divisor_method": "dhondt",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": 0,
+    "dual_min_vote_share": "1/10",
+    "dual_min_sekihai_rate": null,
+    "list_exhaustion": "reallocate",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "立憲民主党": 3,
+      "公明党": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "立憲民主党": 12,
+      "公明党": 2,
+      "日本維新の会": 3,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "国民民主党": 1,
+      "支持政党なし": 2,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "鈴木貴子",
+       "わたなべ孝一",
+       "ほりい学",
+       "中川ゆうこ"
+      ],
+      "立憲民主党": [
+       "松木けんこう",
+       "道下大樹",
+       "おおつきくれは"
+      ],
+      "公明党": [
+       "佐藤英道"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 13,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "立憲民主党": 4,
+      "公明党": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 13,
+      "公明党": 3,
+      "日本共産党": 3,
+      "日本維新の会": 1,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "つしま淳",
+       "秋葉けんや",
+       "かんけ一郎",
+       "亀岡よしたみ",
+       "かねだ勝年",
+       "上杉けんたろう"
+      ],
+      "立憲民主党": [
+       "岡本あき子",
+       "てらたまなぶ",
+       "小沢一郎",
+       "馬場ゆうき"
+      ],
+      "公明党": [
+       "庄子賢一"
+      ],
+      "日本共産党": [
+       "高橋ちづ子"
+      ],
+      "日本維新の会": [
+       "早坂あつし"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "立憲民主党": 5,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 15,
+      "立憲民主党": 20,
+      "公明党": 4,
+      "日本維新の会": 7,
+      "日本共産党": 3,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "尾身朝子",
+       "つちや品子",
+       "野中あつし",
+       "牧原ひでき",
+       "田所よしのり",
+       "石川あきまさ",
+       "いがらし清"
+      ],
+      "立憲民主党": [
+       "藤岡たかお",
+       "なかむら喜四郎",
+       "こみやま泰子",
+       "坂本ゆうのすけ",
+       "青山やまと"
+      ],
+      "公明党": [
+       "石井啓一",
+       "こしみず恵一",
+       "福重隆浩"
+      ],
+      "日本維新の会": [
+       "沢田良",
+       "高橋英明"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ],
+      "国民民主党": [
+       "鈴木よしひろ"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 22,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 9,
+      "立憲民主党": 5,
+      "日本維新の会": 3,
+      "公明党": 2,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 17,
+      "立憲民主党": 22,
+      "日本維新の会": 8,
+      "公明党": 5,
+      "日本共産党": 4,
+      "国民民主党": 3,
+      "れいわ新選組": 2,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "渡辺ひろみち",
+       "田中かずのり",
+       "甘利明",
+       "秋本まさとし",
+       "みたに英弘",
+       "よしいえひろゆき",
+       "中山のりひろ",
+       "門山ひろあき",
+       "山本ともひろ"
+      ],
+      "立憲民主党": [
+       "しのはら豪",
+       "早稲田ゆき",
+       "あべともこ",
+       "中谷一馬",
+       "谷田川はじめ"
+      ],
+      "日本維新の会": [
+       "浅川義治",
+       "清水きよし",
+       "水戸まさし"
+      ],
+      "公明党": [
+       "古屋範子",
+       "角田秀穂"
+      ],
+      "日本共産党": [
+       "志位和夫"
+      ],
+      "国民民主党": [
+       "鈴木あつし"
+      ],
+      "れいわ新選組": [
+       "たがや亮"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 17,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "立憲民主党": 4,
+      "日本維新の会": 2,
+      "公明党": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 20,
+      "日本維新の会": 16,
+      "公明党": 4,
+      "日本共産党": 7,
+      "れいわ新選組": 3,
+      "国民民主党": 3,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "日本第一党": 4,
+      "新党やまと": 4,
+      "政権交代によるコロナ対策強化新党": 4
+     },
+     "winners": {
+      "自由民主党": [
+       "高木けい",
+       "伊藤達也",
+       "石原ひろたか",
+       "松本文明",
+       "伊藤智加",
+       "松野未佳"
+      ],
+      "立憲民主党": [
+       "吉田はるみ",
+       "山岸一生",
+       "菅直人",
+       "手塚よしお"
+      ],
+      "日本維新の会": [
+       "小野たいすけ",
+       "金澤ゆい"
+      ],
+      "公明党": [
+       "高木陽介",
+       "河西宏一"
+      ],
+      "日本共産党": [
+       "笠井亮",
+       "宮本徹"
+      ],
+      "れいわ新選組": [
+       "山本太郎"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 11,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "立憲民主党": 3,
+      "日本維新の会": 1,
+      "公明党": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 13,
+      "日本維新の会": 3,
+      "公明党": 2,
+      "日本共産党": 3,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "わしお英一郎",
+       "国定勇人",
+       "泉田ひろひこ",
+       "つかだ一郎",
+       "山本拓",
+       "佐藤俊"
+      ],
+      "立憲民主党": [
+       "下条みつ",
+       "うめたに守",
+       "こんどう和也"
+      ],
+      "日本維新の会": [
+       "吉田豊史"
+      ],
+      "公明党": [
+       "中川宏昌"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 21,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 9,
+      "立憲民主党": 5,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "立憲民主党": 24,
+      "公明党": 5,
+      "日本維新の会": 4,
+      "日本共産党": 3,
+      "国民民主党": 3,
+      "れいわ新選組": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "あおやま周平",
+       "石井たく",
+       "宮沢ひろゆき",
+       "池田よしたか",
+       "しおのや立",
+       "中川たかもと",
+       "石原まさたか",
+       "吉川たける",
+       "山本左近"
+      ],
+      "立憲民主党": [
+       "ばんの豊",
+       "中川正春",
+       "吉田つねひこ",
+       "わたなべ周",
+       "牧義夫"
+      ],
+      "公明党": [
+       "大口善徳",
+       "伊藤渉",
+       "中川康洋"
+      ],
+      "日本維新の会": [
+       "杉本和巳",
+       "岬まき"
+      ],
+      "日本共産党": [
+       "もとむら伸子"
+      ],
+      "国民民主党": [
+       "田中けん"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 28,
+     "order": [
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "日本維新の会": 8,
+      "自由民主党": 8,
+      "公明党": 4,
+      "立憲民主党": 4,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "日本維新の会": 8,
+      "自由民主党": 27,
+      "公明党": 8,
+      "立憲民主党": 30,
+      "日本共産党": 6,
+      "国民民主党": 2,
+      "れいわ新選組": 3,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "日本維新の会": [
+       "前川きよしげ",
+       "堀場さち子",
+       "なかじまひでき",
+       "井上ひろあき",
+       "池畑浩太朗",
+       "アカギ正幸",
+       "なおやま仁",
+       "ところ順子"
+      ],
+      "自由民主党": [
+       "奥野しんすけ",
+       "柳本あきら",
+       "谷公一",
+       "もりやま正仁",
+       "松本たけあき",
+       "せきよしひろ",
+       "やまだ賢司",
+       "大串まさき"
+      ],
+      "公明党": [
+       "竹内讓",
+       "浮島智子",
+       "鰐淵洋子",
+       "濱村進"
+      ],
+      "立憲民主党": [
+       "いさか信彦",
+       "泉ケンタ",
+       "やまのい和則",
+       "まぶちすみお"
+      ],
+      "日本共産党": [
+       "こくた恵二",
+       "宮本たけし"
+      ],
+      "国民民主党": [
+       "斎藤アレックス"
+      ],
+      "れいわ新選組": [
+       "大石あきこ"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 11,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "立憲民主党": 2,
+      "公明党": 2,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 17,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "石橋林太郎",
+       "新谷まさよし",
+       "こじま敏文",
+       "あべ俊子",
+       "たかがい恵美子",
+       "杉田水脈"
+      ],
+      "立憲民主党": [
+       "上野かんじ",
+       "柚木みちよし"
+      ],
+      "公明党": [
+       "平林晃",
+       "日下正喜"
+      ],
+      "日本維新の会": [
+       "せぎひろちか"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "立憲民主党": 1,
+      "公明党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "立憲民主党": 7,
+      "公明党": 2,
+      "日本維新の会": 2,
+      "国民民主党": 1,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本有二",
+       "平井卓也",
+       "後藤田まさずみ"
+      ],
+      "立憲民主党": [
+       "白石洋一"
+      ],
+      "公明党": [
+       "山崎正恭"
+      ],
+      "日本維新の会": [
+       "吉田とも代"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 20,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "立憲民主党": 4,
+      "公明党": 4,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 21,
+      "公明党": 6,
+      "日本維新の会": 5,
+      "日本共産党": 4,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 4,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "今村雅弘",
+       "やすおか宏武",
+       "岩田かずちか",
+       "古川康",
+       "小里やすひろ",
+       "高橋まいこ",
+       "はつむら滝一郎",
+       "かわの正美"
+      ],
+      "立憲民主党": [
+       "きいたかし",
+       "渡辺創",
+       "すえつぐ精一",
+       "吉川はじめ"
+      ],
+      "公明党": [
+       "濵地雅一",
+       "吉田宣弘",
+       "金城泰邦",
+       "吉田久美子"
+      ],
+      "日本維新の会": [
+       "あべひろき",
+       "山本ごうせい"
+      ],
+      "日本共産党": [
+       "あかみね政賢"
+      ],
+      "国民民主党": [
+       "長友しんじ"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 72,
+    "立憲民主党": 40,
+    "公明党": 24,
+    "日本共産党": 9,
+    "日本維新の会": 23,
+    "国民民主党": 5,
+    "れいわ新選組": 3
+   },
+   "total_seats_by_party": {
+    "自由民主党": 267,
+    "立憲民主党": 80,
+    "公明党": 32,
+    "無所属": 14,
+    "国民民主党": 11,
+    "日本維新の会": 49,
+    "日本共産党": 9,
+    "れいわ新選組": 3
+   },
+   "vacancies": 0,
+   "tie_blocks": []
+  },
+  "rcv_sainte_lague": {
+   "smd_seats_by_party": {
+    "自由民主党": 195,
+    "立憲民主党": 40,
+    "公明党": 8,
+    "無所属": 14,
+    "国民民主党": 6,
+    "日本維新の会": 26
+   },
+   "params": {
+    "divisor_method": "sainteLague",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": 0,
+    "dual_min_vote_share": "1/10",
+    "dual_min_sekihai_rate": null,
+    "list_exhaustion": "reallocate",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "立憲民主党": 2,
+      "公明党": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "立憲民主党": 12,
+      "公明党": 2,
+      "日本維新の会": 3,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "国民民主党": 1,
+      "支持政党なし": 2,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "鈴木貴子",
+       "わたなべ孝一",
+       "ほりい学"
+      ],
+      "立憲民主党": [
+       "松木けんこう",
+       "道下大樹"
+      ],
+      "公明党": [
+       "佐藤英道"
+      ],
+      "日本維新の会": [
+       "山崎泉"
+      ],
+      "日本共産党": [
+       "はたやま和也"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 13,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 3,
+      "公明党": 2,
+      "日本共産党": 1,
+      "日本維新の会": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 13,
+      "公明党": 3,
+      "日本共産党": 3,
+      "日本維新の会": 1,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "つしま淳",
+       "秋葉けんや",
+       "かんけ一郎",
+       "亀岡よしたみ",
+       "かねだ勝年"
+      ],
+      "立憲民主党": [
+       "岡本あき子",
+       "てらたまなぶ",
+       "小沢一郎"
+      ],
+      "公明党": [
+       "庄子賢一",
+       "佐々木雅文"
+      ],
+      "日本共産党": [
+       "高橋ちづ子"
+      ],
+      "日本維新の会": [
+       "早坂あつし"
+      ],
+      "国民民主党": [
+       "加藤けんいち"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "立憲民主党": 4,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 15,
+      "立憲民主党": 20,
+      "公明党": 4,
+      "日本維新の会": 7,
+      "日本共産党": 3,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "尾身朝子",
+       "つちや品子",
+       "野中あつし",
+       "牧原ひでき",
+       "田所よしのり",
+       "石川あきまさ",
+       "いがらし清"
+      ],
+      "立憲民主党": [
+       "藤岡たかお",
+       "なかむら喜四郎",
+       "こみやま泰子",
+       "坂本ゆうのすけ"
+      ],
+      "公明党": [
+       "石井啓一",
+       "こしみず恵一",
+       "福重隆浩"
+      ],
+      "日本維新の会": [
+       "沢田良",
+       "高橋英明"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ],
+      "国民民主党": [
+       "鈴木よしひろ"
+      ],
+      "れいわ新選組": [
+       "田島つよし"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 22,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "立憲民主党": 5,
+      "日本維新の会": 3,
+      "公明党": 2,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 17,
+      "立憲民主党": 22,
+      "日本維新の会": 8,
+      "公明党": 5,
+      "日本共産党": 4,
+      "国民民主党": 3,
+      "れいわ新選組": 2,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "渡辺ひろみち",
+       "田中かずのり",
+       "甘利明",
+       "秋本まさとし",
+       "みたに英弘",
+       "よしいえひろゆき",
+       "中山のりひろ",
+       "門山ひろあき"
+      ],
+      "立憲民主党": [
+       "しのはら豪",
+       "早稲田ゆき",
+       "あべともこ",
+       "中谷一馬",
+       "谷田川はじめ"
+      ],
+      "日本維新の会": [
+       "浅川義治",
+       "清水きよし",
+       "水戸まさし"
+      ],
+      "公明党": [
+       "古屋範子",
+       "角田秀穂"
+      ],
+      "日本共産党": [
+       "志位和夫",
+       "はたの君枝"
+      ],
+      "国民民主党": [
+       "鈴木あつし"
+      ],
+      "れいわ新選組": [
+       "たがや亮"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 17,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 4,
+      "日本維新の会": 2,
+      "公明党": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 20,
+      "日本維新の会": 16,
+      "公明党": 4,
+      "日本共産党": 7,
+      "れいわ新選組": 3,
+      "国民民主党": 3,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "日本第一党": 4,
+      "新党やまと": 4,
+      "政権交代によるコロナ対策強化新党": 4
+     },
+     "winners": {
+      "自由民主党": [
+       "高木けい",
+       "伊藤達也",
+       "石原ひろたか",
+       "松本文明",
+       "伊藤智加"
+      ],
+      "立憲民主党": [
+       "吉田はるみ",
+       "山岸一生",
+       "菅直人",
+       "手塚よしお"
+      ],
+      "日本維新の会": [
+       "小野たいすけ",
+       "金澤ゆい"
+      ],
+      "公明党": [
+       "高木陽介",
+       "河西宏一"
+      ],
+      "日本共産党": [
+       "笠井亮",
+       "宮本徹"
+      ],
+      "れいわ新選組": [
+       "山本太郎"
+      ],
+      "国民民主党": [
+       "さとう由美"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 11,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 3,
+      "日本維新の会": 1,
+      "公明党": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 13,
+      "日本維新の会": 3,
+      "公明党": 2,
+      "日本共産党": 3,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "わしお英一郎",
+       "国定勇人",
+       "泉田ひろひこ",
+       "つかだ一郎",
+       "山本拓"
+      ],
+      "立憲民主党": [
+       "下条みつ",
+       "うめたに守",
+       "こんどう和也"
+      ],
+      "日本維新の会": [
+       "吉田豊史"
+      ],
+      "公明党": [
+       "中川宏昌"
+      ],
+      "日本共産党": [
+       "藤野やすふみ"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 21,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 17,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 9,
+      "立憲民主党": 5,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "立憲民主党": 24,
+      "公明党": 5,
+      "日本維新の会": 4,
+      "日本共産党": 3,
+      "国民民主党": 3,
+      "れいわ新選組": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "あおやま周平",
+       "石井たく",
+       "宮沢ひろゆき",
+       "池田よしたか",
+       "しおのや立",
+       "中川たかもと",
+       "石原まさたか",
+       "吉川たける",
+       "山本左近"
+      ],
+      "立憲民主党": [
+       "ばんの豊",
+       "中川正春",
+       "吉田つねひこ",
+       "わたなべ周",
+       "牧義夫"
+      ],
+      "公明党": [
+       "大口善徳",
+       "伊藤渉",
+       "中川康洋"
+      ],
+      "日本維新の会": [
+       "杉本和巳",
+       "岬まき"
+      ],
+      "日本共産党": [
+       "もとむら伸子"
+      ],
+      "国民民主党": [
+       "田中けん"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 28,
+     "order": [
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 15,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "日本維新の会": 8,
+      "自由民主党": 8,
+      "公明党": 4,
+      "立憲民主党": 4,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "日本維新の会": 8,
+      "自由民主党": 27,
+      "公明党": 8,
+      "立憲民主党": 30,
+      "日本共産党": 6,
+      "国民民主党": 2,
+      "れいわ新選組": 3,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "日本維新の会": [
+       "前川きよしげ",
+       "堀場さち子",
+       "なかじまひでき",
+       "井上ひろあき",
+       "池畑浩太朗",
+       "アカギ正幸",
+       "なおやま仁",
+       "ところ順子"
+      ],
+      "自由民主党": [
+       "奥野しんすけ",
+       "柳本あきら",
+       "谷公一",
+       "もりやま正仁",
+       "松本たけあき",
+       "せきよしひろ",
+       "やまだ賢司",
+       "大串まさき"
+      ],
+      "公明党": [
+       "竹内讓",
+       "浮島智子",
+       "鰐淵洋子",
+       "濱村進"
+      ],
+      "立憲民主党": [
+       "いさか信彦",
+       "泉ケンタ",
+       "やまのい和則",
+       "まぶちすみお"
+      ],
+      "日本共産党": [
+       "こくた恵二",
+       "宮本たけし"
+      ],
+      "国民民主党": [
+       "斎藤アレックス"
+      ],
+      "れいわ新選組": [
+       "大石あきこ"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 11,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 2,
+      "公明党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 17,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "石橋林太郎",
+       "新谷まさよし",
+       "こじま敏文",
+       "あべ俊子",
+       "たかがい恵美子"
+      ],
+      "立憲民主党": [
+       "上野かんじ",
+       "柚木みちよし"
+      ],
+      "公明党": [
+       "平林晃",
+       "日下正喜"
+      ],
+      "日本維新の会": [
+       "せぎひろちか"
+      ],
+      "日本共産党": [
+       "大平よしのぶ"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "立憲民主党": 1,
+      "公明党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "立憲民主党": 7,
+      "公明党": 2,
+      "日本維新の会": 2,
+      "国民民主党": 1,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本有二",
+       "平井卓也",
+       "後藤田まさずみ"
+      ],
+      "立憲民主党": [
+       "白石洋一"
+      ],
+      "公明党": [
+       "山崎正恭"
+      ],
+      "日本維新の会": [
+       "吉田とも代"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 20,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "社会民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "立憲民主党": 4,
+      "公明党": 3,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 21,
+      "公明党": 6,
+      "日本維新の会": 5,
+      "日本共産党": 4,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 4,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "今村雅弘",
+       "やすおか宏武",
+       "岩田かずちか",
+       "古川康",
+       "小里やすひろ",
+       "高橋まいこ",
+       "はつむら滝一郎"
+      ],
+      "立憲民主党": [
+       "きいたかし",
+       "渡辺創",
+       "すえつぐ精一",
+       "吉川はじめ"
+      ],
+      "公明党": [
+       "濵地雅一",
+       "吉田宣弘",
+       "金城泰邦"
+      ],
+      "日本維新の会": [
+       "あべひろき",
+       "山本ごうせい"
+      ],
+      "日本共産党": [
+       "あかみね政賢"
+      ],
+      "国民民主党": [
+       "長友しんじ"
+      ],
+      "れいわ新選組": [
+       "大島九州男"
+      ],
+      "社会民主党": [
+       "新垣クニオ"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 65,
+    "立憲民主党": 37,
+    "公明党": 24,
+    "日本維新の会": 24,
+    "日本共産党": 13,
+    "国民民主党": 7,
+    "れいわ新選組": 5,
+    "社会民主党": 1
+   },
+   "total_seats_by_party": {
+    "自由民主党": 260,
+    "立憲民主党": 77,
+    "公明党": 32,
+    "無所属": 14,
+    "国民民主党": 13,
+    "日本維新の会": 50,
+    "日本共産党": 13,
+    "れいわ新選組": 5,
+    "社会民主党": 1
+   },
+   "vacancies": 0,
+   "tie_blocks": []
+  },
+  "rcv_ldp": {
+   "smd_seats_by_party": {
+    "自由民主党": 195,
+    "立憲民主党": 40,
+    "公明党": 8,
+    "無所属": 14,
+    "国民民主党": 6,
+    "日本維新の会": 26
+   },
+   "params": {
+    "divisor_method": "sainteLague",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": -45,
+    "dual_min_vote_share": "1/6",
+    "dual_min_sekihai_rate": "30",
+    "list_exhaustion": "vacant",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 2,
+      "立憲民主党": 2,
+      "公明党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "立憲民主党": 12,
+      "公明党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "国民民主党": 1,
+      "支持政党なし": 2,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "鈴木貴子",
+       "わたなべ孝一"
+      ],
+      "立憲民主党": [
+       "松木けんこう",
+       "道下大樹"
+      ],
+      "公明党": [
+       "佐藤英道"
+      ],
+      "日本維新の会": [
+       "山崎泉"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 9,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "立憲民主党": 2,
+      "公明党": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 13,
+      "公明党": 3,
+      "日本共産党": 3,
+      "日本維新の会": 1,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "つしま淳",
+       "秋葉けんや",
+       "かんけ一郎",
+       "亀岡よしたみ"
+      ],
+      "立憲民主党": [
+       "岡本あき子",
+       "てらたまなぶ"
+      ],
+      "公明党": [
+       "庄子賢一"
+      ],
+      "日本共産党": [
+       "高橋ちづ子"
+      ],
+      "日本維新の会": [
+       "早坂あつし"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 14,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 3,
+      "公明党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 15,
+      "立憲民主党": 20,
+      "公明党": 4,
+      "日本維新の会": 4,
+      "日本共産党": 2,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "尾身朝子",
+       "つちや品子",
+       "野中あつし",
+       "牧原ひでき",
+       "田所よしのり"
+      ],
+      "立憲民主党": [
+       "藤岡たかお",
+       "なかむら喜四郎",
+       "こみやま泰子"
+      ],
+      "公明党": [
+       "石井啓一",
+       "こしみず恵一"
+      ],
+      "日本維新の会": [
+       "沢田良"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ],
+      "国民民主党": [
+       "鈴木よしひろ"
+      ],
+      "れいわ新選組": [
+       "田島つよし"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 17,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "立憲民主党": 4,
+      "日本維新の会": 2,
+      "公明党": 2,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 17,
+      "立憲民主党": 22,
+      "日本維新の会": 3,
+      "公明党": 5,
+      "日本共産党": 4,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "渡辺ひろみち",
+       "田中かずのり",
+       "甘利明",
+       "秋本まさとし",
+       "みたに英弘",
+       "よしいえひろゆき"
+      ],
+      "立憲民主党": [
+       "しのはら豪",
+       "早稲田ゆき",
+       "あべともこ",
+       "中谷一馬"
+      ],
+      "日本維新の会": [
+       "浅川義治",
+       "清水きよし"
+      ],
+      "公明党": [
+       "古屋範子",
+       "角田秀穂"
+      ],
+      "日本共産党": [
+       "志位和夫"
+      ],
+      "国民民主党": [
+       "長谷康人"
+      ],
+      "れいわ新選組": [
+       "木下ハヤト"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 14,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "立憲民主党": 3,
+      "日本維新の会": 2,
+      "公明党": 2,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 20,
+      "日本維新の会": 10,
+      "公明党": 4,
+      "日本共産党": 7,
+      "れいわ新選組": 2,
+      "国民民主党": 1,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "日本第一党": 4,
+      "新党やまと": 4,
+      "政権交代によるコロナ対策強化新党": 4
+     },
+     "winners": {
+      "自由民主党": [
+       "高木けい",
+       "伊藤達也",
+       "石原ひろたか",
+       "松本文明"
+      ],
+      "立憲民主党": [
+       "吉田はるみ",
+       "山岸一生",
+       "菅直人"
+      ],
+      "日本維新の会": [
+       "小野たいすけ",
+       "金澤ゆい"
+      ],
+      "公明党": [
+       "高木陽介",
+       "河西宏一"
+      ],
+      "日本共産党": [
+       "笠井亮"
+      ],
+      "れいわ新選組": [
+       "山本太郎"
+      ],
+      "国民民主党": [
+       "竹内淳太郎"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "立憲民主党": 2,
+      "日本維新の会": 1,
+      "公明党": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 12,
+      "日本維新の会": 3,
+      "公明党": 2,
+      "日本共産党": 3,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "わしお英一郎",
+       "国定勇人",
+       "泉田ひろひこ"
+      ],
+      "立憲民主党": [
+       "下条みつ",
+       "うめたに守"
+      ],
+      "日本維新の会": [
+       "吉田豊史"
+      ],
+      "公明党": [
+       "中川宏昌"
+      ],
+      "日本共産党": [
+       "藤野やすふみ"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 15,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 3,
+      "公明党": 2,
+      "日本維新の会": 2,
+      "日本共産党": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "立憲民主党": 24,
+      "公明党": 5,
+      "日本維新の会": 2,
+      "日本共産党": 3,
+      "国民民主党": 2,
+      "れいわ新選組": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "あおやま周平",
+       "石井たく",
+       "宮沢ひろゆき",
+       "池田よしたか",
+       "しおのや立"
+      ],
+      "立憲民主党": [
+       "ばんの豊",
+       "中川正春",
+       "吉田つねひこ"
+      ],
+      "公明党": [
+       "大口善徳",
+       "伊藤渉"
+      ],
+      "日本維新の会": [
+       "杉本和巳",
+       "岬まき"
+      ],
+      "日本共産党": [
+       "もとむら伸子"
+      ],
+      "国民民主党": [
+       "田中けん"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 21,
+     "order": [
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "日本維新の会": 7,
+      "自由民主党": 5,
+      "公明党": 3,
+      "立憲民主党": 2,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "日本維新の会": 7,
+      "自由民主党": 27,
+      "公明党": 8,
+      "立憲民主党": 25,
+      "日本共産党": 5,
+      "国民民主党": 1,
+      "れいわ新選組": 2,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0,
+      "社会民主党": 0
+     },
+     "winners": {
+      "日本維新の会": [
+       "前川きよしげ",
+       "堀場さち子",
+       "なかじまひでき",
+       "井上ひろあき",
+       "池畑浩太朗",
+       "アカギ正幸",
+       "なおやま仁"
+      ],
+      "自由民主党": [
+       "奥野しんすけ",
+       "柳本あきら",
+       "谷公一",
+       "もりやま正仁",
+       "松本たけあき"
+      ],
+      "公明党": [
+       "竹内讓",
+       "浮島智子",
+       "鰐淵洋子"
+      ],
+      "立憲民主党": [
+       "いさか信彦",
+       "泉ケンタ"
+      ],
+      "日本共産党": [
+       "こくた恵二",
+       "宮本たけし"
+      ],
+      "国民民主党": [
+       "斎藤アレックス"
+      ],
+      "れいわ新選組": [
+       "大石あきこ"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "立憲民主党": 2,
+      "公明党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 9,
+      "立憲民主党": 15,
+      "公明党": 3,
+      "日本維新の会": 1,
+      "日本共産党": 2,
+      "国民民主党": 1,
+      "れいわ新選組": 0,
+      "社会民主党": 0,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "石橋林太郎",
+       "新谷まさよし",
+       "こじま敏文",
+       "あべ俊子"
+      ],
+      "立憲民主党": [
+       "上野かんじ",
+       "柚木みちよし"
+      ],
+      "公明党": [
+       "平林晃"
+      ],
+      "日本維新の会": [
+       "喜多義典"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 4,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 2,
+      "立憲民主党": 1,
+      "公明党": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "立憲民主党": 7,
+      "公明党": 2,
+      "日本維新の会": 1,
+      "国民民主党": 1,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 1,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本有二",
+       "平井卓也"
+      ],
+      "立憲民主党": [
+       "白石洋一"
+      ],
+      "公明党": [
+       "山崎正恭"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 15,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "公明党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "立憲民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "社会民主党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "立憲民主党": 3,
+      "公明党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "国民民主党": 1,
+      "れいわ新選組": 1,
+      "社会民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 10,
+      "立憲民主党": 21,
+      "公明党": 6,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "国民民主党": 2,
+      "れいわ新選組": 1,
+      "社会民主党": 3,
+      "ＮＨＫと裁判してる党弁護士法７２条違反で": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "今村雅弘",
+       "やすおか宏武",
+       "岩田かずちか",
+       "古川康",
+       "小里やすひろ"
+      ],
+      "立憲民主党": [
+       "きいたかし",
+       "渡辺創",
+       "すえつぐ精一"
+      ],
+      "公明党": [
+       "濵地雅一",
+       "吉田宣弘"
+      ],
+      "日本維新の会": [
+       "あべひろき"
+      ],
+      "日本共産党": [
+       "あかみね政賢"
+      ],
+      "国民民主党": [
+       "長友しんじ"
+      ],
+      "れいわ新選組": [
+       "大島九州男"
+      ],
+      "社会民主党": [
+       "新垣クニオ"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 45,
+    "立憲民主党": 27,
+    "公明党": 18,
+    "日本維新の会": 19,
+    "日本共産党": 9,
+    "国民民主党": 6,
+    "れいわ新選組": 5,
+    "社会民主党": 1
+   },
+   "total_seats_by_party": {
+    "自由民主党": 240,
+    "立憲民主党": 67,
+    "公明党": 26,
+    "無所属": 14,
+    "国民民主党": 12,
+    "日本維新の会": 45,
+    "日本共産党": 9,
+    "れいわ新選組": 5,
+    "社会民主党": 1
+   },
+   "vacancies": 1,
    "tie_blocks": []
   }
  }

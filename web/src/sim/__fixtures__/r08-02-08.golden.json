@@ -2,6 +2,14 @@
  "election_id": "r08-02-08",
  "presets": {
   "baseline": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -10,7 +18,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -1539,6 +1548,14 @@
    "tie_blocks": []
   },
   "ldp": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -1547,7 +1564,8 @@
     "dual_min_sekihai_rate": "30",
     "list_exhaustion": "vacant",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -2796,6 +2814,14 @@
    "tie_blocks": []
   },
   "ldp_sekihai50": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -2804,7 +2830,8 @@
     "dual_min_sekihai_rate": "50",
     "list_exhaustion": "vacant",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -4041,6 +4068,14 @@
    "tie_blocks": []
   },
   "mirai": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -4049,7 +4084,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -5632,6 +5668,14 @@
    "tie_blocks": []
   },
   "modified_sainte_lague": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 14,
@@ -5640,7 +5684,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -7195,6 +7240,14 @@
    "tie_blocks": []
   },
   "modified_sainte_lague_10": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 10,
@@ -7203,7 +7256,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -8786,6 +8840,14 @@
    "tie_blocks": []
   },
   "modified_sainte_lague_21": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "modifiedSainteLague",
     "first_divisor_tenths": 21,
@@ -8794,7 +8856,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "parallel",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -10309,6 +10372,14 @@
    "tie_blocks": []
   },
   "renyo": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -10317,7 +10388,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "renyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -11887,6 +11959,14 @@
    "tie_blocks": []
   },
   "heiyo": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -11895,7 +11975,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -13465,6 +13546,14 @@
    "tie_blocks": []
   },
   "heiyo_expand": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -13473,7 +13562,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "expand"
+    "heiyo_overhang": "expand",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -15376,6 +15466,14 @@
    "tie_blocks": []
   },
   "renyo_sainte_lague": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "sainteLague",
     "first_divisor_tenths": 14,
@@ -15384,7 +15482,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "reallocate",
     "tier_linkage": "renyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -16977,6 +17076,14 @@
    "tie_blocks": []
   },
   "heiyo_vacant_45": {
+   "smd_seats_by_party": {
+    "自由民主党": 248,
+    "中道改革連合": 7,
+    "国民民主党": 8,
+    "無所属": 5,
+    "減税日本・ゆうこく連合": 1,
+    "日本維新の会": 20
+   },
    "params": {
     "divisor_method": "dhondt",
     "first_divisor_tenths": 14,
@@ -16985,7 +17092,8 @@
     "dual_min_sekihai_rate": null,
     "list_exhaustion": "vacant",
     "tier_linkage": "heiyo",
-    "heiyo_overhang": "truncate"
+    "heiyo_overhang": "truncate",
+    "smd_voting": "plurality"
    },
    "blocks": [
     {
@@ -18233,6 +18341,4408 @@
     "日本保守党": 1
    },
    "vacancies": 6,
+   "tie_blocks": []
+  },
+  "rcv": {
+   "smd_seats_by_party": {
+    "自由民主党": 218,
+    "中道改革連合": 4,
+    "国民民主党": 27,
+    "無所属": 5,
+    "日本維新の会": 29,
+    "チームみらい": 3,
+    "減税日本・ゆうこく連合": 2,
+    "日本保守党": 1
+   },
+   "params": {
+    "divisor_method": "dhondt",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": 0,
+    "dual_min_vote_share": "1/10",
+    "dual_min_sekihai_rate": null,
+    "list_exhaustion": "reallocate",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "中道改革連合": 3,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 16,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "伊東よしたか",
+       "わたなべ孝一",
+       "村木汀",
+       "吉田有理"
+      ],
+      "中道改革連合": [
+       "佐藤英道",
+       "浮島智子",
+       "山岡達丸"
+      ],
+      "国民民主党": [
+       "臼木ひでたけ"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 12,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 3,
+      "国民民主党": 1,
+      "参政党": 1,
+      "チームみらい": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 19,
+      "国民民主党": 6,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "江渡あきのり",
+       "みのり川信英",
+       "米内ひろまさ",
+       "いとう信太郎",
+       "菅家一郎",
+       "秋葉賢也"
+      ],
+      "中道改革連合": [
+       "庄子賢一",
+       "有田芳生",
+       "かねこ恵美"
+      ],
+      "国民民主党": [
+       "佐々木まこと"
+      ],
+      "参政党": [
+       "和田政宗"
+      ],
+      "チームみらい": [
+       "林たくみ"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 2,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "中道改革連合": 4,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 25,
+      "国民民主党": 6,
+      "参政党": 5,
+      "チームみらい": 1,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "船田はじめ",
+       "藤田まこと",
+       "三ツ林ひろみ",
+       "やな和生",
+       "ながおか桂子",
+       "鈴木たくみ",
+       "中根かずゆき",
+       "西條昌良"
+      ],
+      "中道改革連合": [
+       "石井啓一",
+       "輿水恵一",
+       "福重隆浩",
+       "小池あつし"
+      ],
+      "国民民主党": [
+       "細谷はやと",
+       "岸田光広"
+      ],
+      "参政党": [
+       "豊田真由子",
+       "大森紀明"
+      ],
+      "チームみらい": [
+       "武藤かず子"
+      ],
+      "日本維新の会": [
+       "高橋英明"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 23,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 6,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "中道改革連合": 6,
+      "国民民主党": 3,
+      "チームみらい": 2,
+      "参政党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "中道改革連合": 30,
+      "国民民主党": 4,
+      "チームみらい": 3,
+      "参政党": 5,
+      "日本維新の会": 7,
+      "日本共産党": 3,
+      "れいわ新選組": 2,
+      "日本保守党": 2,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "中西けんじ",
+       "にった章文",
+       "えりアルフィヤ",
+       "やまぎわ大志郎",
+       "上原まさひろ",
+       "伊藤聡",
+       "文月涼",
+       "岩﨑比菜"
+      ],
+      "中道改革連合": [
+       "角田秀穂",
+       "沼崎満子",
+       "原田直樹",
+       "安藤じゅん子",
+       "中村たけと",
+       "そうの創"
+      ],
+      "国民民主党": [
+       "深作ヘスス",
+       "山口翔平",
+       "中村太一"
+      ],
+      "チームみらい": [
+       "河合みちお",
+       "山田えり"
+      ],
+      "参政党": [
+       "なかやめぐ",
+       "くどう聖子"
+      ],
+      "日本維新の会": [
+       "金村りゅうな"
+      ],
+      "日本共産党": [
+       "はたの君枝"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 9,
+      "中道改革連合": 4,
+      "チームみらい": 1,
+      "国民民主党": 2,
+      "参政党": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 27,
+      "チームみらい": 1,
+      "国民民主党": 16,
+      "参政党": 3,
+      "日本共産党": 3,
+      "日本維新の会": 6,
+      "日本保守党": 1,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "辻󠄂清人",
+       "松本洋平",
+       "今岡うえき",
+       "高木けい",
+       "安藤たかお",
+       "木原誠二",
+       "大西洋平",
+       "平将明",
+       "丸川珠代"
+      ],
+      "中道改革連合": [
+       "岡本みつなり",
+       "河西宏一",
+       "大森江里子",
+       "末松義規"
+      ],
+      "チームみらい": [
+       "高山さとし"
+      ],
+      "国民民主党": [
+       "鳩山紀一郎",
+       "丸山かつき"
+      ],
+      "参政党": [
+       "吉川りな"
+      ],
+      "日本共産党": [
+       "田村智子"
+      ],
+      "日本維新の会": [
+       "阿部司"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 10,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "中道改革連合": 3,
+      "国民民主党": 1,
+      "参政党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 15,
+      "国民民主党": 3,
+      "参政党": 4,
+      "日本維新の会": 3,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "安楽死制度を考える会": 2
+     },
+     "winners": {
+      "自由民主党": [
+       "稲田ともみ",
+       "田畑裕明",
+       "今洋佑",
+       "古井康介"
+      ],
+      "中道改革連合": [
+       "中川宏昌",
+       "はたのつばさ",
+       "こんどう和也"
+      ],
+      "国民民主党": [
+       "おだけかい"
+      ],
+      "参政党": [
+       "川ゆういちろう"
+      ],
+      "日本維新の会": [
+       "わかさ清史"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 21,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 10,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 10,
+      "中道改革連合": 4,
+      "国民民主党": 3,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "中道改革連合": 26,
+      "国民民主党": 8,
+      "参政党": 4,
+      "チームみらい": 1,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 2,
+      "減税日本・ゆうこく連合": 3,
+      "日本保守党": 2,
+      "社会民主党": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本左近",
+       "根本幸典",
+       "山下しずお",
+       "鈴木じゅんじ",
+       "くまだ裕通",
+       "つじ秀樹",
+       "藤沢ただもり",
+       "細田健一",
+       "中川貴元",
+       "斉藤りえ"
+      ],
+      "中道改革連合": [
+       "中川康洋",
+       "西園勝秀",
+       "犬かい明佳",
+       "小山ちほ"
+      ],
+      "国民民主党": [
+       "田中けん",
+       "野村美穂",
+       "しばた将平"
+      ],
+      "参政党": [
+       "渡辺あいり",
+       "伊藤けいすけ"
+      ],
+      "チームみらい": [
+       "須田えいたろう"
+      ],
+      "日本維新の会": [
+       "杉本和巳"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 28,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 10,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 10,
+      "日本維新の会": 8,
+      "中道改革連合": 5,
+      "国民民主党": 2,
+      "参政党": 2,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 24,
+      "日本維新の会": 10,
+      "中道改革連合": 30,
+      "国民民主党": 9,
+      "参政党": 5,
+      "チームみらい": 0,
+      "日本共産党": 4,
+      "日本保守党": 3,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "小寺ひろお",
+       "石田真敏",
+       "武村のぶひで",
+       "やまだ賢司",
+       "大串まさき",
+       "谷川とむ",
+       "とかしきなおみ",
+       "むねきよ皇一",
+       "こうらい啓一郎",
+       "中山泰秀"
+      ],
+      "日本維新の会": [
+       "原山だいすけ",
+       "池畑こうたろう",
+       "住吉ひろき",
+       "斎藤アレックス",
+       "一谷勇一郎",
+       "徳安淳子",
+       "和田有一朗",
+       "木村もとき"
+      ],
+      "中道改革連合": [
+       "赤羽かずよし",
+       "中野洋昌",
+       "山本かなえ",
+       "いさ進一",
+       "国重とおる"
+      ],
+      "国民民主党": [
+       "かわい昭成",
+       "向山好一"
+      ],
+      "参政党": [
+       "谷浩一郎",
+       "石川勝"
+      ],
+      "日本共産党": [
+       "辰巳孝太郎"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 10,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1
+     },
+     "capacity": {
+      "自由民主党": 6,
+      "中道改革連合": 15,
+      "国民民主党": 5,
+      "参政党": 5,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "てらだ稔",
+       "平沼正二郎",
+       "吉田真次",
+       "あいさわ一郎",
+       "あべ俊子",
+       "俵田ゆうじ"
+      ],
+      "中道改革連合": [
+       "斉藤鉄夫",
+       "平林晃"
+      ],
+      "国民民主党": [
+       "鍋島せり"
+      ],
+      "参政党": [
+       "しまむらかおる"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "中道改革連合": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 6,
+      "国民民主党": 3,
+      "参政党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "せと隆一",
+       "村上誠一郎",
+       "中山展宏",
+       "岡山正樹"
+      ],
+      "中道改革連合": [
+       "山崎正恭"
+      ],
+      "国民民主党": [
+       "川崎ともみつ"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 20,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 6,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 8,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 4,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 2,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 10,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 10,
+      "中道改革連合": 4,
+      "参政党": 2,
+      "国民民主党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 21,
+      "参政党": 4,
+      "国民民主党": 6,
+      "チームみらい": 1,
+      "日本維新の会": 4,
+      "日本共産党": 2,
+      "れいわ新選組": 3,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "岩屋たけし",
+       "たけだ良太",
+       "岩田かずちか",
+       "小里やすひろ",
+       "江藤拓",
+       "三原あさと",
+       "浅田ますみ",
+       "上野宏史",
+       "やすおか宏武",
+       "あべひろき"
+      ],
+      "中道改革連合": [
+       "濵地雅一",
+       "吉田宣弘",
+       "金城泰邦",
+       "かわの義博"
+      ],
+      "参政党": [
+       "木下としゆき",
+       "しげいくにあき"
+      ],
+      "国民民主党": [
+       "このみ亮太郎",
+       "近藤まさひこ"
+      ],
+      "チームみらい": [
+       "古川あおい"
+      ],
+      "日本維新の会": [
+       "よこたともひろ"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 79,
+    "中道改革連合": 39,
+    "国民民主党": 19,
+    "参政党": 14,
+    "チームみらい": 7,
+    "日本維新の会": 14,
+    "日本共産党": 4
+   },
+   "total_seats_by_party": {
+    "自由民主党": 297,
+    "中道改革連合": 43,
+    "国民民主党": 46,
+    "無所属": 5,
+    "日本維新の会": 43,
+    "チームみらい": 10,
+    "減税日本・ゆうこく連合": 2,
+    "日本保守党": 1,
+    "参政党": 14,
+    "日本共産党": 4
+   },
+   "vacancies": 0,
+   "tie_blocks": []
+  },
+  "rcv_sainte_lague": {
+   "smd_seats_by_party": {
+    "自由民主党": 218,
+    "中道改革連合": 4,
+    "国民民主党": 27,
+    "無所属": 5,
+    "日本維新の会": 29,
+    "チームみらい": 3,
+    "減税日本・ゆうこく連合": 2,
+    "日本保守党": 1
+   },
+   "params": {
+    "divisor_method": "sainteLague",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": 0,
+    "dual_min_vote_share": "1/10",
+    "dual_min_sekihai_rate": null,
+    "list_exhaustion": "reallocate",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1,
+      "チームみらい": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 16,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "伊東よしたか",
+       "わたなべ孝一",
+       "村木汀"
+      ],
+      "中道改革連合": [
+       "佐藤英道",
+       "浮島智子"
+      ],
+      "国民民主党": [
+       "臼木ひでたけ"
+      ],
+      "参政党": [
+       "中島よしき"
+      ],
+      "チームみらい": [
+       "稲原むねよし"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 12,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "中道改革連合": 3,
+      "国民民主党": 1,
+      "参政党": 1,
+      "チームみらい": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 19,
+      "国民民主党": 6,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "江渡あきのり",
+       "みのり川信英",
+       "米内ひろまさ",
+       "いとう信太郎",
+       "菅家一郎"
+      ],
+      "中道改革連合": [
+       "庄子賢一",
+       "有田芳生",
+       "かねこ恵美"
+      ],
+      "国民民主党": [
+       "佐々木まこと"
+      ],
+      "参政党": [
+       "和田政宗"
+      ],
+      "チームみらい": [
+       "林たくみ"
+      ],
+      "日本維新の会": [
+       "松浦だいご"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "中道改革連合": 4,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 25,
+      "国民民主党": 6,
+      "参政党": 5,
+      "チームみらい": 1,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "船田はじめ",
+       "藤田まこと",
+       "三ツ林ひろみ",
+       "やな和生",
+       "ながおか桂子",
+       "鈴木たくみ",
+       "中根かずゆき"
+      ],
+      "中道改革連合": [
+       "石井啓一",
+       "輿水恵一",
+       "福重隆浩",
+       "小池あつし"
+      ],
+      "国民民主党": [
+       "細谷はやと",
+       "岸田光広"
+      ],
+      "参政党": [
+       "豊田真由子",
+       "大森紀明"
+      ],
+      "チームみらい": [
+       "武藤かず子"
+      ],
+      "日本維新の会": [
+       "高橋英明"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ],
+      "れいわ新選組": [
+       "山越光敏"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 23,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本保守党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 9,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "中道改革連合": 5,
+      "国民民主党": 2,
+      "チームみらい": 2,
+      "参政党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "中道改革連合": 30,
+      "国民民主党": 4,
+      "チームみらい": 3,
+      "参政党": 5,
+      "日本維新の会": 7,
+      "日本共産党": 3,
+      "れいわ新選組": 2,
+      "日本保守党": 2,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "中西けんじ",
+       "にった章文",
+       "えりアルフィヤ",
+       "やまぎわ大志郎",
+       "上原まさひろ",
+       "伊藤聡",
+       "文月涼",
+       "岩﨑比菜"
+      ],
+      "中道改革連合": [
+       "角田秀穂",
+       "沼崎満子",
+       "原田直樹",
+       "安藤じゅん子",
+       "中村たけと"
+      ],
+      "国民民主党": [
+       "深作ヘスス",
+       "山口翔平"
+      ],
+      "チームみらい": [
+       "河合みちお",
+       "山田えり"
+      ],
+      "参政党": [
+       "なかやめぐ",
+       "くどう聖子"
+      ],
+      "日本維新の会": [
+       "金村りゅうな"
+      ],
+      "日本共産党": [
+       "はたの君枝"
+      ],
+      "れいわ新選組": [
+       "山本ジョージ"
+      ],
+      "日本保守党": [
+       "梅原克彦"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 19,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本保守党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "中道改革連合": 4,
+      "チームみらい": 1,
+      "国民民主党": 2,
+      "参政党": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1,
+      "日本保守党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 27,
+      "チームみらい": 1,
+      "国民民主党": 16,
+      "参政党": 3,
+      "日本共産党": 3,
+      "日本維新の会": 6,
+      "日本保守党": 1,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "辻󠄂清人",
+       "松本洋平",
+       "今岡うえき",
+       "高木けい",
+       "安藤たかお",
+       "木原誠二",
+       "大西洋平"
+      ],
+      "中道改革連合": [
+       "岡本みつなり",
+       "河西宏一",
+       "大森江里子",
+       "末松義規"
+      ],
+      "チームみらい": [
+       "高山さとし"
+      ],
+      "国民民主党": [
+       "鳩山紀一郎",
+       "丸山かつき"
+      ],
+      "参政党": [
+       "吉川りな"
+      ],
+      "日本共産党": [
+       "田村智子"
+      ],
+      "日本維新の会": [
+       "阿部司"
+      ],
+      "日本保守党": [
+       "平井宏治"
+      ],
+      "れいわ新選組": [
+       "ミサオ・レッドウルフ"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 10,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 15,
+      "国民民主党": 3,
+      "参政党": 4,
+      "日本維新の会": 3,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "安楽死制度を考える会": 2
+     },
+     "winners": {
+      "自由民主党": [
+       "稲田ともみ",
+       "田畑裕明",
+       "今洋佑",
+       "古井康介"
+      ],
+      "中道改革連合": [
+       "中川宏昌",
+       "はたのつばさ"
+      ],
+      "国民民主党": [
+       "おだけかい"
+      ],
+      "参政党": [
+       "川ゆういちろう"
+      ],
+      "日本維新の会": [
+       "わかさ清史"
+      ],
+      "日本共産党": [
+       "藤野保史"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 21,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "減税日本・ゆうこく連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本保守党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "中道改革連合": 3,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 1,
+      "日本保守党": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "中道改革連合": 26,
+      "国民民主党": 8,
+      "参政党": 4,
+      "チームみらい": 1,
+      "日本維新の会": 2,
+      "日本共産党": 2,
+      "れいわ新選組": 2,
+      "減税日本・ゆうこく連合": 3,
+      "日本保守党": 2,
+      "社会民主党": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本左近",
+       "根本幸典",
+       "山下しずお",
+       "鈴木じゅんじ",
+       "くまだ裕通",
+       "つじ秀樹",
+       "藤沢ただもり",
+       "細田健一"
+      ],
+      "中道改革連合": [
+       "中川康洋",
+       "西園勝秀",
+       "犬かい明佳"
+      ],
+      "国民民主党": [
+       "田中けん",
+       "野村美穂"
+      ],
+      "参政党": [
+       "渡辺あいり",
+       "伊藤けいすけ"
+      ],
+      "チームみらい": [
+       "須田えいたろう"
+      ],
+      "日本維新の会": [
+       "杉本和巳"
+      ],
+      "日本共産党": [
+       "もとむら伸子"
+      ],
+      "れいわ新選組": [
+       "さかぐち直人"
+      ],
+      "減税日本・ゆうこく連合": [
+       "平岩まさき"
+      ],
+      "日本保守党": [
+       "有本香"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 28,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本保守党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 17,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 9,
+      "日本維新の会": 7,
+      "中道改革連合": 4,
+      "国民民主党": 2,
+      "参政党": 2,
+      "日本共産党": 2,
+      "日本保守党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 24,
+      "日本維新の会": 10,
+      "中道改革連合": 30,
+      "国民民主党": 9,
+      "参政党": 5,
+      "チームみらい": 0,
+      "日本共産党": 4,
+      "日本保守党": 3,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "小寺ひろお",
+       "石田真敏",
+       "武村のぶひで",
+       "やまだ賢司",
+       "大串まさき",
+       "谷川とむ",
+       "とかしきなおみ",
+       "むねきよ皇一",
+       "こうらい啓一郎"
+      ],
+      "日本維新の会": [
+       "原山だいすけ",
+       "池畑こうたろう",
+       "住吉ひろき",
+       "斎藤アレックス",
+       "一谷勇一郎",
+       "徳安淳子",
+       "和田有一朗"
+      ],
+      "中道改革連合": [
+       "赤羽かずよし",
+       "中野洋昌",
+       "山本かなえ",
+       "いさ進一"
+      ],
+      "国民民主党": [
+       "かわい昭成",
+       "向山好一"
+      ],
+      "参政党": [
+       "谷浩一郎",
+       "石川勝"
+      ],
+      "日本共産党": [
+       "辰巳孝太郎",
+       "堀川あきこ"
+      ],
+      "日本保守党": [
+       "島田洋一"
+      ],
+      "れいわ新選組": [
+       "西郷みなこ"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 10,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 6,
+      "中道改革連合": 15,
+      "国民民主党": 5,
+      "参政党": 5,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "てらだ稔",
+       "平沼正二郎",
+       "吉田真次",
+       "あいさわ一郎",
+       "あべ俊子"
+      ],
+      "中道改革連合": [
+       "斉藤鉄夫",
+       "平林晃"
+      ],
+      "国民民主党": [
+       "鍋島せり"
+      ],
+      "参政党": [
+       "しまむらかおる"
+      ],
+      "日本維新の会": [
+       "喜多義典"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "中道改革連合": 1,
+      "国民民主党": 1,
+      "参政党": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 6,
+      "国民民主党": 3,
+      "参政党": 2,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "せと隆一",
+       "村上誠一郎",
+       "中山展宏"
+      ],
+      "中道改革連合": [
+       "山崎正恭"
+      ],
+      "国民民主党": [
+       "川崎ともみつ"
+      ],
+      "参政党": [
+       "原田しんたろう"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 20,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 15,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 8,
+      "中道改革連合": 4,
+      "参政党": 2,
+      "国民民主党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 21,
+      "参政党": 4,
+      "国民民主党": 6,
+      "チームみらい": 1,
+      "日本維新の会": 4,
+      "日本共産党": 2,
+      "れいわ新選組": 3,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "岩屋たけし",
+       "たけだ良太",
+       "岩田かずちか",
+       "小里やすひろ",
+       "江藤拓",
+       "三原あさと",
+       "浅田ますみ",
+       "上野宏史"
+      ],
+      "中道改革連合": [
+       "濵地雅一",
+       "吉田宣弘",
+       "金城泰邦",
+       "かわの義博"
+      ],
+      "参政党": [
+       "木下としゆき",
+       "しげいくにあき"
+      ],
+      "国民民主党": [
+       "このみ亮太郎",
+       "近藤まさひこ"
+      ],
+      "チームみらい": [
+       "古川あおい"
+      ],
+      "日本維新の会": [
+       "よこたともひろ"
+      ],
+      "日本共産党": [
+       "あかみね政賢"
+      ],
+      "れいわ新選組": [
+       "山川ひとし"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 67,
+    "中道改革連合": 34,
+    "国民民主党": 17,
+    "参政党": 16,
+    "チームみらい": 8,
+    "日本維新の会": 15,
+    "日本共産党": 8,
+    "れいわ新選組": 6,
+    "日本保守党": 4,
+    "減税日本・ゆうこく連合": 1
+   },
+   "total_seats_by_party": {
+    "自由民主党": 285,
+    "中道改革連合": 38,
+    "国民民主党": 44,
+    "無所属": 5,
+    "日本維新の会": 44,
+    "チームみらい": 11,
+    "減税日本・ゆうこく連合": 3,
+    "日本保守党": 5,
+    "参政党": 16,
+    "日本共産党": 8,
+    "れいわ新選組": 6
+   },
+   "vacancies": 0,
+   "tie_blocks": []
+  },
+  "rcv_ldp": {
+   "smd_seats_by_party": {
+    "自由民主党": 218,
+    "中道改革連合": 4,
+    "国民民主党": 27,
+    "無所属": 5,
+    "日本維新の会": 29,
+    "チームみらい": 3,
+    "減税日本・ゆうこく連合": 2,
+    "日本保守党": 1
+   },
+   "params": {
+    "divisor_method": "sainteLague",
+    "first_divisor_tenths": 14,
+    "pr_seat_delta": -45,
+    "dual_min_vote_share": "1/6",
+    "dual_min_sekihai_rate": "30",
+    "list_exhaustion": "vacant",
+    "tier_linkage": "parallel",
+    "heiyo_overhang": "truncate",
+    "smd_voting": "rcv"
+   },
+   "blocks": [
+    {
+     "block": "北海道",
+     "seats": 6,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "中道改革連合": 2,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 16,
+      "国民民主党": 1,
+      "参政党": 0,
+      "チームみらい": 1,
+      "日本共産党": 1,
+      "日本維新の会": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "伊東よしたか",
+       "わたなべ孝一",
+       "村木汀"
+      ],
+      "中道改革連合": [
+       "佐藤英道",
+       "浮島智子"
+      ],
+      "国民民主党": [
+       "鈴木まさき"
+      ]
+     }
+    },
+    {
+     "block": "東北",
+     "seats": 9,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 4,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "チームみらい": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 17,
+      "国民民主党": 4,
+      "参政党": 0,
+      "チームみらい": 1,
+      "日本維新の会": 0,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "江渡あきのり",
+       "みのり川信英",
+       "米内ひろまさ",
+       "いとう信太郎"
+      ],
+      "中道改革連合": [
+       "庄子賢一",
+       "有田芳生"
+      ],
+      "国民民主党": [
+       "佐々木まこと"
+      ],
+      "チームみらい": [
+       "林たくみ"
+      ]
+     }
+    },
+    {
+     "block": "北関東",
+     "seats": 15,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 3,
+      "国民民主党": 2,
+      "参政党": 1,
+      "チームみらい": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 24,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 1,
+      "日本維新の会": 0,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "船田はじめ",
+       "藤田まこと",
+       "三ツ林ひろみ",
+       "やな和生",
+       "ながおか桂子",
+       "鈴木たくみ"
+      ],
+      "中道改革連合": [
+       "石井啓一",
+       "輿水恵一",
+       "福重隆浩"
+      ],
+      "国民民主党": [
+       "細谷はやと",
+       "岸田光広"
+      ],
+      "参政党": [
+       "豊田真由子"
+      ],
+      "チームみらい": [
+       "武藤かず子"
+      ],
+      "日本共産党": [
+       "塩川鉄也"
+      ]
+     }
+    },
+    {
+     "block": "南関東",
+     "seats": 17,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 7,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 4,
+      "国民民主党": 2,
+      "チームみらい": 2,
+      "参政党": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 8,
+      "中道改革連合": 30,
+      "国民民主党": 4,
+      "チームみらい": 2,
+      "参政党": 2,
+      "日本維新の会": 2,
+      "日本共産党": 3,
+      "れいわ新選組": 2,
+      "日本保守党": 2,
+      "減税日本・ゆうこく連合": 0,
+      "社会民主党": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "中西けんじ",
+       "にった章文",
+       "えりアルフィヤ",
+       "やまぎわ大志郎",
+       "上原まさひろ",
+       "伊藤聡"
+      ],
+      "中道改革連合": [
+       "角田秀穂",
+       "沼崎満子",
+       "原田直樹",
+       "安藤じゅん子"
+      ],
+      "国民民主党": [
+       "深作ヘスス",
+       "山口翔平"
+      ],
+      "チームみらい": [
+       "河合みちお",
+       "山田えり"
+      ],
+      "参政党": [
+       "和田武士"
+      ],
+      "日本維新の会": [
+       "金村りゅうな"
+      ],
+      "日本共産党": [
+       "はたの君枝"
+      ]
+     }
+    },
+    {
+     "block": "東京都",
+     "seats": 14,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 3,
+       "filled": false
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 2,
+     "seats_by_party": {
+      "自由民主党": 5,
+      "中道改革連合": 2,
+      "チームみらい": 1,
+      "国民民主党": 2,
+      "参政党": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 27,
+      "チームみらい": 1,
+      "国民民主党": 6,
+      "参政党": 1,
+      "日本共産党": 2,
+      "日本維新の会": 0,
+      "日本保守党": 1,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 0,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "辻󠄂清人",
+       "松本洋平",
+       "今岡うえき",
+       "高木けい",
+       "安藤たかお"
+      ],
+      "中道改革連合": [
+       "岡本みつなり",
+       "河西宏一"
+      ],
+      "チームみらい": [
+       "高山さとし"
+      ],
+      "国民民主党": [
+       "鳩山紀一郎",
+       "丸山かつき"
+      ],
+      "参政党": [
+       "野々田商"
+      ],
+      "日本共産党": [
+       "田村智子"
+      ]
+     }
+    },
+    {
+     "block": "北陸信越",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1
+     },
+     "capacity": {
+      "自由民主党": 4,
+      "中道改革連合": 15,
+      "国民民主党": 2,
+      "参政党": 1,
+      "日本維新の会": 0,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "安楽死制度を考える会": 2
+     },
+     "winners": {
+      "自由民主党": [
+       "稲田ともみ",
+       "田畑裕明",
+       "今洋佑"
+      ],
+      "中道改革連合": [
+       "中川宏昌",
+       "はたのつばさ"
+      ],
+      "国民民主党": [
+       "おだけかい"
+      ],
+      "参政党": [
+       "高岩かつひと"
+      ]
+     }
+    },
+    {
+     "block": "東海",
+     "seats": 15,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      }
+     ],
+     "vacancies": 2,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 3,
+      "国民民主党": 2,
+      "チームみらい": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 13,
+      "中道改革連合": 25,
+      "国民民主党": 7,
+      "参政党": 0,
+      "チームみらい": 1,
+      "日本維新の会": 0,
+      "日本共産党": 2,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 0,
+      "日本保守党": 1,
+      "社会民主党": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "山本左近",
+       "根本幸典",
+       "山下しずお",
+       "鈴木じゅんじ",
+       "くまだ裕通",
+       "つじ秀樹"
+      ],
+      "中道改革連合": [
+       "中川康洋",
+       "西園勝秀",
+       "犬かい明佳"
+      ],
+      "国民民主党": [
+       "田中けん",
+       "野村美穂"
+      ],
+      "チームみらい": [
+       "須田えいたろう"
+      ],
+      "日本共産党": [
+       "もとむら伸子"
+      ]
+     }
+    },
+    {
+     "block": "近畿",
+     "seats": 21,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "日本保守党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "れいわ新選組",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 13,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 7,
+      "日本維新の会": 5,
+      "中道改革連合": 3,
+      "国民民主党": 1,
+      "参政党": 1,
+      "日本共産党": 1,
+      "日本保守党": 1,
+      "れいわ新選組": 1
+     },
+     "capacity": {
+      "自由民主党": 24,
+      "日本維新の会": 8,
+      "中道改革連合": 23,
+      "国民民主党": 2,
+      "参政党": 2,
+      "チームみらい": 0,
+      "日本共産党": 3,
+      "日本保守党": 3,
+      "れいわ新選組": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "小寺ひろお",
+       "石田真敏",
+       "武村のぶひで",
+       "やまだ賢司",
+       "大串まさき",
+       "谷川とむ",
+       "とかしきなおみ"
+      ],
+      "日本維新の会": [
+       "原山だいすけ",
+       "池畑こうたろう",
+       "住吉ひろき",
+       "斎藤アレックス",
+       "一谷勇一郎"
+      ],
+      "中道改革連合": [
+       "赤羽かずよし",
+       "中野洋昌",
+       "山本かなえ"
+      ],
+      "国民民主党": [
+       "かわい昭成"
+      ],
+      "参政党": [
+       "黒石隆太"
+      ],
+      "日本共産党": [
+       "辰巳孝太郎"
+      ],
+      "日本保守党": [
+       "島田洋一"
+      ],
+      "れいわ新選組": [
+       "西郷みなこ"
+      ]
+     }
+    },
+    {
+     "block": "中国",
+     "seats": 8,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 3,
+      "中道改革連合": 2,
+      "国民民主党": 1,
+      "参政党": 1,
+      "日本維新の会": 1
+     },
+     "capacity": {
+      "自由民主党": 6,
+      "中道改革連合": 14,
+      "国民民主党": 3,
+      "参政党": 1,
+      "日本維新の会": 1,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "減税日本・ゆうこく連合": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "てらだ稔",
+       "平沼正二郎",
+       "吉田真次"
+      ],
+      "中道改革連合": [
+       "斉藤鉄夫",
+       "平林晃"
+      ],
+      "国民民主党": [
+       "鍋島せり"
+      ],
+      "参政党": [
+       "山田はじめ"
+      ],
+      "日本維新の会": [
+       "喜多義典"
+      ]
+     }
+    },
+    {
+     "block": "四国",
+     "seats": 4,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 0,
+     "seats_by_party": {
+      "自由民主党": 2,
+      "中道改革連合": 1,
+      "国民民主党": 1
+     },
+     "capacity": {
+      "自由民主党": 7,
+      "中道改革連合": 6,
+      "国民民主党": 2,
+      "参政党": 0,
+      "日本維新の会": 0,
+      "日本共産党": 1,
+      "れいわ新選組": 1,
+      "日本保守党": 1,
+      "社会民主党": 1
+     },
+     "winners": {
+      "自由民主党": [
+       "せと隆一",
+       "村上誠一郎"
+      ],
+      "中道改革連合": [
+       "山崎正恭"
+      ],
+      "国民民主党": [
+       "川崎ともみつ"
+      ]
+     }
+    },
+    {
+     "block": "九州",
+     "seats": 14,
+     "order": [
+      {
+       "party": "自由民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "参政党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "国民民主党",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 3,
+       "filled": true
+      },
+      {
+       "party": "チームみらい",
+       "divisor": 1,
+       "filled": true
+      },
+      {
+       "party": "日本維新の会",
+       "divisor": 1,
+       "filled": false
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 7,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 9,
+       "filled": true
+      },
+      {
+       "party": "中道改革連合",
+       "divisor": 5,
+       "filled": true
+      },
+      {
+       "party": "自由民主党",
+       "divisor": 11,
+       "filled": true
+      },
+      {
+       "party": "日本共産党",
+       "divisor": 1,
+       "filled": true
+      }
+     ],
+     "vacancies": 1,
+     "seats_by_party": {
+      "自由民主党": 6,
+      "中道改革連合": 3,
+      "参政党": 1,
+      "国民民主党": 1,
+      "チームみらい": 1,
+      "日本共産党": 1
+     },
+     "capacity": {
+      "自由民主党": 14,
+      "中道改革連合": 20,
+      "参政党": 1,
+      "国民民主党": 4,
+      "チームみらい": 1,
+      "日本維新の会": 0,
+      "日本共産党": 2,
+      "れいわ新選組": 2,
+      "日本保守党": 1,
+      "社会民主党": 0,
+      "減税日本・ゆうこく連合": 0
+     },
+     "winners": {
+      "自由民主党": [
+       "岩屋たけし",
+       "たけだ良太",
+       "岩田かずちか",
+       "小里やすひろ",
+       "江藤拓",
+       "三原あさと"
+      ],
+      "中道改革連合": [
+       "濵地雅一",
+       "吉田宣弘",
+       "金城泰邦"
+      ],
+      "参政党": [
+       "大河内茂太"
+      ],
+      "国民民主党": [
+       "このみ亮太郎"
+      ],
+      "チームみらい": [
+       "古川あおい"
+      ],
+      "日本共産党": [
+       "あかみね政賢"
+      ]
+     }
+    }
+   ],
+   "pr_seats_by_party": {
+    "自由民主党": 51,
+    "中道改革連合": 27,
+    "国民民主党": 15,
+    "チームみらい": 7,
+    "参政党": 7,
+    "日本共産党": 6,
+    "日本維新の会": 7,
+    "日本保守党": 1,
+    "れいわ新選組": 1
+   },
+   "total_seats_by_party": {
+    "自由民主党": 269,
+    "中道改革連合": 31,
+    "国民民主党": 42,
+    "無所属": 5,
+    "日本維新の会": 36,
+    "チームみらい": 10,
+    "減税日本・ゆうこく連合": 2,
+    "日本保守党": 2,
+    "参政党": 7,
+    "日本共産党": 6,
+    "れいわ新選組": 1
+   },
+   "vacancies": 9,
    "tie_blocks": []
   }
  }

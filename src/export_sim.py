@@ -88,6 +88,11 @@ class Params:
     #: ``renyo``（連用制）は比例の除数を「その党の小選挙区当選者数 + 1」から始める。
     #: ``heiyo``（併用制）は比例得票で総議席を決め、小選挙区当選者をその枠に充てる。
     tier_linkage: str = "parallel"
+    #: 小選挙区の投票方式。``plurality`` は現行（単記・最多得票）、``rcv`` は優先順位付投票。
+    #:
+    #: RCV は有権者の順位付けデータが存在しないため、調査から作った**仮想のペルソナ**の
+    #: 選好順序で代用する。出てくる数字は投票結果ではなく仮定が生む数字である。
+    smd_voting: str = "plurality"
     #: 併用制で超過議席が出たときの扱い。``truncate`` は総定数を固定して商の低い方から
     #: 打ち切る、``expand`` は超過分だけ定数が増えるのを認める（ドイツの旧制度型）。
     #:
@@ -113,8 +118,8 @@ LDP = Params(
 )
 
 #: チームみらい案は小選挙区比例代表並立制を踏襲し、定数・比例復活・重複立候補の
-#: ルールは変えない。抜本改革案の RCV は選好順序データが存在しないため試算不能で、
-#: 議席配分に効くのはサンラグ方式のみ。結果として抜本案と修正案は同一になる。
+#: ルールは変えない。ここに入っているのは比例のサンラグ式（＝修正案）で、
+#: 抜本改革案にあたるのは ``smd_voting="rcv"`` と組み合わせたもの。
 MIRAI = Params(divisor_method="sainteLague")
 
 #: 修正サンラグ。どの党の案でもなく、比較のための参考ケース。第1除数だけを大きくして
@@ -138,6 +143,10 @@ PRESETS: dict[str, Params] = {
     "heiyo_vacant_45": replace(
         BASELINE, tier_linkage="heiyo", list_exhaustion="vacant", pr_seat_delta=-45
     ),
+    # 優先順位付投票。仮想ペルソナの選好順序に依存するので、他とは性格が違う。
+    "rcv": replace(BASELINE, smd_voting="rcv"),
+    "rcv_sainte_lague": replace(BASELINE, smd_voting="rcv", divisor_method="sainteLague"),
+    "rcv_ldp": replace(LDP, smd_voting="rcv"),
 }
 
 
@@ -160,6 +169,9 @@ class Entry:
     actual_elected_order: int | None
     #: 以下は重複立候補者のみ
     district_id: str | None = None
+    #: 小選挙区側（表13）での氏名。比例名簿（表11）とは表記が違うことがあるので
+    #: （届出名と戸籍名、異体字など）、当落を氏名で突き合わせるときはこちらを使う。
+    smd_name: str | None = None
     smd_won: bool = False
     smd_votes: int | None = None
     district_valid_votes: int | None = None
@@ -167,13 +179,21 @@ class Entry:
     printed_sekihai_rate: Decimal | None = None
     printed_excluded: bool = False
 
-    def sekihai_rate(self) -> Decimal | None:
-        """惜敗率（％）。分母はその選挙区の最多得票で、区割りを変えない限り不変。"""
-        if not self.dual or not self.smd_votes or not self.district_top_votes:
-            return None
-        return Decimal(self.smd_votes) / Decimal(self.district_top_votes) * 100
+    def sekihai_rate(self, winner_votes: int | None = None) -> Decimal | None:
+        """惜敗率（％）。分母はその選挙区の当選者の得票。
 
-    def eligible(self, params: Params) -> bool:
+        優先順位付投票では当選者が変わるので、``winner_votes`` に新しい当選者の
+        第1選好の得票を渡す。渡さないと単記で勝っていた人が必ず 100% になり、
+        比例名簿の同一順位で先頭に立ってしまう。
+        """
+        top = winner_votes if winner_votes is not None else self.district_top_votes
+        if not self.dual or not self.smd_votes or not top:
+            return None
+        return Decimal(self.smd_votes) / Decimal(top) * 100
+
+    def eligible(
+        self, params: Params, smd_won: bool | None = None, winner_votes: int | None = None
+    ) -> bool:
         """このパラメータのもとで比例の当選人になれるか。
 
         得票率要件・惜敗率要件は**重複立候補者にのみ**適用される。単独の名簿
@@ -182,14 +202,14 @@ class Entry:
         """
         if not self.dual:
             return True
-        if self.smd_won:
+        if self.smd_won if smd_won is None else smd_won:
             return False
         # 得票率要件: smd_votes / valid_votes >= share。割り算を避けて交差比較する。
         share = params.dual_min_vote_share
         if self.smd_votes * share.denominator < self.district_valid_votes * share.numerator:
             return False
         if params.dual_min_sekihai_rate is not None:
-            rate = self.sekihai_rate()
+            rate = self.sekihai_rate(winner_votes)
             if rate is None or rate < params.dual_min_sekihai_rate:
                 return False
         return True
@@ -383,17 +403,109 @@ def adams(populations: dict[str, int], total: int) -> dict[str, int]:
 
 
 # ---------------------------------------------------------------------------
+# 優先順位付投票
+# ---------------------------------------------------------------------------
+
+
+PERSONAS_PATH = ROOT / "research" / "personas" / "personas.json"
+
+
+def load_personas() -> dict[str, list[str]] | None:
+    """仮想ペルソナの選好順序。無ければ ``None``。"""
+    if not PERSONAS_PATH.exists():
+        return None
+    return json.loads(PERSONAS_PATH.read_text(encoding="utf-8"))["orderings"]
+
+
+def irv(candidates: list[dict], orderings: dict[str, list[str]]) -> tuple[str, str, int]:
+    """1選挙区の優先順位付投票。当選者の氏名・党派と、要した回数を返す。
+
+    **これは投票結果ではなく仮定が生む数字である。** 有権者の順位付けデータは存在せず、
+    調査から作った仮想の選好順序で代用している。
+
+    過半数を取る候補が出るまで最下位を落とし、その票を落ちた候補の党派の選好順序で
+    次に来る党派の候補へ移す。移す先が無ければ死票になる。
+    """
+    live = {c["name"]: Decimal(c["votes"]) for c in candidates}
+    party_of = {c["name"]: c["party"] for c in candidates}
+    rounds = 0
+
+    while True:
+        rounds += 1
+        total = sum(live.values())
+        leader = min(live, key=lambda n: (-live[n], n))
+        if len(live) == 1 or live[leader] * 2 > total:
+            return leader, party_of[leader], rounds
+
+        loser = min(live, key=lambda n: (live[n], party_of[n], n))
+        moving = live.pop(loser)
+        order = orderings.get(party_of[loser])
+        if order is None:
+            continue  # 選好順序を持たない党派は移譲先が分からないので死票
+
+        targets: list[str] = []
+        for party in order:
+            targets = [n for n in live if party_of[n] == party]
+            if targets:
+                break
+        if not targets:
+            continue
+        base = sum(live[n] for n in targets)
+        for n in targets:
+            share = live[n] / base if base else Decimal(1) / len(targets)
+            live[n] += moving * share
+
+
+def solve_smd(payload: dict, params: Params, orderings: dict | None) -> dict:
+    """小選挙区の当落を決める。優先順位付投票では現行と変わる。"""
+    if params.smd_voting == "plurality":
+        return {
+            "winners": {d["district_id"]: d["winner"] for d in payload["smd"]["districts"]},
+            "winner_votes": {
+                d["district_id"]: d["top_votes"] for d in payload["smd"]["districts"]
+            },
+            "seats_by_party": dict(payload["smd"]["seats_by_party"]),
+            "by_block": {b: dict(v) for b, v in payload["smd"]["by_block"].items()},
+        }
+    if params.smd_voting != "rcv":
+        raise ExportError(f"未知の小選挙区の投票方式: {params.smd_voting}")
+    if orderings is None:
+        raise ExportError("優先順位付投票にはペルソナの選好順序が要る")
+
+    winners: dict[str, str] = {}
+    winner_votes: dict[str, int] = {}
+    seats: dict[str, int] = defaultdict(int)
+    by_block: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    for d in payload["smd"]["districts"]:
+        name, party, _ = irv(d["candidates"], orderings)
+        winners[d["district_id"]] = name
+        winner_votes[d["district_id"]] = next(
+            (c["votes"] for c in d["candidates"] if c["name"] == name), d["top_votes"]
+        )
+        seats[party] += 1
+        by_block[d["block"]][party] += 1
+    return {
+        "winners": winners,
+        "winner_votes": winner_votes,
+        "seats_by_party": dict(seats),
+        "by_block": {b: dict(v) for b, v in by_block.items()},
+    }
+
+
+# ---------------------------------------------------------------------------
 # シミュレーション
 # ---------------------------------------------------------------------------
 
 
-def simulate(payload: dict, params: Params) -> dict:
+def simulate(payload: dict, params: Params, orderings: dict | None = None) -> dict:
     """1回分のデータに制度パラメータを当てはめ、比例代表の議席を解く。
 
-    小選挙区の結果は動かさない。第1版が扱う3案はいずれも区割りにも小選挙区の
-    投票方式にも手を入れないため（チームみらい抜本案の RCV は選好順序データが
-    存在しないので試算対象外）。
+    小選挙区の当落は ``solve_smd`` で先に決める。優先順位付投票を選ぶと現行と変わり、
+    比例名簿の当選資格（小選挙区で当選した者は比例に回れない）と惜敗率の分母にも
+    波及する。
     """
+    smd = solve_smd(payload, params, orderings)
+
     blocks_in = payload["blocks"]
     total_pr = payload["meta"]["pr_seats"] + params.pr_seat_delta
     if total_pr < len(blocks_in):
@@ -412,12 +524,23 @@ def simulate(payload: dict, params: Params) -> dict:
             by_party[e.party].append(e)
 
         votes = {p["party"]: p["votes"] for p in b["parties"]}
+        def smd_won_by(e: Entry) -> bool:
+            # 氏名の表記が表によって違うので、突合には小選挙区側の氏名を使う
+            if not e.dual or not e.district_id:
+                return False
+            return smd["winners"].get(e.district_id) == (e.smd_name or e.name)
+
+        def wv(e: Entry) -> int | None:
+            return smd["winner_votes"].get(e.district_id) if e.district_id else None
+
         capacity = {
-            party: sum(1 for e in by_party.get(party, []) if e.eligible(params))
+            party: sum(
+                1 for e in by_party.get(party, []) if e.eligible(params, smd_won_by(e), wv(e))
+            )
             for party in votes
         }
 
-        smd_by_party = payload["smd"]["by_block"].get(b["block"], {})
+        smd_by_party = smd["by_block"].get(b["block"], {})
         smd_total = sum(smd_by_party.values())
         pr_seats = seats_by_block[b["block"]]
 
@@ -443,8 +566,8 @@ def simulate(payload: dict, params: Params) -> dict:
         winners: dict[str, list[str]] = {}
         for party, n in won.items():
             pool = sorted(
-                (e for e in by_party.get(party, []) if e.eligible(params)),
-                key=lambda e: (e.list_rank, -(e.sekihai_rate() or Decimal(0))),
+                (e for e in by_party.get(party, []) if e.eligible(params, smd_won_by(e), wv(e))),
+                key=lambda e: (e.list_rank, -(e.sekihai_rate(wv(e)) or Decimal(0))),
             )
             winners[party] = [e.name for e in pool[:n]]
             if len(winners[party]) != n:
@@ -466,11 +589,12 @@ def simulate(payload: dict, params: Params) -> dict:
     for b in blocks_out:
         for party, n in b["seats_by_party"].items():
             pr_by_party[party] += n
-    total_by_party = defaultdict(int, payload["smd"]["seats_by_party"])
+    total_by_party = defaultdict(int, smd["seats_by_party"])
     for party, n in pr_by_party.items():
         total_by_party[party] += n
 
     return {
+        "smd_seats_by_party": smd["seats_by_party"],
         "params": {
             "divisor_method": params.divisor_method,
             "first_divisor_tenths": params.first_divisor_tenths,
@@ -483,6 +607,7 @@ def simulate(payload: dict, params: Params) -> dict:
             "list_exhaustion": params.list_exhaustion,
             "tier_linkage": params.tier_linkage,
             "heiyo_overhang": params.heiyo_overhang,
+            "smd_voting": params.smd_voting,
         },
         "blocks": blocks_out,
         "pr_seats_by_party": dict(pr_by_party),
@@ -583,6 +708,14 @@ def load(cfg: ElectionConfig) -> dict:
             "top_votes": scaled(top),
             "winner": winners[0]["name_display"],
             "winner_party": winners[0]["party"],
+            "candidates": [
+                {
+                    "name": c["name_display"],
+                    "party": c["party"],
+                    "votes": scaled(dec(c["votes"])),
+                }
+                for c in sorted(rows, key=lambda c: -dec(c["votes"]))
+            ],
         }
 
     # --- 比例代表 -----------------------------------------------------------
@@ -605,6 +738,7 @@ def load(cfg: ElectionConfig) -> dict:
             c = pair_by_entry[id(r)]
             district_id = f"{c['prefecture']}{c['district_no']}"
             entry.district_id = district_id
+            entry.smd_name = c["name_display"]
             entry.smd_won = flag(c["elected"])
             entry.smd_votes = scaled(dec(c["votes"]))
             entry.district_valid_votes = districts[district_id]["valid_votes"]
@@ -762,6 +896,11 @@ def web_payload(payload: dict) -> dict:
                     "topVotes": d["top_votes"],
                     "winner": d["winner"],
                     "winnerParty": d["winner_party"],
+                    # 優先順位付投票を回すには候補者ごとの第1選好得票が要る
+                    "candidates": [
+                        {"name": c["name"], "party": c["party"], "votes": c["votes"]}
+                        for c in d["candidates"]
+                    ],
                 }
                 for d in payload["smd"]["districts"]
             ],
@@ -785,6 +924,7 @@ def web_payload(payload: dict) -> dict:
                                 "actualElected": e.actual_elected,
                                 "actualElectedOrder": e.actual_elected_order,
                                 "districtId": e.district_id,
+                                "smdName": e.smd_name,
                                 "smdWon": e.smd_won,
                                 "smdVotes": e.smd_votes,
                                 "districtValidVotes": e.district_valid_votes,
@@ -804,15 +944,17 @@ def web_payload(payload: dict) -> dict:
     }
 
 
-def golden_payload(payload: dict) -> dict:
+def golden_payload(payload: dict, orderings: dict | None) -> dict:
     """TS エンジンが再現すべき期待値。"""
     return {
         "election_id": payload["meta"]["election_id"],
-        "presets": {name: simulate(payload, params) for name, params in PRESETS.items()},
+        "presets": {
+            name: simulate(payload, params, orderings) for name, params in PRESETS.items()
+        },
     }
 
 
-def export(cfg: ElectionConfig) -> int:
+def export(cfg: ElectionConfig, orderings: dict | None) -> int:
     payload = load(cfg)
     problems = self_check(payload)
     for p in problems[:20]:
@@ -830,7 +972,8 @@ def export(cfg: ElectionConfig) -> int:
     )
     golden = GOLDEN_DIR / f"{cfg.election_id}.golden.json"
     golden.write_text(
-        json.dumps(golden_payload(payload), ensure_ascii=False, indent=1), encoding="utf-8"
+        json.dumps(golden_payload(payload, orderings), ensure_ascii=False, indent=1),
+        encoding="utf-8",
     )
 
     ldp = simulate(payload, LDP)
@@ -849,7 +992,14 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     ids = [args.election_id] if args.election_id else list(elections.ELECTIONS)
-    status = max(export(elections.get(i)) for i in ids)
+    orderings = load_personas()
+    if orderings is None:
+        # 黙って落とすと、TS 側のゴールデンから優先順位付投票の照合が消えたまま
+        # テストが緑になる。止める。
+        print(f"[FAIL] 選好順序が無い: {PERSONAS_PATH.relative_to(ROOT)}")
+        print("       python research/personas/build_personas.py で生成する")
+        return 1
+    status = max(export(elections.get(i), orderings) for i in ids)
     if status:
         return status
 

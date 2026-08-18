@@ -4,6 +4,14 @@
 raw/*.pdf
 raw/*.pdf.part
 
+# 第三者の調査データそのものは含めない。出典が未確認で、data/ のライセンス表示
+# （総務省の結果調をもとに作成／CC BY 4.0）とも整合しないため。
+# ここから導いた選好順序だけを research/personas/personas.json に残す。
+data/*.png
+data/*.jpg
+data/*.jpeg
+research/personas/rejection_matrix.json
+
 __pycache__/
 *.pyc
 .venv/

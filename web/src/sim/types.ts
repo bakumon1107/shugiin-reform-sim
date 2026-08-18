@@ -9,6 +9,8 @@ export type ListEntry = {
   actualElectedOrder: number | null;
   /** 以下は重複立候補者のみ。単独の名簿登載者は null。 */
   districtId: string | null;
+  /** 小選挙区側での氏名。比例名簿とは表記が違うことがあるので突合はこちらで行う。 */
+  smdName: string | null;
   smdWon: boolean;
   smdVotes: number | null;
   districtValidVotes: number | null;
@@ -32,6 +34,13 @@ export type Block = {
   parties: BlockParty[];
 };
 
+export type Candidate = {
+  name: string;
+  party: string;
+  /** 第1選好の得票 × 1000 */
+  votes: number;
+};
+
 export type District = {
   id: string;
   pref: string;
@@ -41,6 +50,80 @@ export type District = {
   topVotes: number;
   winner: string;
   winnerParty: string;
+  /** 得票の多い順。優先順位付投票を回すのに使う。 */
+  candidates: Candidate[];
+};
+
+/**
+ * 政党の選好順序。優先順位付投票の移譲先を決めるのに使う。
+ *
+ * 調査から作った**仮想のペルソナ**であって、実際の投票データではない。
+ * `research/personas/README.md` を参照。
+ */
+export type Personas = {
+  method: string;
+  source: string;
+  /** 調査に出てこないため想定で置いた政党と、その理由 */
+  derived: Record<string, string>;
+  caveats: string[];
+  /** 比例投票先 → その集団の政党の選好順序（先頭が自党） */
+  orderings: Record<string, string[]>;
+};
+
+/** 優先順位付投票の1回分の途中経過。 */
+export type IrvRound = {
+  /** その回の得票（多い順）。移譲後の値なので小数になりうる。 */
+  standing: { name: string; party: string; votes: number; share: number }[];
+  /** この回で落とした候補。当選が決まった回では null。 */
+  eliminated: { name: string; party: string; votes: number } | null;
+  /** 落とした票の移譲先の党派。死票になった場合は null。 */
+  movedTo: string | null;
+};
+
+/** 選挙区ごとの優先順位付投票の結果。 */
+export type DistrictRcv = {
+  district: string;
+  winner: string;
+  winnerParty: string;
+  /** 現行（単記）の当選者。入れ替わったかはこれと比べる。 */
+  pluralityWinner: string;
+  pluralityWinnerParty: string;
+  /** 第1選好で過半数に達していて、移譲によらず結果が動かないか */
+  secured: boolean;
+  log: IrvRound[];
+};
+
+/** 小選挙区の当落。 */
+export type SmdOutcome = {
+  /** 選挙区ID → 当選者名 */
+  winners: Record<string, string>;
+  seatsByParty: Record<string, number>;
+  byBlock: Record<string, Record<string, number>>;
+  /** 現行（単記）から当選者が入れ替わった選挙区 */
+  flipped: {
+    district: string;
+    fromParty: string;
+    fromName: string;
+    toParty: string;
+    toName: string;
+    rounds: number;
+  }[];
+  /** 移譲先が定義できず死票になった票 × 1000 */
+  exhausted: number;
+  /** 第1選好で過半数に達し、移譲によらず当選が確定している選挙区の数 */
+  securedOnFirstPreferences: number;
+  /** 選挙区ごとの途中経過。優先順位付投票のときだけ入る。 */
+  districts: DistrictRcv[];
+  /** 選挙区ID → 当選者の第1選好の得票。惜敗率の分母に使う。 */
+  winnerVotes: Record<string, number>;
+  /**
+   * 選好順序を持たない党派と、その候補の得票の合計。
+   *
+   * 調査は第51回（2026年）の政党構成で行われているため、それ以前の回では
+   * 民主党・維新の党・希望の党のような大政党がここに入る。該当する党の票は
+   * 移譲されず死票になり、他党からも票が回ってこないので、結果が大きく歪む。
+   */
+  unorderedParties: { party: string; votes: number; share: number }[];
 };
 
 export type ElectionData = {
@@ -120,7 +203,16 @@ export type SimParams = {
   listExhaustion: ListExhaustion;
   tierLinkage: TierLinkage;
   heiyoOverhang: HeiyoOverhang;
+  /**
+   * 小選挙区の投票方式。`plurality` は現行（単記・最多得票）、`rcv` は優先順位付投票。
+   *
+   * **`rcv` は仮想のペルソナに依存する。** 有権者の順位付けデータは存在しないため、
+   * 調査から作った選好順序で代用している。出てくる数字は投票結果ではない。
+   */
+  smdVoting: SmdVoting;
 };
+
+export type SmdVoting = "plurality" | "rcv";
 
 // ---------------------------------------------------------------------------
 // 計算結果
@@ -147,6 +239,8 @@ export type BlockResult = {
 };
 
 export type SimResult = {
+  /** 小選挙区の当落。優先順位付投票を選ぶと現行と変わる。 */
+  smd: SmdOutcome;
   blocks: BlockResult[];
   prSeatsByParty: Record<string, number>;
   totalSeatsByParty: Record<string, number>;

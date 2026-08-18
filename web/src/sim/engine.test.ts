@@ -14,7 +14,7 @@ import { describe, expect, it } from "vitest";
 
 import { adams, divisorOf, divisorScale, isEligible, simulate } from "./engine";
 import { BASELINE_PARAMS } from "./presets";
-import type { ElectionData, SimParams } from "./types";
+import type { ElectionData, Personas, SimParams } from "./types";
 
 const ELECTION_IDS = ["r08-02-08", "r06-10-27", "r03-10-31", "h29-10-22", "h26-12-14"];
 
@@ -39,6 +39,7 @@ type Golden = {
         list_exhaustion: string;
         tier_linkage: string;
         heiyo_overhang: string;
+        smd_voting: string;
       };
       blocks: {
         block: string;
@@ -57,6 +58,10 @@ type Golden = {
   >;
 };
 
+const PERSONAS: Personas = JSON.parse(
+  readFileSync(join(WEB_ROOT, "public", "data", "personas.json"), "utf8")
+);
+
 function loadGolden(id: string): Golden {
   return JSON.parse(readFileSync(join(__dirname, "__fixtures__", `${id}.golden.json`), "utf8"));
 }
@@ -73,6 +78,7 @@ function toParams(p: Golden["presets"][string]["params"]): SimParams {
     listExhaustion: p.list_exhaustion as SimParams["listExhaustion"],
     tierLinkage: p.tier_linkage as SimParams["tierLinkage"],
     heiyoOverhang: p.heiyo_overhang as SimParams["heiyoOverhang"],
+    smdVoting: p.smd_voting as SimParams["smdVoting"],
   };
 }
 
@@ -121,7 +127,7 @@ describe.each(ELECTION_IDS)("%s", (id) => {
   describe("Python 実装との突合", () => {
     for (const [name, expected] of Object.entries(golden.presets)) {
       it(`${name}: 議席・獲得順・当選者・欠員がすべて一致する`, () => {
-        const result = simulate(data, toParams(expected.params));
+        const result = simulate(data, toParams(expected.params), PERSONAS);
 
         expect(result.prSeatsByParty).toEqual(expected.pr_seats_by_party);
         expect(result.totalSeatsByParty).toEqual(expected.total_seats_by_party);
@@ -171,6 +177,7 @@ describe("当選資格の判定", () => {
       actualElected: false,
       actualElectedOrder: null,
       districtId: "テスト1",
+      smdName: "境界",
       smdWon: false,
       smdVotes: 1000,
       districtValidVotes: 6000,
@@ -191,6 +198,7 @@ describe("当選資格の判定", () => {
       actualElected: false,
       actualElectedOrder: null,
       districtId: "テスト1",
+      smdName: "境界",
       smdWon: false,
       smdVotes: 1500,
       districtValidVotes: 6000,

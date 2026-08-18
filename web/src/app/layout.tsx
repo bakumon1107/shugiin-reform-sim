@@ -3,7 +3,23 @@ import Link from "next/link";
 
 import "./globals.css";
 
+/**
+ * OGP画像のURLを絶対URLにするための基準。
+ *
+ * これが無いと `http://localhost:3000/...` が埋め込まれ、X などのクローラーが
+ * 画像を取得できない。公開先が決まったら `NEXT_PUBLIC_SITE_URL` に設定する。
+ * Vercel では本番ドメインが `VERCEL_PROJECT_PRODUCTION_URL` に入るのでそれを使う。
+ */
+function siteUrl(): URL {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return new URL(explicit);
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercel) return new URL(`https://${vercel}`);
+  return new URL("http://localhost:3000");
+}
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl(),
   title: "衆院選 選挙制度改革シミュレータ",
   description:
     "各党の衆議院選挙制度改革案を、実際の選挙結果に当てはめて議席を再計算し比較する。" +

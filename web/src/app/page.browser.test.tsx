@@ -33,7 +33,7 @@ afterEach(() => {
 
 /** 改革案のタブ。制度パラメータの操作盤にも同名のボタンがあるので、範囲を絞る。 */
 function presetTab(name: string): HTMLElement {
-  return within(screen.getByRole("group", { name: "改革案" })).getByRole("button", { name });
+  return within(screen.getByRole("group", { name: "比例代表・各党の案" })).getByRole("button", { name });
 }
 
 /** 「議員数の合計」行から、現行と案の議席数を読む。 */
@@ -250,6 +250,60 @@ describe("シミュレータのページ", () => {
       expect(screen.getByText("法定定数").parentElement!.textContent).toContain("519");
     });
   });
+
+  it("RCVを選ぶと警告が出て、確定議席と実際に動いた議席が併記される", async () => {
+    const { user } = await setup();
+
+    await user.click(screen.getByRole("button", { name: /^RCV/ }));
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined();
+      // 第51回は 156議席が第1選好で確定、38議席が入れ替わる
+      expect(screen.getByText("仮定によらず確定").parentElement!.textContent).toContain("156");
+      expect(screen.getByText("実際に動いた").parentElement!.textContent).toContain("38");
+    });
+    // 選挙区ごとの途中経過も出る
+    expect(screen.getByRole("heading", { name: "選挙区ごとの途中経過" })).toBeDefined();
+  });
+
+  it("RCVは案を切り替えても保たれ、現行制度の値に戻すでも消えない", async () => {
+    const { user } = await setup();
+
+    await user.click(screen.getByRole("button", { name: /^RCV/ }));
+    await waitFor(() => expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined());
+
+    await user.click(presetTab("現行制度"));
+    expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined();
+
+    await user.click(screen.getByRole("button", { name: "現行制度の値に戻す" }));
+    expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined();
+  });
+
+  it("順序を持たない政党がある選挙回では、その旨と得票が出る", async () => {
+    const { user } = await setup();
+
+    await user.click(screen.getByRole("button", { name: /^RCV/ }));
+    await waitFor(() => expect(screen.getByText("⚠ これは仮想のペルソナが生む数字です")).toBeDefined());
+
+    // 第51回で順序を持たないのは諸派だけなので、赤い警告は出ない
+    expect(
+      screen.queryByText("この選挙回には、選好順序を持たない大きな政党があります")
+    ).toBeNull();
+    expect(screen.getAllByText(/選好順序を持たない諸派/).length).toBeGreaterThan(0);
+
+    // 第47回（2014）は民主党・維新の党が調査に無いので警告が出る
+    await user.selectOptions(screen.getByLabelText("選挙回"), "h26-12-14");
+    await waitFor(
+      () => {
+        const box = screen
+          .getByText("この選挙回には、選好順序を持たない大きな政党があります")
+          .parentElement!;
+        expect(box.textContent).toContain("民主党");
+        expect(box.textContent).toContain("維新の党");
+      },
+      { timeout: 15000 }
+    );
+  }, 30000);
 
   it("選挙回を切り替えると定数が変わる", async () => {
     const { user } = await setup();

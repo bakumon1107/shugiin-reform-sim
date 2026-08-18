@@ -35,6 +35,7 @@ export const BASELINE_PARAMS: SimParams = {
   listExhaustion: "reallocate",
   tierLinkage: "parallel",
   heiyoOverhang: "truncate",
+  smdVoting: "plurality",
 };
 
 export const PRESETS: Preset[] = [
@@ -88,6 +89,7 @@ export const PRESETS: Preset[] = [
       listExhaustion: "vacant",
       tierLinkage: "parallel",
       heiyoOverhang: "truncate",
+      smdVoting: "plurality",
     },
     notes: [
       "惜敗率の下限は座長試案が「30%や50%」を例示したもので、確定値ではない。既定は30%とし、スライダーで変更できる。",
@@ -117,10 +119,11 @@ export const PRESETS: Preset[] = [
       listExhaustion: "reallocate",
       tierLinkage: "parallel",
       heiyoOverhang: "truncate",
+      smdVoting: "plurality",
     },
     notes: [
-      "抜本改革案に含まれる優先順位付投票（RCV）は、有権者が候補者にどう順位をつけたかのデータが存在しないため試算できない。ここではサンラグ式のみを適用している。",
-      "そのため、抜本改革案と修正案は議席配分の上では同じ結果になる。両案の違いは被選挙権年齢・供託金・インターネット投票の範囲・独立選挙委員会の扱いといった、議席計算に表れない部分にある。",
+      "ここに入っているのは比例のサンラグ式だけで、これは修正案にあたる。抜本改革案にはさらに優先順位付投票（RCV）が含まれるので、上の「選挙区制度」で RCV を選ぶと抜本改革案の組み合わせになる。",
+      "ただし RCV の試算は仮想のペルソナに依存する。有権者が候補者にどう順位をつけたかのデータは存在しないため、調査から作った選好順序で代用している。修正案（サンラグのみ）の方は実際の投票結果からの機械的な再計算で、仮定は入っていない。",
     ],
   },
   {
@@ -142,6 +145,7 @@ export const PRESETS: Preset[] = [
       listExhaustion: "reallocate",
       tierLinkage: "parallel",
       heiyoOverhang: "truncate",
+      smdVoting: "plurality",
     },
     notes: [
       "これはどの政党の案でもなく、ドント式とサンラグ式を比べるために置いた参考ケース。スウェーデンやノルウェーなどで使われている第1除数が1.4で、既定値もそれに合わせている。",

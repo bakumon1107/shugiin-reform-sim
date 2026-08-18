@@ -12,7 +12,10 @@ import { decompose } from "@/lib/decompose";
 import { RULING_DEFAULT } from "@/lib/ruling";
 import { simulate } from "@/sim/engine";
 import { BASELINE_PARAMS, PRESETS } from "@/sim/presets";
-import type { ElectionData, SimParams } from "@/sim/types";
+import { DistrictSystem } from "@/components/DistrictSystem";
+import { RcvDistricts } from "@/components/RcvDistricts";
+import { RcvNotice } from "@/components/RcvNotice";
+import type { ElectionData, Personas, SimParams } from "@/sim/types";
 
 type IndexEntry = {
   id: string;
@@ -38,6 +41,7 @@ function sameParams(a: SimParams, b: SimParams): boolean {
     a.tierLinkage === b.tierLinkage &&
     // 超過議席のルールは併用制のときしか効かない
     (a.tierLinkage !== "heiyo" || a.heiyoOverhang === b.heiyoOverhang)
+    // 選挙区制度は別のタブで選ぶ独立の軸なので、案の一致判定には含めない
   );
 }
 
@@ -54,6 +58,10 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   // 与党の選び直しは選挙回ごとに覚える。既定値は選挙時点の連立。
   const [rulingOverride, setRulingOverride] = useState<Record<string, string[]>>({});
+  const [personas, setPersonas] = useState<Personas | null>(null);
+  // 読み手が組み替えた選好順序。優先順位付投票の数字はこの並びに依存するので、
+  // 仮定を隠して1つの答えを出すより、握らせて動かしてもらう。
+  const [orderOverrides, setOrderOverrides] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     fetch("/data/index.json")
@@ -63,6 +71,14 @@ export default function Home() {
         setElectionId(idx[0].id);
       })
       .catch(() => setError("選挙回の一覧を読み込めませんでした"));
+  }, []);
+
+  // 優先順位付投票で使う仮想ペルソナの選好順序
+  useEffect(() => {
+    fetch("/data/personas.json")
+      .then((r) => r.json())
+      .then(setPersonas)
+      .catch(() => setError("選好順序を読み込めませんでした"));
   }, []);
 
   useEffect(() => {
@@ -84,11 +100,19 @@ export default function Home() {
   const preset = PRESETS.find((p) => p.id === presetId);
   const isCustom = preset ? !sameParams(params, preset.params) : true;
 
+  // 読み手の組み替えを反映した選好順序
+  const effectivePersonas = useMemo<Personas | null>(() => {
+    if (!personas) return null;
+    if (Object.keys(orderOverrides).length === 0) return personas;
+    return { ...personas, orderings: { ...personas.orderings, ...orderOverrides } };
+  }, [personas, orderOverrides]);
+
   const view = useMemo(() => {
     if (!data) return null;
-    const baseline = simulate(data, BASELINE_PARAMS);
-    const proposal = simulate(data, params);
-    const steps = decompose(data, params);
+    if (params.smdVoting === "rcv" && !effectivePersonas) return null;
+    const baseline = simulate(data, BASELINE_PARAMS, effectivePersonas);
+    const proposal = simulate(data, params, effectivePersonas);
+    const steps = decompose(data, params, effectivePersonas);
 
     // 法定定数。併用制で超過議席を認めた場合はここが膨らむので、配られた比例議席の
     // 実数と、条文上の比例定数の大きい方を取る。
@@ -104,7 +128,7 @@ export default function Home() {
       .filter((p, i, a) => a.indexOf(p) === i)
       .sort((a, b) => (baseline.totalSeatsByParty[b] ?? 0) - (baseline.totalSeatsByParty[a] ?? 0));
     return { baseline, proposal, steps, legalTotal, filled, vacancies, parties };
-  }, [data, params]);
+  }, [data, params, effectivePersonas]);
 
   const ruling =
     (electionId ? rulingOverride[electionId] : undefined) ??
@@ -134,8 +158,8 @@ export default function Home() {
 
       {/* --- 選択 --- */}
       <section className="card p-4">
-        <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
-          <div>
+        <div className="divide-y" style={{ borderColor: "var(--grid)" }}>
+          <div className="pb-4">
             <label
               htmlFor="election"
               className="mb-1 block text-[12px]"
@@ -162,9 +186,16 @@ export default function Home() {
             </select>
           </div>
 
-          <div>
+          <div className="py-4">
+            <DistrictSystem
+              value={params.smdVoting}
+              onChange={(v) => setParams((p) => ({ ...p, smdVoting: v }))}
+            />
+          </div>
+
+          <div className="pt-4">
             <div id="preset-label" className="mb-1 text-[12px]" style={{ color: "var(--ink-muted)" }}>
-              改革案
+              比例代表・各党の案
             </div>
             <div role="group" aria-labelledby="preset-label" className="flex flex-wrap gap-2">
               {PRESETS.map((p) => {
@@ -175,7 +206,8 @@ export default function Home() {
                     type="button"
                     onClick={() => {
                       setPresetId(p.id);
-                      setParams(p.params);
+                      // 選挙区制度は別タブの選択なので、案を切り替えても保つ
+                      setParams({ ...p.params, smdVoting: params.smdVoting });
                     }}
                     aria-pressed={active}
                     className="rounded-lg px-3 py-2 text-[13px]"
@@ -198,21 +230,21 @@ export default function Home() {
                 </span>
               )}
             </div>
+
+            {preset && !isCustom && (
+              <p className="mt-2 max-w-3xl text-[12px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
+                {preset.summary}
+              </p>
+            )}
+            {preset && preset.notes.length > 0 && (
+              <ul className="mt-2 max-w-3xl space-y-1 text-[11px]" style={{ color: "var(--ink-muted)" }}>
+                {preset.notes.map((n) => (
+                  <li key={n}>※ {n}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
-
-        {preset && !isCustom && (
-          <p className="mt-3 max-w-3xl text-[12px] leading-relaxed" style={{ color: "var(--ink-2)" }}>
-            {preset.summary}
-          </p>
-        )}
-        {preset && preset.notes.length > 0 && (
-          <ul className="mt-2 max-w-3xl space-y-1 text-[11px]" style={{ color: "var(--ink-muted)" }}>
-            {preset.notes.map((n) => (
-              <li key={n}>※ {n}</li>
-            ))}
-          </ul>
-        )}
       </section>
 
       {!view || !data || !meta ? (
@@ -257,6 +289,21 @@ export default function Home() {
               })(),
             ]}
           />
+
+          {/* --- 優先順位付投票を選んでいるあいだの警告 --- */}
+          {params.smdVoting === "rcv" && (
+            <RcvNotice
+              smd={view.proposal.smd}
+              personas={effectivePersonas}
+              districtCount={data.meta.smd_seats}
+              voteScale={data.voteScale}
+              orderOverrides={orderOverrides}
+              onChangeOrder={(party, order) =>
+                setOrderOverrides((prev) => ({ ...prev, [party]: order }))
+              }
+              onResetOrders={() => setOrderOverrides({})}
+            />
+          )}
 
           {/* --- 与党の議席占有率 --- */}
           <RulingShare
@@ -321,13 +368,22 @@ export default function Home() {
             </div>
             <button
               type="button"
-              onClick={() => setParams(BASELINE_PARAMS)}
+              // 選挙区制度は別タブの選択なので、ここでは戻さない
+              onClick={() => setParams({ ...BASELINE_PARAMS, smdVoting: params.smdVoting })}
               className="mt-3 rounded-lg px-3 py-2 text-[12px]"
               style={{ border: "1px solid var(--hairline)", color: "var(--ink-2)" }}
             >
               現行制度の値に戻す
             </button>
           </section>
+
+          {/* --- 選挙区ごとの移譲の経過 --- */}
+          {params.smdVoting === "rcv" && view.proposal.smd.districts.length > 0 && (
+            <RcvDistricts
+              districts={view.proposal.smd.districts}
+              voteScale={data.voteScale}
+            />
+          )}
 
           {/* --- ブロック別 --- */}
           <section>

@@ -14,9 +14,13 @@ import { describe, expect, it } from "vitest";
 import { decompose } from "@/lib/decompose";
 import { simulate } from "@/sim/engine";
 import { BASELINE_PARAMS, PRESETS } from "@/sim/presets";
-import type { ElectionData, SimParams } from "@/sim/types";
+import type { ElectionData, Personas, SimParams } from "@/sim/types";
 
 import { BlockDetail } from "./BlockDetail";
+import { DistrictSystem } from "./DistrictSystem";
+import { OrderingEditor } from "./OrderingEditor";
+import { RcvDistricts } from "./RcvDistricts";
+import { RcvNotice } from "./RcvNotice";
 import { Decomposition } from "./Decomposition";
 import { ParamControls } from "./ParamControls";
 import { SeatTable } from "./SeatTable";
@@ -24,6 +28,11 @@ import { StatTiles } from "./StatTiles";
 
 const ELECTION_IDS = ["r08-02-08", "r06-10-27", "r03-10-31", "h29-10-22", "h26-12-14"];
 const DATA_DIR = join(__dirname, "..", "..", "public", "data");
+
+// 優先順位付投票のプリセットは仮想ペルソナの選好順序を要るので、ここでも読み込む
+const PERSONAS: Personas = JSON.parse(
+  readFileSync(join(DATA_DIR, "personas.json"), "utf8")
+);
 
 function loadData(id: string): ElectionData {
   return JSON.parse(readFileSync(join(DATA_DIR, `${id}.sim.json`), "utf8"));
@@ -48,6 +57,18 @@ function paramCases(data: ElectionData): { name: string; params: SimParams }[] {
         listExhaustion: "vacant" as const,
         tierLinkage: "parallel" as const,
         heiyoOverhang: "truncate" as const,
+        smdVoting: "plurality" as const,
+      },
+    },
+    {
+      name: "優先順位付投票",
+      params: { ...BASELINE_PARAMS, smdVoting: "rcv" as const },
+    },
+    {
+      name: "優先順位付投票＋自民案",
+      params: {
+        ...PRESETS.find((p) => p.id === "ldp")!.params,
+        smdVoting: "rcv" as const,
       },
     },
     {
@@ -63,11 +84,11 @@ function paramCases(data: ElectionData): { name: string; params: SimParams }[] {
 
 describe.each(ELECTION_IDS)("%s", (id) => {
   const data = loadData(id);
-  const baseline = simulate(data, BASELINE_PARAMS);
+  const baseline = simulate(data, BASELINE_PARAMS, PERSONAS);
 
   it.each(paramCases(data))("$name で画面が組み立てられる", ({ params }) => {
-    const proposal = simulate(data, params);
-    const steps = decompose(data, params);
+    const proposal = simulate(data, params, PERSONAS);
+    const steps = decompose(data, params, PERSONAS);
     const legalTotal = data.meta.smd_seats + data.meta.pr_seats + params.prSeatDelta;
 
     const html = renderToStaticMarkup(
@@ -87,6 +108,27 @@ describe.each(ELECTION_IDS)("%s", (id) => {
         <Decomposition steps={steps} baselineSeats={baseline.totalSeatsByParty} />
         <ParamControls params={params} prSeats={data.meta.pr_seats} onChange={() => {}} />
         <BlockDetail data={data} baseline={baseline} proposal={proposal} params={params} />
+        <DistrictSystem value={params.smdVoting} onChange={() => {}} />
+        {params.smdVoting === "rcv" && (
+          <>
+            <RcvNotice
+              smd={proposal.smd}
+              personas={PERSONAS}
+              districtCount={data.meta.smd_seats}
+              voteScale={data.voteScale}
+              orderOverrides={{}}
+              onChangeOrder={() => {}}
+              onResetOrders={() => {}}
+            />
+            <OrderingEditor
+              personas={PERSONAS}
+              overrides={{}}
+              onChange={() => {}}
+              onReset={() => {}}
+            />
+            <RcvDistricts districts={proposal.smd.districts} voteScale={data.voteScale} />
+          </>
+        )}
       </>
     );
 
@@ -97,7 +139,7 @@ describe.each(ELECTION_IDS)("%s", (id) => {
 
   it("欠員を含めても議席の合計は法定定数を超えない", () => {
     for (const { params } of paramCases(data)) {
-      const proposal = simulate(data, params);
+      const proposal = simulate(data, params, PERSONAS);
       const legalTotal = data.meta.smd_seats + data.meta.pr_seats + params.prSeatDelta;
       const filled = Object.values(proposal.totalSeatsByParty).reduce((a, b) => a + b, 0);
       expect(filled + proposal.vacancies).toBe(legalTotal);

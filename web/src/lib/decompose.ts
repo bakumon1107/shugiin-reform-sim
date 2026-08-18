@@ -12,9 +12,10 @@
 
 import { simulate } from "@/sim/engine";
 import { BASELINE_PARAMS } from "@/sim/presets";
-import type { ElectionData, SimParams } from "@/sim/types";
+import type { ElectionData, Personas, SimParams } from "@/sim/types";
 
 export type StepId =
+  | "smdVoting"
   | "tierLinkage"
   | "heiyoOverhang"
   | "divisorMethod"
@@ -40,6 +41,14 @@ export type Step = {
 
 function describe(id: StepId, params: SimParams): { label: string; change: string } {
   switch (id) {
+    case "smdVoting":
+      return {
+        label: "小選挙区の投票方式",
+        change:
+          params.smdVoting === "rcv"
+            ? "単記 → 優先順位付投票（※仮想ペルソナの選好順序による）"
+            : "単記（現行）",
+      };
     case "tierLinkage":
       return {
         label: "小選挙区と比例の連動",
@@ -106,6 +115,7 @@ function describe(id: StepId, params: SimParams): { label: string; change: strin
 }
 
 const ORDER: StepId[] = [
+  "smdVoting",
   "tierLinkage",
   "heiyoOverhang",
   "divisorMethod",
@@ -134,16 +144,20 @@ function same(id: StepId, a: SimParams, b: SimParams): boolean {
 }
 
 /** 現行制度から `target` へ、実際に変わるパラメータだけを1段ずつ適用する。 */
-export function decompose(data: ElectionData, target: SimParams): Step[] {
+export function decompose(
+  data: ElectionData,
+  target: SimParams,
+  personas: Personas | null = null
+): Step[] {
   const steps: Step[] = [];
   let current: SimParams = { ...BASELINE_PARAMS };
-  let prev = simulate(data, current).totalSeatsByParty;
+  let prev = simulate(data, current, personas).totalSeatsByParty;
 
   for (const id of ORDER) {
     if (same(id, current, target)) continue;
 
     current = { ...current, [id]: target[id] } as SimParams;
-    const result = simulate(data, current);
+    const result = simulate(data, current, personas);
     const seats = result.totalSeatsByParty;
 
     const deltas: Record<string, number> = {};

@@ -1,0 +1,233 @@
+"""拒否政党の調査から、比例投票先ごとの政党の選好順序を組み立てる。
+
+優先順位付投票（RCV）や単記移譲式（STV）を試算するには、有権者が候補者にどう順位を
+つけたかが要る。実際の投票用紙に残るのは第1希望だけなので、そのデータは存在しない。
+ここでは調査から得られる「どの政党を拒否しているか」を手がかりに順序を組み立てる。
+
+考え方はごく単純で、**拒否されていない順に並べる**。ある政党に比例票を投じた人たちに
+ついて、各政党の拒否率を低い順に並べれば、それがその集団の選好順序になる。自分が
+投じた政党は先頭に固定する。
+
+    例（日本共産党に投じた人）
+      社民 6% → れいわ 9% → みらい 13% → 国民 16% → 中道 17%
+      → 保守 32% → 維新 35% → 参政 45% → 自民 58%
+
+順序を決めるのに調査以外の仮定を持ち込まないのが利点。ただし調査は第51回（2026年）の
+政党構成で行われているため、そこに出てこない政党（立憲民主党・公明党・減税日本・無所属）
+は ``DERIVED`` の規則で補っている。**そこだけは調査から出る値ではなく、こちらで置いた
+想定である。**
+
+入力（``rejection_matrix.json``）はコミットしない。出力は拒否率の数値を捨てて順序だけを
+残すので、そこから元の調査結果を復元することはできない。
+
+使い方::
+
+    python research/personas/build_personas.py
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+SOURCE = HERE / "rejection_matrix.json"
+#: Vercel は web/ をルートに置いてビルドするので、その外のファイルは参照できない。
+#: 同じ内容を web 側にも書き出す。
+OUTPUTS = (HERE / "personas.json", ROOT / "web" / "public" / "data" / "personas.json")
+
+#: 調査の党名 → 選挙データ（総務省の結果調）側の党名
+NAME = {
+    "自民党": "自由民主党",
+    "中道改革連合": "中道改革連合",
+    "国民民主党": "国民民主党",
+    "日本維新の会": "日本維新の会",
+    "参政党": "参政党",
+    "チームみらい": "チームみらい",
+    "日本共産党": "日本共産党",
+    "れいわ新選組": "れいわ新選組",
+    "日本保守党": "日本保守党",
+    "社民党": "社会民主党",
+}
+
+#: 調査に出てこない政党を、隣に置く政党から派生させる。
+#:
+#: ``beside`` この政党のすぐ隣にあるものとして扱う。自分の順序はこの政党の順序を
+#:            下敷きにし、他党の順序へはこの政党の直後に挿し込む。
+#:
+#: 立憲民主党と中道改革連合、公明党と自由民主党のように、同時に存在しない政党も
+#: あるが（中道改革連合は第51回のみ、立憲民主党と公明党は第50回以前）、順序は
+#: 全政党をまたいで1本持ち、選挙回ごとに存在する政党だけを見る。
+DERIVED: dict[str, dict] = {
+    "立憲民主党": {
+        "beside": "中道改革連合",
+        "why": "中道改革連合と同じ位置にあるものとして扱う",
+    },
+    "公明党": {
+        "beside": "自由民主党",
+        "why": "自民党の隣にあるものとして扱う。長く連立を組んでいた",
+    },
+    "減税日本・ゆうこく連合": {
+        "beside": "日本保守党",
+        "why": "日本保守党に近い位置にあるものとして扱う",
+    },
+}
+
+INDEPENDENT = "無所属"
+
+#: 他党の順序の中で無所属をどこに置くか。0.0 が先頭、0.5 が中間、1.0 が最下位。
+#:
+#: 無所属は政党ではなく、保守系から革新系まで人によって位置が違うので、一律に置くと
+#: どちらかに必ず偏る。中間（0.5）に置くと「誰からも受け入れられる妥協候補」になり、
+#: 優先順位付投票では万人に許容される候補が勝ち上がるため、無所属に有利に出すぎる。
+#: かといって最下位に落とすと、移譲をまったく受け取れず不利に振れる。
+#:
+#: 中間より少しだけ下に置いて、有利になりすぎないようにしている。
+#:
+#: **この値には崖がある。** 0.75 と 0.8 の間で、無所属が立憲民主党／中道改革連合より
+#: 上か下かが切り替わる。立憲・中道はどの陣営からも最も拒否される位置にいるため、
+#: それより上にあるうちは、自民候補が落ちた選挙区の票がまとめて無所属へ流れる。
+#: 第50回（2024年）の無所属の議席は、0.75 で +3、0.8 で −6 と反転する。中立な値は
+#: 無いので、この一点が結果を左右することを承知のうえで使うこと。
+INDEPENDENT_POSITION = 0.75
+
+
+class BuildError(Exception):
+    """出力すると誤ったデータを配ることになる不整合。"""
+
+
+def base_ordering(voted: str, rates: dict[str, int]) -> list[str]:
+    """拒否率の低い順に政党を並べる。投じた政党は先頭に固定する。
+
+    同率のときは党名順にして、実行するたびに結果が変わらないようにする。
+    """
+    others = sorted((p for p in rates if p != voted), key=lambda p: (rates[p], p))
+    return [NAME[voted]] + [NAME[p] for p in others]
+
+
+def insert_beside(order: list[str], party: str, beside: str) -> list[str]:
+    """``party`` を ``beside`` の直後に置く。"""
+    out = list(order)
+    if party in out:
+        return out
+    if beside not in out:
+        out.append(party)
+        return out
+    out.insert(out.index(beside) + 1, party)
+    return out
+
+
+def build() -> dict:
+    raw = json.loads(SOURCE.read_text(encoding="utf-8"))
+    columns: list[str] = raw["_columns"]
+    if sorted(columns) != sorted(NAME):
+        raise BuildError(f"列と党名対応が食い違う: {set(columns) ^ set(NAME)}")
+
+    # --- 調査から直に出る10党の順序 ---
+    surveyed: dict[str, list[str]] = {}
+    mean_rate: dict[str, float] = {c: 0.0 for c in columns}
+    n_rows = 0
+    for voted, values in raw["rows"].items():
+        if len(values) != len(columns):
+            raise BuildError(f"{voted}: 値の数が列数と合わない")
+        rates = dict(zip(columns, values))
+        # 平均の拒否率は、比例票を持たない区分も含めた全回答から取る
+        for c in columns:
+            mean_rate[c] += rates[c]
+        n_rows += 1
+        if voted in NAME:
+            surveyed[NAME[voted]] = base_ordering(voted, rates)
+    for c in mean_rate:
+        mean_rate[c] /= n_rows
+
+    # --- 派生させる政党の、自分自身の順序 ---
+    # 隣に置く政党の順序をそのまま下敷きにし、自党を先頭に足す。
+    orderings: dict[str, list[str]] = dict(surveyed)
+    for party, rule in DERIVED.items():
+        orderings[party] = [party] + list(surveyed[rule["beside"]])
+
+    # 無所属は、全体を通して拒否されにくい順
+    orderings[INDEPENDENT] = [INDEPENDENT] + [
+        NAME[c] for c in sorted(columns, key=lambda c: (mean_rate[c], c))
+    ]
+
+    # --- すべての順序に、派生させた政党を挿し込む ---
+    for party in list(orderings):
+        order = orderings[party]
+        for derived, rule in DERIVED.items():
+            if derived == party:
+                continue
+            order = insert_beside(order, derived, rule["beside"])
+        if party != INDEPENDENT:
+            # 先頭（自党）を除いた並びの、指定した割合の位置に置く
+            rest = len(order) - 1
+            at = 1 + round(rest * INDEPENDENT_POSITION)
+            order = order[:at] + [INDEPENDENT] + order[at:]
+        orderings[party] = order
+
+    universe = set(orderings)
+    for party, order in orderings.items():
+        if order[0] != party:
+            raise BuildError(f"{party}: 先頭が自党でない")
+        if set(order) != universe or len(order) != len(universe):
+            raise BuildError(f"{party}: 順序に重複か欠落がある（{len(order)}件）")
+
+    return {
+        "method": (
+            "比例投票先ごとに、各政党の拒否率が低い順に並べたもの。投じた政党を先頭に"
+            "固定し、以降は拒否されていない順。同率は党名順。拒否率の数値そのものは"
+            "保持しない。調査に出てこない政党は derived の規則で近い政党から派生させた。"
+        ),
+        "source": (
+            "第三者の調査『比例投票先 × 拒否政党』。グラフ画像から目視で読み取った"
+            "（誤差 ±2 ポイント程度）。調査主体・実施時期・標本数・設問文は未確認。"
+            "調査は第51回（2026年）の政党構成で行われている。"
+        ),
+        "derived": {
+            party: rule["why"] for party, rule in DERIVED.items()
+        } | {
+            INDEPENDENT: "特定の位置を持たないので、どの順序でも中間に置く。"
+                         "自身の順序は全体を通して拒否されにくい順",
+        },
+        "caveats": [
+            "拒否率は知名度と混ざっている。新しい政党や小さい政党は、判断材料を持つ人が"
+            "少ないぶん拒否率が低く出るため、実際より上位に並びやすい。",
+            "調査は現行制度のもとでの投票行動を尋ねたもの。制度が変われば有権者も政党も"
+            "行動を変えるので、この順序がそのまま当てはまるわけではない。",
+            "政党単位の順序であって、候補者単位ではない。小選挙区では現職かどうかや"
+            "知名度が効くが、それは反映されていない。",
+            "拒否している政党にも順位をつける前提になっている。実際には順位をつけずに"
+            "投票用紙を打ち切る人がいるはずで、その場合は票が移譲されずに死票になる。",
+            "立憲民主党・公明党・減税日本・無所属は調査に出てこないため、近い政党から"
+            "派生させた想定である。これらを含む試算は仮定がさらに重い。",
+        ],
+        "orderings": orderings,
+    }
+
+
+def main() -> int:
+    if not SOURCE.exists():
+        print(f"[FAIL] 入力がない: {SOURCE.relative_to(HERE.parents[1])}")
+        print("       この調査データはコミットしていないので、手元に置いてから実行する。")
+        return 1
+
+    payload = build()
+    text = json.dumps(payload, ensure_ascii=False, indent=1) + "\n"
+    for out in OUTPUTS:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text, encoding="utf-8")
+        print(f"[OK] {out.relative_to(ROOT)}")
+    print(f"     {len(payload['orderings'])}政党\n")
+    derived = set(payload["derived"])
+    for party, order in payload["orderings"].items():
+        mark = "（派生）" if party in derived else ""
+        print(f"{party}{mark} に投じた人の選好順序")
+        shown = [f"*{p}*" if p in derived else p for p in order]
+        print("  " + " → ".join(shown) + "\n")
+    print("* を付けた政党は、調査に出てこないため想定で置いたもの。")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

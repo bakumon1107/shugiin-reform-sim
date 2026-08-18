@@ -9,12 +9,14 @@
  * 割り算せず交差乗算で行い、浮動小数点の誤差を持ち込まない。
  */
 
+import { solveSmd } from "./rcv";
 import type {
   Block,
   BlockResult,
   DivisorMethod,
   ElectionData,
   ListEntry,
+  Personas,
   SeatAward,
   SimParams,
   SimResult,
@@ -59,9 +61,26 @@ export function divisorOf(
  * 小選挙区の得票が存在しないので、これらで落としてはいけない
  * （公職選挙法95条の2第6項は重複立候補者についての規定）。
  */
-export function isEligible(entry: ListEntry, params: SimParams): boolean {
+export function isEligible(
+  entry: ListEntry,
+  params: SimParams,
+  /**
+   * 小選挙区で当選したか。優先順位付投票では当選者が変わるので、そのときは
+   * 呼び出し側から渡す。省略すると現行（単記）の結果を使う。
+   *
+   * なお得票率要件と惜敗率は、優先順位付投票でも**第1選好の得票**で判定している。
+   * 移譲後の得票で惜敗率を定義すると分母（当選者の得票）に移譲分が入り、意味が
+   * 変わってしまう。法律で定めるならどちらもありうるが、ここでは第1選好を採る。
+   */
+  smdWon?: boolean,
+  /**
+   * 惜敗率の分母（その選挙区の当選者の第1選好の得票）。優先順位付投票では当選者が
+   * 変わるので呼び出し側から渡す。省略すると現行（単記）の最多得票を使う。
+   */
+  winnerVotes?: number
+): boolean {
   if (!entry.dual) return true;
-  if (entry.smdWon) return false;
+  if (smdWon ?? entry.smdWon) return false;
 
   const votes = entry.smdVotes ?? 0;
   const valid = entry.districtValidVotes ?? 0;
@@ -70,17 +89,24 @@ export function isEligible(entry: ListEntry, params: SimParams): boolean {
   if (votes * den < valid * num) return false;
 
   if (params.dualMinSekihaiRate !== null) {
-    const top = entry.districtTopVotes ?? 0;
+    const top = winnerVotes ?? entry.districtTopVotes ?? 0;
     // votes / top * 100 >= rate
     if (votes * 100 < params.dualMinSekihaiRate * top) return false;
   }
   return true;
 }
 
-/** 惜敗率（％）。分母はその選挙区の最多得票で、区割りを変えない限り不変。 */
-export function sekihaiRate(entry: ListEntry): number | null {
-  if (!entry.dual || !entry.smdVotes || !entry.districtTopVotes) return null;
-  return (entry.smdVotes / entry.districtTopVotes) * 100;
+/**
+ * 惜敗率（％）。分母はその選挙区の当選者の得票。
+ *
+ * 優先順位付投票では当選者が変わるので、`winnerVotes` に新しい当選者の第1選好の
+ * 得票を渡す。渡さないと現行（単記）の最多得票で割るため、単記で勝っていた人が
+ * 必ず 100% になり、比例名簿の同一順位で先頭に立ってしまう。
+ */
+export function sekihaiRate(entry: ListEntry, winnerVotes?: number): number | null {
+  const top = winnerVotes ?? entry.districtTopVotes;
+  if (!entry.dual || !entry.smdVotes || !top) return null;
+  return (entry.smdVotes / top) * 100;
 }
 
 /**
@@ -265,10 +291,15 @@ export function adams(populations: Record<string, number>, total: number): Recor
 }
 
 /** 名簿順位順（同一順位内は惜敗率降順）に並べる。 */
-function listOrder(entries: ListEntry[]): ListEntry[] {
+function listOrder(
+  entries: ListEntry[],
+  winnerVotes: Record<string, number>
+): ListEntry[] {
+  const rate = (e: ListEntry) =>
+    sekihaiRate(e, e.districtId ? winnerVotes[e.districtId] : undefined) ?? 0;
   return [...entries].sort((a, b) => {
     if (a.rank !== b.rank) return a.rank - b.rank;
-    return (sekihaiRate(b) ?? 0) - (sekihaiRate(a) ?? 0);
+    return rate(b) - rate(a);
   });
 }
 
@@ -276,13 +307,24 @@ function solveBlock(
   block: Block,
   seats: number,
   smdByParty: Record<string, number>,
-  params: SimParams
+  params: SimParams,
+  /** 選挙区ID → 当選者名。優先順位付投票では現行と変わる。 */
+  smdWinners: Record<string, string>,
+  /** 選挙区ID → 当選者の第1選好の得票。惜敗率の分母。 */
+  winnerVotes: Record<string, number>
 ): { result: BlockResult; tie: boolean } {
+  // 重複立候補者が小選挙区で当選したかは、その選挙区の当選者が本人かで決まる。
+  // 比例名簿と小選挙区で氏名の表記が違うことがあるので、突合には小選挙区側の氏名を使う。
+  const won = (e: ListEntry) =>
+    e.dual && e.districtId ? smdWinners[e.districtId] === (e.smdName ?? e.name) : false;
+  const eligible = (e: ListEntry) =>
+    isEligible(e, params, won(e), e.districtId ? winnerVotes[e.districtId] : undefined);
+
   const votes: Record<string, number> = {};
   const capacity: Record<string, number> = {};
   for (const p of block.parties) {
     votes[p.party] = p.votes;
-    capacity[p.party] = p.list.filter((e) => isEligible(e, params)).length;
+    capacity[p.party] = p.list.filter(eligible).length;
   }
 
   const { order, tie } =
@@ -306,7 +348,7 @@ function solveBlock(
   for (const p of block.parties) {
     const n = seatsByParty[p.party] ?? 0;
     if (n === 0) continue;
-    const pool = listOrder(p.list.filter((e) => isEligible(e, params)));
+    const pool = listOrder(p.list.filter(eligible), winnerVotes);
     if (pool.length < n) {
       throw new Error(`${block.block}/${p.party}: 当選者を${n}人埋められない`);
     }
@@ -330,11 +372,20 @@ function solveBlock(
 /**
  * 1回分のデータに制度パラメータを当てはめ、比例代表の議席を解く。
  *
- * 小選挙区の結果は動かさない。第1版が扱う3案はいずれも区割りにも小選挙区の投票方式
- * にも手を入れないため（チームみらい抜本案の優先順位付投票は、有権者の選好順序
- * データが存在しないので試算対象外）。
+ * 小選挙区の当落は `solveSmd` で先に決める。優先順位付投票を選ぶと現行と変わり、
+ * 比例名簿の当選資格（小選挙区で当選した者は比例に回れない）と惜敗率の分母にも
+ * 波及する。
  */
-export function simulate(data: ElectionData, params: SimParams): SimResult {
+export function simulate(
+  data: ElectionData,
+  params: SimParams,
+  /** 優先順位付投票を選ぶときに要る、仮想のペルソナの選好順序。 */
+  personas: Personas | null = null
+): SimResult {
+  // 小選挙区の当落を先に決める。優先順位付投票では現行と変わり、比例名簿の
+  // 当選資格（小選挙区で当選した者は比例に回れない）にも波及する。
+  const smd = solveSmd(data.smd.districts, personas, params.smdVoting);
+
   const totalPr = data.meta.pr_seats + params.prSeatDelta;
   if (totalPr < data.blocks.length) {
     throw new Error(`比例定数(${totalPr})がブロック数を下回る`);
@@ -351,7 +402,14 @@ export function simulate(data: ElectionData, params: SimParams): SimResult {
   }
 
   const solved = data.blocks.map((b) =>
-    solveBlock(b, seatsByBlock[b.block], data.smd.byBlock[b.block] ?? {}, params)
+    solveBlock(
+      b,
+      seatsByBlock[b.block],
+      smd.byBlock[b.block] ?? {},
+      params,
+      smd.winners,
+      smd.winnerVotes
+    )
   );
   const blocks = solved.map((s) => s.result);
   const tieBlocks = solved.filter((s) => s.tie).map((s) => s.result.block);
@@ -363,12 +421,13 @@ export function simulate(data: ElectionData, params: SimParams): SimResult {
     }
   }
 
-  const totalSeatsByParty: Record<string, number> = { ...data.smd.seatsByParty };
+  const totalSeatsByParty: Record<string, number> = { ...smd.seatsByParty };
   for (const [party, n] of Object.entries(prSeatsByParty)) {
     totalSeatsByParty[party] = (totalSeatsByParty[party] ?? 0) + n;
   }
 
   return {
+    smd,
     blocks,
     prSeatsByParty,
     totalSeatsByParty,
