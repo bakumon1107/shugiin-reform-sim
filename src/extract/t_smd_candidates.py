@@ -109,7 +109,11 @@ class Candidate:
     name_kana: str
     age: int
     gender: str
-    """``男`` / ``女``。「性別」列がない回（第49回以降）は空文字。"""
+    """``男`` / ``女``。「性別」列がない回（第49回以降）は空文字。
+
+    **空欄を氏名等からの推定で埋めてはならない**（DATA_POLICY.md）。
+    検証E5がこれを機械的に確認する。
+    """
     party_raw: str
     party: str
     party_is_certified: bool

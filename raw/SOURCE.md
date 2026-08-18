@@ -1,5 +1,14 @@
 # データ出典
 
+PDF原本はリポジトリに含めていない（`raw/*.pdf` は .gitignore）。
+下記のURLと sha256 をもとに取得する:
+
+```bash
+PYTHONPATH=src python3 -m extract.fetch          # 全回
+PYTHONPATH=src python3 -m extract.fetch --check  # 手元のPDFの照合のみ
+```
+
+
 ## r08-02-08 — 第51回衆議院議員総選挙
 
 - 名称: 令和8年2月8日執行 衆議院議員総選挙・最高裁判所裁判官国民審査結果調

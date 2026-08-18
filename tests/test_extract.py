@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from extract.csvio import dec, read_rows  # noqa: E402
 from extract.elections import ELECTIONS  # noqa: E402
-from verify.checks import FAIL, dhondt, load, run_all  # noqa: E402
+from verify.checks import FAIL, PASS, check_e, dhondt, load, run_all  # noqa: E402
 
 CSV = ROOT / "data" / "csv"
 
@@ -262,6 +262,69 @@ def test_2021_pr_list_image_name() -> None:
     tsuji = [e for e in entries if e["name"] == "辻清人"]
     assert len(tsuji) == 1
     assert (tsuji[0]["list_rank"], tsuji[0]["smd_result"]) == ("2", "当")
+
+
+# ---------------------------------------------------------------------------
+# データ方針（DATA_POLICY.md）を機械的に守れているか
+# ---------------------------------------------------------------------------
+
+
+def _checks_e(election_id: str, mutate=None):
+    """E系チェックだけを、必要なら改変したデータに対して走らせる。"""
+    from copy import deepcopy
+
+    csv_dir = CSV / election_id
+    if not csv_dir.exists():
+        pytest.skip(f"{csv_dir} がありません")
+    data = deepcopy(load(csv_dir))
+    if mutate:
+        mutate(data)
+    return {r.check_id: r for r in check_e(data, ELECTIONS[election_id])}
+
+
+def test_e5_detects_inferred_gender() -> None:
+    """性別列のない回に値を入れたら E5 が落ちること（推定混入の検出）。"""
+    assert _checks_e("r08-02-08")["E5"].status == PASS
+
+    def fill_gender(data):
+        data["smd_candidates"][0]["gender"] = "男"
+
+    result = _checks_e("r08-02-08", fill_gender)["E5"]
+    assert result.status == FAIL
+    assert "推定" in result.samples[0]
+
+
+def test_e5_detects_partially_blank_gender() -> None:
+    """性別列のある回で一部が空になったら E5 が落ちること。"""
+    assert _checks_e("h26-12-14")["E5"].status == PASS
+
+    def blank_one(data):
+        data["smd_candidates"][0]["gender"] = ""
+
+    assert _checks_e("h26-12-14", blank_one)["E5"].status == FAIL
+
+
+def test_e6_detects_extra_personal_column() -> None:
+    """原典に無い属性列を足したら E6 が落ちること。"""
+    assert _checks_e("r08-02-08")["E6"].status == PASS
+
+    def add_column(data):
+        for row in data["smd_candidates"]:
+            row["birthdate"] = "1980-01-01"
+
+    result = _checks_e("r08-02-08", add_column)["E6"]
+    assert result.status == FAIL
+    assert "birthdate" in result.samples[0]
+
+
+def test_national_review_is_not_ingested() -> None:
+    """最高裁判所裁判官国民審査は収録対象外（DATA_POLICY.md）。"""
+    for election_id in ELECTIONS:
+        csv_dir = CSV / election_id
+        if not csv_dir.exists():
+            continue
+        names = {p.stem for p in csv_dir.glob("*.csv")}
+        assert not any("review" in n or "shinsa" in n for n in names)
 
 
 # ---------------------------------------------------------------------------

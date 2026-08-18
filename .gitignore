@@ -1,3 +1,9 @@
+# 出典PDF原本はリポジトリに含めない。
+# URL と sha256 は src/extract/elections.py と raw/SOURCE.md にあり、
+# `python -m extract.fetch` で取得・照合できる。
+raw/*.pdf
+raw/*.pdf.part
+
 __pycache__/
 *.pyc
 .venv/

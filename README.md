@@ -24,16 +24,26 @@
 
 ## 使い方
 
+`data/` の CSV・JSON はリポジトリに入っているので、シミュレータを作るだけなら
+そのまま読めます。PDFから作り直す場合は次のとおり。
+
 ```bash
 pip install -r requirements.txt
-
 export PYTHONPATH=src
+
+python3 -m extract.fetch                 # 出典PDFを総務省から取得（sha256照合つき）
 python3 -m extract.run_all   r08-02-08   # PDF → data/csv/<id>/*.csv
 python3 -m verify.run_verify r08-02-08   # 検証 → reports/verification_report_<id>.md
 python3 -m build_json        r08-02-08   # CSV → data/json/<id>.json
 
 ./run_regression.sh                      # 全選挙回 × 抽出/検証/JSON + pytest
 ```
+
+**出典PDF原本（約10MB）はリポジトリに含めていません。** URLと sha256 は
+[`src/extract/elections.py`](src/extract/elections.py) と [raw/SOURCE.md](raw/SOURCE.md)
+に記録してあり、`python3 -m extract.fetch` が取得と照合を行います
+（`--check` で手元のPDFの照合のみ）。`run_all` も起動時に sha256 を確認するので、
+出典が差し替わったまま気づかずに再抽出することはありません。
 
 新しい選挙回を足すときは Claude Code のスキル
 [`soumu-election-ingest`](.claude/skills/soumu-election-ingest/SKILL.md) を使う
@@ -85,7 +95,8 @@ ballots_by_prefecture         投票総数・有効・無効
 - **B. 選挙区単位の厳密検証** — **Σ候補者得票 = 供託物没収点 × 10**（全289区）、当選者は1名かつ最多得票、惜敗率の再計算、「×」印の条件、区番号の連番と定数の一致
 - **C. 独立した表どうしの突合** — Σ候補者得票 = 党派別得票数（**小数まで完全一致**）、都道府県別・ブロック別の各集計表との相互一致、重複立候補の表(13)⇄表(11)両方向突合、議席数 289+176=465
 - **D. ドント式の独立再計算** — 除数表の商、議席配分、獲得順（名簿枯渇ルールを含めて再現）
-- **E. 構造アサーション** — 47都道府県・11ブロック、党派名の集合、必須項目、名簿順位の連番
+- **E. 構造アサーション** — 47都道府県・11ブロック、党派名の集合、必須項目、名簿順位の連番、
+  性別欄を推定で埋めていないこと、原典に無い属性列が混入していないこと（[DATA_POLICY.md](DATA_POLICY.md)）
 
 出典PDF自体に矛盾がある箇所は `elections.py` の `known_discrepancies` に理由つきで登録し、
 FAIL ではなく WARN として報告する。**登録していない不一致は今までどおり FAIL**。
@@ -117,10 +128,11 @@ FAIL ではなく WARN として報告する。**登録していない不一致�
 ## 設計
 
 ```
-raw/                        PDF原本（sha256を elections.py で照合）
+raw/                        SOURCE.md のみ（PDFは .gitignore、fetch で取得）
 src/extract/
   common.py                 Decimalパーサ / 罫線→グリッド / 氏名突合キー / 定数
-  elections.py              選挙回ごとの設定（ページ範囲・党派名・定数）
+  elections.py              選挙回ごとの設定（URL・sha256・ページ範囲・党派名・定数）
+  fetch.py                  出典PDFの取得と sha256 照合
   probe.py                  新しいPDFの構造を実測する調査ツール
   t_*.py                    表ごとの抽出
   csvio.py                  dataclass ⇄ CSV
@@ -145,6 +157,35 @@ src/build_json.py
 - **長い党派名はセル間にも行間にも折り返される。** 見出しは1行に限定せず、
   連続する数行を連結しながら「全列が既知の党派名になる」組合せを探す。
 - **共通コードを触ったら全選挙回でリグレッションを回す**（`./run_regression.sh`）。
+
+## ライセンス
+
+コードとデータで分けています。詳細と出典表示の文例は [LICENSES.md](LICENSES.md)。
+
+| 対象 | ライセンス |
+|---|---|
+| ソースコード（`src/`, `tests/`） | [MIT](LICENSE) |
+| 抽出データ（`data/`）・ドキュメント・レポート | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ja) |
+| 出典PDF原本 | 総務省の著作物 / 政府標準利用規約（第2.0版）＝ CC BY 4.0 互換。**再配布せず総務省のURLから取得** |
+
+`data/` を使うときは出典を示してください。
+
+> 出典: 総務省「衆議院議員総選挙・最高裁判所裁判官国民審査結果調」をもとに shugiin-reform-sim が作成
+
+## データの扱い
+
+`data/` には落選者を含む候補者の氏名・年齢・党派・職業・得票数が入っています。
+いずれも総務省が公表済みで要配慮個人情報は含みませんが、
+PDFをCSV化すること自体が名寄せを容易にするため、次の線を引いています
+（詳細は [DATA_POLICY.md](DATA_POLICY.md)）。
+
+- **原典に無い個人属性を足さない**（生年月日・住所・SNS等は追加しない）
+- **空欄を推定で埋めない** — とくに第49回以降にない `gender` 列を氏名から推定しない
+- **他ソースと結合したデータをリポジトリに入れない**
+- 氏名は表(13)⇄表(11)の突合のためだけに使う
+- 最高裁判所裁判官国民審査は収録対象外
+
+後ろ2つ以外は検証項目 E5・E6 で機械的に確認していて、崩れるとリグレッションが落ちます。
 
 ## これから
 

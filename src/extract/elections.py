@@ -32,6 +32,11 @@ class ElectionConfig:
     #: 表の列見出しに使われる語（回によって揺れる）
     party_column_label: str = "党派"
 
+    #: 表(13)に「性別」列があるか（第47・48回にはある、第49回以降はない）。
+    #: 検証E5がこの宣言と実データの一致を確認する。空欄を推定で埋めていないことの担保。
+    #: 詳細は DATA_POLICY.md を参照。
+    smd_has_gender_column: bool = False
+
     #: 表(13)で氏名が画像として埋め込まれているセルの読み値。
     #: キーは (都道府県, 区番号, 得票数の文字列)。値は {"display": ..., "kanji": ...}。
     #: Word由来のPDFでは稀な字形が画像で貼り込まれ、テキストレイヤーから欠落する。
@@ -281,6 +286,7 @@ R29_10_22 = ElectionConfig(
     smd_seats=289,
     pr_seats=176,
     party_column_label="届出政党等",
+    smd_has_gender_column=True,
     parties=frozenset(
         {
             "自由民主党",
@@ -350,6 +356,7 @@ R26_12_14 = ElectionConfig(
     smd_seats=295,
     pr_seats=180,
     party_column_label="届出政党等",
+    smd_has_gender_column=True,
     parties=frozenset(
         {
             "自由民主党",

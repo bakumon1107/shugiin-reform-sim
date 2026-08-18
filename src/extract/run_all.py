@@ -25,7 +25,11 @@ CSV_DIR = ROOT / "data" / "csv"
 def verify_source(cfg: ElectionConfig) -> Path:
     path = RAW_DIR / cfg.pdf_filename
     if not path.exists():
-        raise SystemExit(f"PDF がありません: {path}\n  {cfg.source_url} から取得してください。")
+        raise SystemExit(
+            f"PDF がありません: {path}\n"
+            f"  python -m extract.fetch {cfg.election_id}  で取得してください。\n"
+            f"  （出典: {cfg.source_url}）"
+        )
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     if digest != cfg.sha256:
         raise SystemExit(

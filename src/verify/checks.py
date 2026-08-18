@@ -835,7 +835,57 @@ def check_e(data, cfg) -> list[Result]:
             bad.append(f"{key}: 名簿順位が昇順でない")
     out.append(_mk("E4", "E", "比例名簿の順位が1始まりの昇順", bad, n))
 
+    # E5: 性別欄を推定で埋めていないこと（DATA_POLICY.md）
+    cands = data["smd_candidates"]
+    values = {c["gender"] for c in cands}
+    bad = []
+    if not values <= {"", "男", "女"}:
+        bad.append(f"想定外の値: {sorted(values - {'', '男', '女'})}")
+    if cfg.smd_has_gender_column:
+        if "" in values:
+            n_blank = sum(1 for c in cands if not c["gender"])
+            bad.append(f"出典に性別列がある回なのに {n_blank} 件が空です")
+    elif values != {""}:
+        bad.append(
+            f"出典に性別列がない回なのに値が入っています: {sorted(values - {''})}。"
+            "氏名等からの推定で埋めていないか確認してください（DATA_POLICY.md）"
+        )
+    out.append(
+        _mk("E5", "E", "性別欄が出典どおり（推定で埋めていない）", bad, len(cands),
+            f"出典PDFに性別列: {'あり' if cfg.smd_has_gender_column else 'なし'}")
+    )
+
+    # E6: 原典に無い個人属性の列が混入していないこと（DATA_POLICY.md）
+    bad = []
+    for name, expected in EXPECTED_COLUMNS.items():
+        actual = set(data[name][0]) if data.get(name) else set()
+        extra, missing = actual - expected, expected - actual
+        if extra:
+            bad.append(f"{name}: 想定外の列 {sorted(extra)}")
+        if missing:
+            bad.append(f"{name}: 列が不足 {sorted(missing)}")
+    out.append(
+        _mk("E6", "E", "個人が写るCSVの列が宣言したスキーマと一致", bad, len(EXPECTED_COLUMNS))
+    )
+
     return out
+
+
+#: 個人が特定できる情報を含むCSVの列。ここに無い列を足すときは DATA_POLICY.md を読むこと。
+EXPECTED_COLUMNS: dict[str, set[str]] = {
+    "smd_candidates": {
+        "election_id", "prefecture", "district_no", "order_in_district",
+        "elected", "result_mark", "name_display", "name_kanji", "name_kana",
+        "age", "gender", "party_raw", "party", "party_is_certified", "status",
+        "occupation", "votes", "dual_candidacy", "sekihai_rate",
+        "sekihai_excluded", "source_page",
+    },
+    "pr_list_entries": {
+        "election_id", "block", "party", "list_rank", "name", "elected_order",
+        "elected_pr", "smd_result", "sekihai_rate", "sekihai_excluded",
+        "dual_candidacy", "source_page",
+    },
+}
 
 
 ALL_CHECKS: tuple[Callable, ...] = (check_a, check_b, check_c, check_d, check_e)
