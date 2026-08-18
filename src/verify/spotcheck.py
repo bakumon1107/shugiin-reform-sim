@@ -53,15 +53,18 @@ def run(cfg: ElectionConfig, n_districts: int, n_blocks: int) -> None:
             f"-- PDF p{d['source_page']} | {d['prefecture']}第{d['district_no']}区 "
             f"| 供託物没収点 {d['deposit_forfeit_point']} | 候補者 {len(rows)} 名"
         )
-        print(f"   {'当落':<4}{'氏名':<18}{'年齢':>4} {'党派':<14}{'新前元':<4}{'得票数':>12} {'重複':<4}{'惜敗率':>9}")
+        print(
+            f"   {'当落':<4}{'氏名':<18}{'性別':<3}{'年齢':>4} {'党派':<14}{'新前元':<4}"
+            f"{'得票数':>12} {'重複':<4}{'惜敗率':>9}"
+        )
         for c in rows:
             sek = "×" if c["sekihai_excluded"] == "true" else (c["sekihai_rate"] or "")
             mark = "当" if c["elected"] == "true" else "落"
             dup = "重" if c["dual_candidacy"] == "true" else ""
             name = c["name_display"] + (f"({c['name_kanji']})" if c["name_kanji"] else "")
             print(
-                f"   {mark:<4}{name:<18}{c['age']:>4} {c['party_raw']:<14}{c['status']:<4}"
-                f"{c['votes']:>12} {dup:<4}{sek:>9}"
+                f"   {mark:<4}{name:<18}{c['gender'] or '-':<3}{c['age']:>4} "
+                f"{c['party_raw']:<14}{c['status']:<4}{c['votes']:>12} {dup:<4}{sek:>9}"
             )
         print()
 

@@ -8,7 +8,7 @@ set -uo pipefail
 cd "$(dirname "$0")"
 export PYTHONPATH=src
 
-ELECTIONS=("r08-02-08" "r06-10-27")
+ELECTIONS=("r08-02-08" "r06-10-27" "r03-10-31" "h29-10-22" "h26-12-14")
 STATUS=0
 
 for id in "${ELECTIONS[@]}"; do

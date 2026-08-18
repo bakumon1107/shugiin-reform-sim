@@ -380,9 +380,13 @@ PARTY_ALIASES: dict[str, str] = {
 }
 
 
+#: 党派名に付く脚注記号（「立憲民主党※１」のように印字される回がある）
+_FOOTNOTE_MARK_RE = re.compile(r"[※＊*][0-9０-９]*$")
+
+
 def normalize_party(raw: str, known: set[str] | None = None) -> str:
     """党派名を正規化する。``known`` を渡した場合、未知の党派名で例外を送出する。"""
-    name = squash(raw)
+    name = _FOOTNOTE_MARK_RE.sub("", squash(raw))
     name = PARTY_ALIASES.get(name, name)
     if known is not None and name not in known and name != "__TOTAL__":
         raise ExtractError(

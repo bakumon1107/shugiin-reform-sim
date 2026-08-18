@@ -1,13 +1,18 @@
 """表 2(1)(2) 都道府県別 有権者数・投票者数・棄権者数・投票率。
 
-各段（小選挙区／比例代表）が4ページで構成される。
+小選挙区／比例代表それぞれが4ページで構成される。
 
-* 有権者数・投票者数・棄権者数（男/女/計）        … ``electorate_*``
-* 同（うち在外）                                  … ``electorate_*_overseas``
-* 投票率(A)・前回投票率(B)・比較(A)-(B)（男/女/計） … ``turnout_*``
-* 同（うち在外）                                  … ``turnout_*_overseas``
+* 有権者数・投票者数・棄権者数（男/女/計）
+* 投票率(A)・前回投票率(B)・比較(A)-(B)（男/女/計）
+* 上の2つの「（うち在外）」版
 
-比例代表の表だけ先頭に「選挙区」列が付く。
+**4ページの並び順は回によって違う**（第51回は 本体/在外/率/在外率、
+第47回は 本体/率/在外/在外率）。順序を決め打ちせず、ページの中身で判定する:
+
+* 「うち在外」が表題にあれば ``scope=overseas``
+* 「棄権者数」があれば有権者数の表、「投票率」＋「前回」があれば投票率の表
+
+比例代表の表だけ先頭に選挙区（ブロック）列が付く。
 """
 
 from __future__ import annotations
@@ -69,8 +74,44 @@ class Turnout:
     source_page: int
 
 
-def extract_electorate(pdf_path: str, cfg: ElectionConfig, table: str, tier: str, scope: str):
-    rows = _read(pdf_path, cfg, table, has_block_col=(tier == "pr"))
+def extract(
+    pdf_path: str, cfg: ElectionConfig, tier: str
+) -> tuple[list[Electorate], list[Turnout]]:
+    """``electorate_<tier>`` の4ページを読み、内容で振り分けて返す。"""
+    table = f"electorate_{tier}"
+    electorate: list[Electorate] = []
+    turnout: list[Turnout] = []
+    seen: set[tuple[str, str]] = set()
+
+    with pdfplumber.open(pdf_path) as doc:
+        for pno in cfg.page_range(table):
+            page = doc.pages[pno - 1]
+            text = squash(page.extract_text() or "")
+            scope = "overseas" if "うち在外" in text else "all"
+            if "棄権者数" in text:
+                kind = "electorate"
+            elif "投票率" in text and "前回" in text:
+                kind = "turnout"
+            else:
+                raise ExtractError(
+                    f"{table} p{pno}: 有権者数の表か投票率の表か判別できません"
+                )
+            if (kind, scope) in seen:
+                raise ExtractError(f"{table} p{pno}: {kind}/{scope} が重複しています")
+            seen.add((kind, scope))
+            rows = _read_page(page, pno, table, has_block_col=(tier == "pr"))
+            if kind == "electorate":
+                electorate.extend(_to_electorate(rows, cfg, tier, scope))
+            else:
+                turnout.extend(_to_turnout(rows, cfg, tier, scope))
+
+    missing = {("electorate", "all"), ("electorate", "overseas"), ("turnout", "all"), ("turnout", "overseas")} - seen
+    if missing:
+        raise ExtractError(f"{table}: 読めなかった組合せがあります: {sorted(missing)}")
+    return electorate, turnout
+
+
+def _to_electorate(rows, cfg: ElectionConfig, tier: str, scope: str):
     return [
         Electorate(
             election_id=cfg.election_id,
@@ -93,8 +134,7 @@ def extract_electorate(pdf_path: str, cfg: ElectionConfig, table: str, tier: str
     ]
 
 
-def extract_turnout(pdf_path: str, cfg: ElectionConfig, table: str, tier: str, scope: str):
-    rows = _read(pdf_path, cfg, table, has_block_col=(tier == "pr"))
+def _to_turnout(rows, cfg: ElectionConfig, tier: str, scope: str):
     return [
         Turnout(
             election_id=cfg.election_id,
@@ -117,38 +157,35 @@ def extract_turnout(pdf_path: str, cfg: ElectionConfig, table: str, tier: str, s
     ]
 
 
-def _read(
-    pdf_path: str, cfg: ElectionConfig, table: str, *, has_block_col: bool
+def _read_page(
+    page: pdfplumber.page.Page, pno: int, table: str, *, has_block_col: bool
 ) -> list[tuple[str, str, list[Decimal | None], int]]:
-    """「(選挙区) 都道府県 + 9つの数値列」型の表を共通で読む。"""
+    """「(選挙区) 都道府県 + 9つの数値列」型の1ページを読む。"""
     out: list[tuple[str, str, list[Decimal | None], int]] = []
-    with pdfplumber.open(pdf_path) as doc:
-        for pno in cfg.page_range(table):
-            page = doc.pages[pno - 1]
-            xs = rule_positions(page, "v")
-            rows = read_rows_by_baseline(page, xs, 0, page.height)
-            base = locate_pref_column(rows)
-            if len(xs) - 1 < base + 10:
-                raise ExtractError(
-                    f"{table} p{pno}: 都道府県列 {base} の右に必要な9列がありません（全 {len(xs) - 1} 列）"
-                )
+    xs = rule_positions(page, "v")
+    rows = read_rows_by_baseline(page, xs, 0, page.height)
+    base = locate_pref_column(rows)
+    if len(xs) - 1 < base + 10:
+        raise ExtractError(
+            f"{table} p{pno}: 都道府県列 {base} の右に必要な9列がありません（全 {len(xs) - 1} 列）"
+        )
+    block = ""
+    for row in rows:
+        if has_block_col:
+            c0 = squash(row[base - 1].text) if base >= 1 else ""
+            if c0 in PR_BLOCKS:
+                block = c0
+        label = squash(row[base].text)
+        pref = row_label(label, has_block_col, block)
+        if pref is None:
+            continue
+        if pref == "合計":
             block = ""
-            for row in rows:
-                if has_block_col:
-                    c0 = squash(row[base - 1].text) if base >= 1 else ""
-                    if c0 in PR_BLOCKS:
-                        block = c0
-                label = squash(row[base].text)
-                pref = row_label(label, has_block_col, block)
-                if pref is None:
-                    continue
-                if pref == "合計":
-                    block = ""
-                values = [
-                    parse_decimal(squash(row[base + 1 + i].text), field_name=f"{table} {label}")
-                    for i in range(9)
-                ]
-                out.append((block, pref, values, pno))
+        values = [
+            parse_decimal(squash(row[base + 1 + i].text), field_name=f"{table} {label}")
+            for i in range(9)
+        ]
+        out.append((block, pref, values, pno))
     if not out:
-        raise ExtractError(f"{table}: 1件も取れていません")
+        raise ExtractError(f"{table} p{pno}: 1件も取れていません")
     return out

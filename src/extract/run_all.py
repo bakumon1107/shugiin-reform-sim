@@ -59,12 +59,11 @@ def run(cfg: ElectionConfig) -> dict[str, int]:
     emit("ballots_smd_by_pref", t_ballots.extract_ballots_smd(pdf, cfg))
     emit("ballots_pr_by_block_pref", t_ballots.extract_ballots_pr(pdf, cfg))
 
-    electorate = []
-    turnout = []
+    electorate, turnout = [], []
     for tier in ("smd", "pr"):
-        for scope, suffix in (("all", ""), ("overseas", "_overseas")):
-            electorate += t_turnout.extract_electorate(pdf, cfg, f"electorate_{tier}{suffix}", tier, scope)
-            turnout += t_turnout.extract_turnout(pdf, cfg, f"turnout_{tier}{suffix}", tier, scope)
+        e, t = t_turnout.extract(pdf, cfg, tier)
+        electorate += e
+        turnout += t
     emit("electorate", electorate)
     emit("turnout", turnout)
 

@@ -176,6 +176,95 @@ def test_hokkaido_dhondt_first_seats() -> None:
 
 
 # ---------------------------------------------------------------------------
+# 第47回（2014）— 「性別」列がある回。PDF p113 を目視確認
+# ---------------------------------------------------------------------------
+
+KANAGAWA_13_2014 = [
+    ("当", "甘利明", "", "男", 65, "自由民主党", "142201", True, "100.000"),
+    ("落", "たかく良美", "髙久良美", "男", 60, "日本共産党", "34014", False, None),
+    ("落", "伊藤ゆうた", "伊藤優太", "男", 29, "維新の党", "58941", True, "41.449"),
+]
+
+
+def test_kanagawa_13_2014_has_gender_column() -> None:
+    got = [
+        c
+        for c in rows("h26-12-14", "smd_candidates")
+        if c["prefecture"] == "神奈川県" and c["district_no"] == "13"
+    ]
+    assert len(got) == len(KANAGAWA_13_2014)
+    for c, want in zip(got, KANAGAWA_13_2014):
+        mark, display, kanji, gender, age, party, votes, dual, sekihai = want
+        assert (c["result_mark"], c["name_display"], c["name_kanji"]) == (mark, display, kanji)
+        assert c["gender"] == gender
+        assert int(c["age"]) == age
+        assert c["party_raw"] == party
+        assert dec(c["votes"]) == Decimal(votes)
+        assert (c["dual_candidacy"] == "true") is dual
+        assert dec(c["sekihai_rate"]) == (Decimal(sekihai) if sekihai else None)
+    assert sum(dec(c["votes"]) for c in got) == Decimal("23515.600") * 10
+
+
+def test_2014_seat_counts_differ_from_later_elections() -> None:
+    """第47回は 0増5減 前の区割りで小選挙区295・比例180（合計475）。"""
+    cfg = ELECTIONS["h26-12-14"]
+    assert (cfg.smd_seats, cfg.pr_seats, cfg.total_seats) == (295, 180, 475)
+    assert len(rows("h26-12-14", "smd_districts")) == 295
+    assert sum(1 for c in rows("h26-12-14", "smd_candidates") if c["elected"] == "true") == 295
+
+
+def test_gender_column_absent_in_recent_elections() -> None:
+    """第49回以降は「性別」列がないので空文字になる。"""
+    assert {c["gender"] for c in rows("r08-02-08", "smd_candidates")} == {""}
+    assert {c["gender"] for c in rows("h26-12-14", "smd_candidates")} == {"男", "女"}
+
+
+# ---------------------------------------------------------------------------
+# 第49回（2021）— 氏名が画像として埋め込まれているセルの補正
+# ---------------------------------------------------------------------------
+
+IMAGE_NAME_CASES_2021 = [
+    ("北海道", "8", "112857", "おおさか誠二", "逢坂誠二"),
+    ("東京都", "2", "119281", "辻清人", ""),
+    ("東京都", "7", "37781", "つじ健太郎", "辻健太郎"),
+    ("東京都", "13", "4039", "はしもとまごみ", "橋本孫美"),
+    ("東京都", "18", "122091", "菅直人", "菅直人"),
+    ("長野県", "5", "80408", "そが逸郎", "曽我逸郎"),
+    ("大阪府", "1", "67145", "大西ひろゆき", "大西宏幸"),
+    ("大阪府", "2", "47487", "尾辻かな子", ""),
+    ("大阪府", "10", "66943", "辻元清美", ""),
+    ("兵庫県", "8", "24880", "つじ恵", "辻恵"),
+    ("島根県", "1", "4318.908", "龜井彰子", ""),
+    ("岡山県", "1", "90939", "あいさわ一郎", "逢沢一郎"),
+    ("鹿児島県", "4", "127131", "森山ひろし", "森山裕"),
+]
+
+
+@pytest.mark.parametrize("pref,district,votes,display,kanji", IMAGE_NAME_CASES_2021)
+def test_2021_image_embedded_names(pref, district, votes, display, kanji) -> None:
+    """テキストレイヤーから欠落した氏名が、目視確認値で補われていること。"""
+    got = [
+        c
+        for c in rows("r03-10-31", "smd_candidates")
+        if c["prefecture"] == pref and c["district_no"] == district and c["votes"] == votes
+    ]
+    assert len(got) == 1, f"{pref}{district}区 得票{votes} が一意に定まりません"
+    assert (got[0]["name_display"], got[0]["name_kanji"]) == (display, kanji)
+
+
+def test_2021_pr_list_image_name() -> None:
+    """表(11)で画像化されていた東京都・自民の名簿2「辻清人」。"""
+    entries = [
+        e
+        for e in rows("r03-10-31", "pr_list_entries")
+        if e["block"] == "東京都" and e["party"] == "自由民主党"
+    ]
+    tsuji = [e for e in entries if e["name"] == "辻清人"]
+    assert len(tsuji) == 1
+    assert (tsuji[0]["list_rank"], tsuji[0]["smd_result"]) == ("2", "当")
+
+
+# ---------------------------------------------------------------------------
 # ドント式の実装そのもの
 # ---------------------------------------------------------------------------
 

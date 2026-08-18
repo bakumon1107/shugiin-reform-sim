@@ -28,7 +28,8 @@ from .elections import ElectionConfig
 
 TABLE = "dhondt_table"
 
-_BLOCK_RE = re.compile(r"^[＜<](?P<name>.+?)選挙区[＞>]$")
+#: ブロック見出し。行頭に議席数などが入る回があるので、行全体ではなく部分一致で探す。
+_BLOCK_RE = re.compile(r"[＜<](?P<name>[^＜<＞>]+?)選挙区[＞>]")
 
 
 @dataclass
@@ -60,7 +61,7 @@ def extract(pdf_path: str, cfg: ElectionConfig) -> list[DhondtQuotient]:
             head_rows = read_rows_by_baseline(page, xs, ys[0], ys[-1])
             data_rows = read_rows_by_baseline(page, xs, ys[-2], ys[-1])
 
-            found = _find_block(read_rows_by_baseline(page, xs, 0, ys[0]))
+            found = _find_block(read_rows_by_baseline(page, xs, 0, ys[-2]))
             if found:
                 block = found
                 parties = []
@@ -103,7 +104,7 @@ def extract(pdf_path: str, cfg: ElectionConfig) -> list[DhondtQuotient]:
 def _find_block(rows: list[list[Cell]]) -> str:
     for row in rows:
         joined = squash("".join(c.text for c in row))
-        m = _BLOCK_RE.match(joined)
+        m = _BLOCK_RE.search(joined)
         if m and m.group("name") in PR_BLOCKS:
             return m.group("name")
     return ""
@@ -116,14 +117,27 @@ def _party_header(rows: list[list[Cell]], n_parties: int, cfg: ElectionConfig) -
     割れずに1セルに収まる回もある（第50回）。どちらもグループ内を連結すれば同じ。
     先頭セルは空の回と「除数」が入る回があるため、そこには依存しない。
     """
-    for row in rows[:8]:
-        names = [squash(row[1 + i * 2].text + row[2 + i * 2].text) for i in range(n_parties)]
-        while names and not names[-1]:
-            names.pop()
-        if not names or not all(names):
-            continue
-        try:
-            return [normalize_party(n, cfg.parties) for n in names]
-        except ExtractError:
-            continue
+    head = rows[:8]
+    for i in range(len(head)):
+        # 長い党派名は次の行に折り返されるので、1〜3行を連結しながら試す
+        for j in range(i + 1, min(i + 4, len(head)) + 1):
+            names = [
+                squash(
+                    "".join(
+                        row[1 + k * 2].text + row[2 + k * 2].text
+                        for row in head[i:j]
+                        if 2 + k * 2 < len(row)
+                    )
+                )
+                for k in range(n_parties)
+            ]
+            # 最終ページは後ろの党派列が空になる
+            while names and not names[-1]:
+                names.pop()
+            if not names or not all(names):
+                continue
+            try:
+                return [normalize_party(n, cfg.parties) for n in names]
+            except ExtractError:
+                continue
     return []

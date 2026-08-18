@@ -61,11 +61,20 @@ def extract_party_vote_totals(
             rows = read_rows_by_baseline(page, xs, 0, page.height)
             parties: list[str] = []
             period: str | None = None
-            for row in rows:
+            for i, row in enumerate(rows):
                 label = squash(row[0].text)
                 cells = row[1:]
                 if label == "区分":
-                    parties = [squash(c.text) for c in cells]
+                    # 長い党派名は見出しセルの中で折り返され、ベースラインが分かれるため
+                    # 別の行として読み取られる。「今回」行が来るまでを見出しとして連結する。
+                    parts = [[squash(c.text)] for c in cells]
+                    for cont in rows[i + 1 :]:
+                        if squash(cont[0].text) in _PERIOD_BY_LABEL:
+                            break
+                        for j, c in enumerate(cont[1:]):
+                            if j < len(parts):
+                                parts[j].append(squash(c.text))
+                    parties = ["".join(p) for p in parts]
                     period = None
                     continue
                 if label in _PERIOD_BY_LABEL:
@@ -170,19 +179,31 @@ def _party_groups_from_header(
     )
     if sub_idx is None:
         raise ExtractError(f"{where}: 「男/女/計」の副見出し行が見つかりません")
-    header = next(
-        (rows[i] for i in range(sub_idx - 1, -1, -1) if any(squash(c.text) for c in rows[i][1:])),
-        None,
-    )
-    if header is None:
-        raise ExtractError(f"{where}: 党派名の見出し行を特定できません")
 
-    names: list[str | None] = []
-    cells = header[1:]
-    for start in range(0, len(cells), group_size):
-        joined = squash("".join(c.text for c in cells[start : start + group_size]))
-        names.append(normalize_party(joined, cfg.parties) if joined else None)
-    return names
+    # 長い党派名は、グループ内の複数セルにまたがるだけでなく、
+    # 「ＮＨＫと裁判し／てる党」＋「弁護士法７２条／違反で」のように行にも折り返される。
+    # 「男/女/計」行の上から1行ずつ遡って積み上げ、全グループが既知の党派名になった時点で確定する。
+    for start_row in range(sub_idx - 1, -1, -1):
+        names = _join_groups(rows[start_row:sub_idx], group_size)
+        if not any(names):
+            continue
+        try:
+            return [normalize_party(n, cfg.parties) if n else None for n in names]
+        except ExtractError:
+            continue
+    raise ExtractError(f"{where}: 党派名の見出し行を特定できません")
+
+
+def _join_groups(rows: list[list[Cell]], group_size: int) -> list[str | None]:
+    """複数行 × グループ内の複数セルを、グループごとに1つの文字列へ畳む。"""
+    width = max(len(row) for row in rows) - 1
+    parts: list[list[str]] = [[] for _ in range((width + group_size - 1) // group_size)]
+    for row in rows:
+        cells = row[1:]
+        for g in range(len(parts)):
+            parts[g].append(squash("".join(c.text for c in cells[g * group_size : (g + 1) * group_size])))
+    joined = ["".join(p) for p in parts]
+    return [j or None for j in joined]
 
 
 # ---------------------------------------------------------------------------
@@ -281,12 +302,22 @@ def extract_block_party_votes(pdf_path: str, cfg: ElectionConfig) -> list[BlockP
             )
             if head is None:
                 raise ExtractError(f"{table} p{pno}: 「順位/党派名」の見出し行が見つかりません")
-            for row in rows[head + 1 :]:
+            body = rows[head + 1 :]
+            for r, row in enumerate(body):
                 for g in range(n_groups):
                     rank_c, party_c, votes_c, share_c = row[g * 4 : g * 4 + 4]
                     party_raw = squash(party_c.text)
-                    if not party_raw or party_raw == "党派名":
+                    if not party_raw or party_raw in PARTY_COLUMN_LABELS:
                         continue
+                    if not squash(votes_c.text):
+                        # 直前のデータ行から折り返された党派名の続き。その行で連結済み。
+                        continue
+                    # 長い党派名は次の行に折り返される（得票数が空の行が続く）
+                    for cont in body[r + 1 :]:
+                        cont_party = squash(cont[g * 4 + 1].text)
+                        if not cont_party or squash(cont[g * 4 + 2].text):
+                            break
+                        party_raw += cont_party
                     is_total = party_raw in _TOTAL_LABELS
                     votes = parse_decimal(votes_c.compact, field_name=f"{block} {party_raw}")
                     if votes is None:
@@ -317,8 +348,14 @@ def _block_pref_header(rows: list[list[Cell]], cfg: ElectionConfig, where: str) 
     first_data = next(
         (i for i, row in enumerate(rows) if squash(row[1].text) in PREFECTURES), len(rows)
     )
-    for row in reversed(rows[:first_data]):
-        names = [squash(c.text) for c in row[2:]]
+    # 長い党派名は次の行に折り返される（「ＮＨＫと裁判してる党」＋「弁護士法７２条違反で」）。
+    # データ開始行の上から1行ずつ遡って積み上げ、全列が既知の党派名になった時点で確定する。
+    for start_row in range(first_data - 1, -1, -1):
+        width = max(len(row) for row in rows[start_row:first_data]) - 2
+        names = [
+            squash("".join(row[2 + i].text for row in rows[start_row:first_data] if 2 + i < len(row)))
+            for i in range(width)
+        ]
         # 最終ページは「合計」列だけになるなど、後ろの列が余る
         while names and not names[-1]:
             names.pop()

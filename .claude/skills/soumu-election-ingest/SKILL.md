@@ -45,6 +45,31 @@ PYTHONPATH=src python3 -m extract.probe raw/<番号>.pdf --parties <election_id>
 ```
 
 出力には表題の断片（「（１）届出政党等別」など）が混ざるので、党派名だけを選んで貼る。
+プローブは最初のエラーで各抽出器を打ち切るため取りこぼしがある。表(13)の党派列だけを
+全走査して差分を見るほうが速い:
+
+```bash
+PYTHONPATH=src python3 -c "
+import pdfplumber, re
+from collections import Counter
+from extract import elections
+from extract.common import read_grid, rule_positions, squash, normalize
+PAREN = re.compile(r'^[（(](.+?)[)）]\$')
+cfg = elections.get('<election_id>')
+c = Counter()
+with pdfplumber.open('raw/' + cfg.pdf_filename) as doc:
+    for pno in cfg.page_range('smd_candidates'):
+        pg = doc.pages[pno - 1]
+        xs = rule_positions(pg, 'v'); ys = rule_positions(pg, 'h'); n = (len(xs) - 1) // 2
+        hdr = read_grid(pg.crop((xs[0], 0, xs[n], pg.height)), xs[:n+1], ys[0:2])[0]
+        pi = next(i for i, h in enumerate(hdr) if normalize(h.text) in ('党派', '届出政党等'))
+        for b in (xs[:n+1], xs[n:]):
+            for row in read_grid(pg.crop((b[0], 0, b[-1], pg.height)), b, ys[1:]):
+                t = squash(row[pi].text)
+                if t: c[PAREN.match(t).group(1) if PAREN.match(t) else t] += 1
+print('候補者', sum(c.values()), '/ 未登録', [k for k in c if k not in cfg.parties])
+"
+```
 
 ### 4. 抽出 → 検証 → JSON
 
@@ -102,17 +127,48 @@ seed 固定で12選挙区＋4ブロックを抜き出す。出力に `PDF p<n>` 
 - **罫線のないサブ列がある。** 表1(2)/3(2)の「新前元計」は罫線がなく `35412` のように連結して見える。
   党派列を4等分して文字を割り付けると分離できる。
 
-### 表記ゆれ（回によって違う）
+### 表記ゆれ・構成の違い（回によって違う）
 
-| 概念 | 第51回 | 第50回 |
+| 概念 | 第51回 | それ以前 |
 |---|---|---|
 | 政党の列見出し | 党派 / 党派名 | 届出政党等 / 政党等名 |
 | 行見出し | 都道府県 / 選挙区 | 区分 / 比例代表区 |
-| 表(8) の先頭列 | なし | 通し番号列がある |
-| 年齢段階の数字 | 半角 | 全角 |
+| 表(8) の先頭列 | なし | 通し番号列がある回あり（第50回） |
+| 表(13) の「性別」列 | なし | **第47・48回にはある**（1段10列） |
+| 年齢段階の数字 | 半角 | 全角の回あり |
+| 表2(1)(2) 4ページの並び | 本体/在外/率/在外率 | **本体/率/在外/在外率 の回あり**（第47回） |
+| 議席 | 289+176=465 | **第47回は 295+180=475** |
 
 **ラベル決め打ちで行・列を探さない。** 都道府県名や既知の党派名が入っている列を実測で探す
-（`locate_pref_column` / `_block_pref_header` がその実装）。
+（`locate_pref_column` / `_block_pref_header`）。表(13)の列は見出しラベルから役割を引く
+（`COLUMN_ROLES`）。投票結果の4ページは並び順ではなくページの中身で振り分ける。
+
+### 長い党派名は折り返される
+
+「ＮＨＫと裁判してる党弁護士法７２条違反で」のような長い名称は、見出しの中で
+**セル間にも行間にも**割れる。見出しは1行に限定せず、連続する数行を連結しながら
+「全列が既知の党派名になる」組合せを探す実装になっている（各 `_*_header` 関数）。
+表(10)では折り返しがデータ行の**次の行**に出るので、先読みして連結する。
+
+### 文字が画像として貼り込まれている回がある
+
+Word 由来のPDF（第49回）では、稀な字形が文字ではなく画像として貼られており、
+テキストレイヤーから丸ごと欠落する。表(13)に13件、表(11)に1件あった。
+
+- 抽出器は氏名セルに画像を検出すると **停止する**（黙って欠測にしない）
+- 対処: `pdftoppm -r 900` で該当セルを切り出して目視で読み、
+  `elections.py` の `name_overrides` / `pr_name_overrides` に登録する
+- 字形の判断は慎重に。第49回の島根1区は新字体「亀」ではなく**旧字体「龜」**だった
+- 登録キーは (都道府県, 区番号, 得票数) — 選挙区内で得票数は一意
+
+### 出典PDF自体が矛盾していることがある
+
+第48回の沖縄県は、表(6)と表(13)がともに 636,134.995 票で一致するのに、
+表(8)有効投票数は 636,030 票（105票少ない）。沖縄2区の供託物没収点もそちら側と整合する。
+
+**まず「抽出ミスではない」ことを複数の表で確かめる**（この件は惜敗率の再計算でも
+表(13)側が裏付けられた）。そのうえで `elections.py` の `known_discrepancies` に
+根拠つきで登録すると、その対象だけ WARN になる。登録していない不一致は FAIL のまま。
 
 ### 氏名の突合
 

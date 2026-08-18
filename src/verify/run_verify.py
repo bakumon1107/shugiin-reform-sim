@@ -38,7 +38,13 @@ def render(results: list[Result], cfg: ElectionConfig, csv_dir: Path) -> str:
     jst = timezone(timedelta(hours=9))
     now = datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S %Z")
     n_fail = sum(1 for r in results if r.status == FAIL)
-    verdict = "**全チェック PASS**" if n_fail == 0 else f"**FAIL {n_fail} 件**"
+    n_warn = sum(1 for r in results if r.status == "WARN")
+    if n_fail:
+        verdict = f"**FAIL {n_fail} 件**"
+    elif n_warn:
+        verdict = f"**FAILなし**（うち {n_warn} 件は出典PDF側の既知の不整合により WARN）"
+    else:
+        verdict = "**全チェック PASS**"
 
     lines = [
         f"# 検証レポート — 第{cfg.ordinal}回衆議院議員総選挙（{cfg.election_date}）",

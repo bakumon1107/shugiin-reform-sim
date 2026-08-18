@@ -315,18 +315,31 @@ def _party_header(
     cfg: ElectionConfig,
     where: str,
 ) -> list[str | None]:
-    """見出し行から党派名を拾う（列幅を超えた折り返しはグループ内で連結）。"""
+    """見出し行から党派名を拾う。
+
+    列幅を超えた党派名はグループ内の複数セルに割れるだけでなく、次の行にも折り返される
+    （「ＮＨＫと裁判してる党」＋「弁護士法７２条違反で」）。連続する1〜3行を連結しながら試す。
+    """
     limit = y_limit if y_limit is not None else page.height
-    for row in read_rows_by_baseline(page, xs, 0, limit):
-        cells = row[offset:]
-        names: list[str | None] = []
-        for start in range(0, len(cells), group_size):
-            joined = squash("".join(c.text for c in cells[start : start + group_size]))
-            names.append(joined or None)
-        if not any(names):
-            continue
-        try:
-            return [normalize_party(n, cfg.parties) if n else None for n in names]
-        except ExtractError:
-            continue
+    rows = read_rows_by_baseline(page, xs, 0, limit)
+    for i in range(len(rows)):
+        for j in range(i + 1, min(i + 4, len(rows)) + 1):
+            span = [row[offset:] for row in rows[i:j]]
+            width = max(len(cells) for cells in span)
+            names: list[str | None] = []
+            for start in range(0, width, group_size):
+                joined = squash(
+                    "".join(
+                        c.text
+                        for cells in span
+                        for c in cells[start : start + group_size]
+                    )
+                )
+                names.append(joined or None)
+            if not any(names):
+                continue
+            try:
+                return [normalize_party(n, cfg.parties) if n else None for n in names]
+            except ExtractError:
+                continue
     raise ExtractError(f"{where}: 党派名の見出し行を特定できません")

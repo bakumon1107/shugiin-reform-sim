@@ -32,6 +32,21 @@ class ElectionConfig:
     #: 表の列見出しに使われる語（回によって揺れる）
     party_column_label: str = "党派"
 
+    #: 表(13)で氏名が画像として埋め込まれているセルの読み値。
+    #: キーは (都道府県, 区番号, 得票数の文字列)。値は {"display": ..., "kanji": ...}。
+    #: Word由来のPDFでは稀な字形が画像で貼り込まれ、テキストレイヤーから欠落する。
+    #: 該当セルに画像があるのにここに登録がなければ抽出は停止する。
+    name_overrides: dict[tuple[str, int, str], dict[str, str]] = field(default_factory=dict)
+
+    #: 表(11)の比例名簿で氏名が画像として埋め込まれているセルの読み値。
+    #: キーは (ブロック, 党派, そのブロック×党派の中での0始まりの並び順)。
+    pr_name_overrides: dict[tuple[str, str, int], str] = field(default_factory=dict)
+
+    #: 出典PDF自体に矛盾がある箇所。``{チェックID: {対象: 理由}}``。
+    #: ここに登録した対象だけ FAIL ではなく WARN として報告する。
+    #: 抽出ミスと出典の誤りを混同しないよう、理由には突き合わせた根拠を書くこと。
+    known_discrepancies: dict[str, dict[str, str]] = field(default_factory=dict)
+
     @property
     def total_seats(self) -> int:
         return self.smd_seats + self.pr_seats
@@ -91,15 +106,10 @@ R08_02_08 = ElectionConfig(
         "candidacy_by_party": (3, 5),
         "candidacy_by_pref_party": (6, 7),
         "candidacy_by_pref_age": (8, 8),
-        # 第1 2. 投票結果
-        "electorate_smd": (9, 9),
-        "electorate_smd_overseas": (10, 10),
-        "turnout_smd": (11, 11),
-        "turnout_smd_overseas": (12, 12),
-        "electorate_pr": (13, 13),
-        "electorate_pr_overseas": (14, 14),
-        "turnout_pr": (15, 15),
-        "turnout_pr_overseas": (16, 16),
+        # 第1 2. 投票結果（本体／投票率／それぞれの「うち在外」の4ページ。
+        # 並び順は回によって違うので、抽出側が中身を見て振り分ける）
+        "electorate_smd": (9, 12),
+        "electorate_pr": (13, 16),
         # 第1 3. 開票結果
         "winners_by_party": (17, 19),
         "winners_by_pref_party": (20, 21),
@@ -161,14 +171,8 @@ R06_10_27 = ElectionConfig(
         "candidacy_by_party": (3, 5),
         "candidacy_by_pref_party": (6, 8),
         "candidacy_by_pref_age": (9, 9),
-        "electorate_smd": (10, 10),
-        "electorate_smd_overseas": (11, 11),
-        "turnout_smd": (12, 12),
-        "turnout_smd_overseas": (13, 13),
-        "electorate_pr": (14, 14),
-        "electorate_pr_overseas": (15, 15),
-        "turnout_pr": (16, 16),
-        "turnout_pr_overseas": (17, 17),
+        "electorate_smd": (10, 13),
+        "electorate_pr": (14, 17),
         "winners_by_party": (18, 20),
         "winners_by_pref_party": (21, 23),
         "winners_by_pref_age": (24, 24),
@@ -186,9 +190,216 @@ R06_10_27 = ElectionConfig(
 )
 
 
+R03_10_31 = ElectionConfig(
+    election_id="r03-10-31",
+    ordinal=49,
+    election_date="2021-10-31",
+    pdf_filename="000776985.pdf",
+    sha256="224fee3ca2f448ca698a3e0869388435d842de45cbeeba9f5f17a3c20095e29a",
+    source_url="https://www.soumu.go.jp/main_content/000776985.pdf",
+    n_pages=150,
+    smd_seats=289,
+    pr_seats=176,
+    party_column_label="届出政党等",
+    parties=frozenset(
+        {
+            "自由民主党",
+            "立憲民主党",
+            "日本維新の会",
+            "公明党",
+            "日本共産党",
+            "国民民主党",
+            "れいわ新選組",
+            "社会民主党",
+            "ＮＨＫと裁判してる党弁護士法７２条違反で",
+            "支持政党なし",
+            "新党やまと",
+            "政権交代によるコロナ対策強化新党",
+            "日本第一党",
+            "新党くにもり",
+            "希望の党",
+            "新党日本こころ",
+            "改革未来党",
+            "愛地球党",
+            "日本成功党",
+            "改新党",
+            "無所属",
+            "諸派",
+        }
+    ),
+    # 表(13)で氏名の一部が画像として貼り込まれている13件。
+    # 該当セルを300〜900dpiで切り出して目視で読み取った値
+    # （reports/visual_spotcheck_r03-10-31.md に切り出し画像の所見を記載）。
+    name_overrides={
+        ("北海道", 8, "112857"): {"kanji": "逢坂誠二"},
+        ("東京都", 2, "119281"): {"display": "辻清人"},
+        ("東京都", 7, "37781"): {"kanji": "辻健太郎"},
+        ("東京都", 13, "4039"): {"kanji": "橋本孫美"},
+        ("東京都", 18, "122091"): {"kanji": "菅直人"},
+        ("長野県", 5, "80408"): {"kanji": "曽我逸郎"},
+        ("大阪府", 1, "67145"): {"kanji": "大西宏幸"},
+        ("大阪府", 2, "47487"): {"display": "尾辻かな子"},
+        ("大阪府", 10, "66943"): {"display": "辻元清美"},
+        ("兵庫県", 8, "24880"): {"kanji": "辻恵"},
+        ("島根県", 1, "4318.908"): {"display": "龜井彰子"},
+        ("岡山県", 1, "90939"): {"kanji": "逢沢一郎"},
+        ("鹿児島県", 4, "127131"): {"kanji": "森山裕"},
+    },
+    # 表(11) 東京都ブロック 自民の3人目（名簿順位2）。表(13)の東京都2区と同一人物。
+    pr_name_overrides={("東京都", "自由民主党", 2): "辻清人"},
+    pages={
+        "candidacy_by_party": (3, 6),
+        "candidacy_by_pref_party": (7, 9),
+        "candidacy_by_pref_age": (10, 10),
+        "electorate_smd": (11, 14),
+        "electorate_pr": (15, 18),
+        "winners_by_party": (19, 22),
+        "winners_by_pref_party": (23, 25),
+        "winners_by_pref_age": (26, 26),
+        "party_votes_smd_total": (27, 28),
+        "party_votes_pr_total": (29, 30),
+        "party_votes_by_pref_smd": (31, 34),
+        "party_votes_by_block_pref": (35, 37),
+        "ballots_smd_by_pref": (38, 38),
+        "ballots_pr_by_block_pref": (39, 39),
+        "party_votes_by_block": (40, 50),
+        "pr_lists": (51, 83),
+        "dhondt_table": (84, 105),
+        "smd_candidates": (106, 141),
+    },
+)
+
+
+R29_10_22 = ElectionConfig(
+    election_id="h29-10-22",
+    ordinal=48,
+    election_date="2017-10-22",
+    pdf_filename="000516736.pdf",
+    sha256="6c5093d7b66dbc8d0158d821f5ce4ee152a184ff48c6781cb5aa4065377e0d6f",
+    source_url="https://www.soumu.go.jp/main_content/000516736.pdf",
+    n_pages=136,
+    smd_seats=289,
+    pr_seats=176,
+    party_column_label="届出政党等",
+    parties=frozenset(
+        {
+            "自由民主党",
+            "立憲民主党",
+            "希望の党",
+            "公明党",
+            "日本共産党",
+            "日本維新の会",
+            "社会民主党",
+            "日本のこころ",
+            "幸福実現党",
+            "支持政党なし",
+            "世界経済共同体党",
+            "労働の解放をめざす労働者党",
+            "新党大地",
+            "フェア党",
+            "犬丸勝子と共和党",
+            "都政を革新する会",
+            "新党憲法９条",
+            "議員報酬ゼロを実現する会",
+            "長野県を日本一好景気にする会",
+            "日本新党",
+            "無所属",
+            "諸派",
+        }
+    ),
+    known_discrepancies={
+        # 沖縄県は、表(6)の合計列と表(13)の候補者得票の総和がともに 636,134.995 で一致する一方、
+        # 表(8)の有効投票数は 636,030（105票少ない）。沖縄2区の供託物没収点 15,633.600 も
+        # 表(8)側と整合する。表(13)の値は惜敗率（宮崎政久 64,247 / 照屋寛徳 92,194 = 69.686）
+        # とも整合しており、抽出誤りではなく出典PDF内の食い違い。
+        "B1": {"沖縄県2": "表(13)の得票総和 156,441 に対し供託物没収点は 156,336 相当（出典の不整合、105票）"},
+        "C3": {"沖縄県": "表(6)・表(13)は 636,134.995、表(8)有効投票数は 636,030（出典の不整合、105票）"},
+    },
+    pages={
+        "candidacy_by_party": (3, 5),
+        "candidacy_by_pref_party": (6, 7),
+        "candidacy_by_pref_age": (8, 8),
+        "electorate_smd": (9, 12),
+        "electorate_pr": (13, 16),
+        "winners_by_party": (17, 19),
+        "winners_by_pref_party": (20, 21),
+        "winners_by_pref_age": (22, 22),
+        "party_votes_smd_total": (23, 24),
+        "party_votes_pr_total": (25, 25),
+        "party_votes_by_pref_smd": (26, 28),
+        "party_votes_by_block_pref": (29, 30),
+        "ballots_smd_by_pref": (31, 31),
+        "ballots_pr_by_block_pref": (32, 32),
+        "party_votes_by_block": (33, 43),
+        "pr_lists": (44, 68),
+        "dhondt_table": (69, 90),
+        "smd_candidates": (91, 129),
+    },
+)
+
+
+R26_12_14 = ElectionConfig(
+    election_id="h26-12-14",
+    ordinal=47,
+    election_date="2014-12-14",
+    pdf_filename="000328960.pdf",
+    sha256="343258be57812b680fbea05d8a4e4f4700301cde1f80561959efbef4b10a4792",
+    source_url="https://www.soumu.go.jp/main_content/000328960.pdf",
+    n_pages=142,
+    #: 第47回は 0増5減 前の区割りで小選挙区295・比例180（合計475）
+    smd_seats=295,
+    pr_seats=180,
+    party_column_label="届出政党等",
+    parties=frozenset(
+        {
+            "自由民主党",
+            "民主党",
+            "維新の党",
+            "公明党",
+            "日本共産党",
+            "次世代の党",
+            "生活の党",
+            "社会民主党",
+            "新党改革",
+            "幸福実現党",
+            "支持政党なし",
+            "減税日本",
+            "世界経済共同体党",
+            "犬丸勝子と共和党",
+            "みらい党",
+            "無所属",
+            "諸派",
+        }
+    ),
+    pages={
+        "candidacy_by_party": (3, 5),
+        "candidacy_by_pref_party": (6, 7),
+        "candidacy_by_pref_age": (8, 8),
+        "electorate_smd": (9, 12),
+        "electorate_pr": (13, 16),
+        "winners_by_party": (17, 19),
+        "winners_by_pref_party": (20, 21),
+        "winners_by_pref_age": (22, 22),
+        "party_votes_smd_total": (23, 24),
+        "party_votes_pr_total": (25, 25),
+        "party_votes_by_pref_smd": (26, 28),
+        "party_votes_by_block_pref": (29, 30),
+        "ballots_smd_by_pref": (31, 31),
+        "ballots_pr_by_block_pref": (32, 32),
+        "party_votes_by_block": (33, 43),
+        "pr_lists": (44, 74),
+        "dhondt_table": (75, 96),
+        "smd_candidates": (97, 136),
+    },
+)
+
+
 ELECTIONS: dict[str, ElectionConfig] = {
     R08_02_08.election_id: R08_02_08,
     R06_10_27.election_id: R06_10_27,
+    R03_10_31.election_id: R03_10_31,
+    R29_10_22.election_id: R29_10_22,
+    R26_12_14.election_id: R26_12_14,
 }
 
 DEFAULT_ELECTION = R08_02_08.election_id

@@ -39,6 +39,9 @@ GROUP_COLS = 7
 
 _BLOCK_RE = re.compile(r"^[＜<]?(?P<name>.+?)選挙区[＞>]?$")
 
+#: グループ見出しの各行の始まり。党派名の折り返しと区別するために使う。
+_HEADER_LINE_PREFIXES = ("得票数", "当選人数", "男", "名簿")
+
 
 @dataclass
 class PrPartyBlock:
@@ -79,6 +82,7 @@ def extract(
     headers: list[PrPartyBlock] = []
     entries: list[PrListEntry] = []
 
+    group_counts: dict[tuple[str, str] | None, int] = {}
     with pdfplumber.open(pdf_path) as doc:
         block = ""
         for pno in cfg.page_range(TABLE):
@@ -108,8 +112,19 @@ def extract(
             for row in data_rows:
                 for g in range(n_groups):
                     cells = row[g * GROUP_COLS : (g + 1) * GROUP_COLS]
-                    entry = _parse_entry(cells, by_group.get(g), block, cfg, pno)
+                    header = by_group.get(g)
+                    key = (block, header.party) if header else None
+                    entry = _parse_entry(
+                        cells,
+                        header,
+                        block,
+                        cfg,
+                        pno,
+                        index=group_counts.get(key, 0),
+                        images=_name_images(page, xs, g, row),
+                    )
                     if entry is not None:
+                        group_counts[key] = group_counts.get(key, 0) + 1
                         entries.append(entry)
 
     if not headers or not entries:
@@ -133,7 +148,17 @@ def _parse_group_headers(
     out: list[tuple[int, PrPartyBlock]] = []
     for g in range(n_groups):
         texts = [squash("".join(c.text for c in row[g * GROUP_COLS : (g + 1) * GROUP_COLS])) for row in rows]
-        party_raw = next((v for t in texts if (v := strip_party_label(t)) is not None), None)
+        party_idx = next(
+            (i for i, t in enumerate(texts) if strip_party_label(t) is not None), None
+        )
+        if party_idx is None:
+            continue
+        party_raw = strip_party_label(texts[party_idx]) or ""
+        # 長い党派名は次の行に折り返される（「ＮＨＫと裁判してる党」＋「弁護士法７２条違反で」）
+        for cont in texts[party_idx + 1 :]:
+            if not cont or any(cont.startswith(p) for p in _HEADER_LINE_PREFIXES):
+                break
+            party_raw += cont
         if not party_raw:
             continue
         votes_line = next((t for t in texts if t.startswith("得票数")), "")
@@ -163,18 +188,52 @@ def _parse_group_headers(
     return out
 
 
+def _name_images(page: pdfplumber.page.Page, xs: list[float], g: int, row: list[Cell]) -> list[dict]:
+    """氏名セル（グループ内の2〜4列目）に重なる埋め込み画像。
+
+    Word由来のPDFでは稀な字形が画像で貼り込まれ、テキストレイヤーから欠落する。
+    """
+    baselines = [t for c in row for t, _ in c.lines]
+    if not baselines:
+        return []
+    base = min(baselines)
+    left, right = xs[g * GROUP_COLS + 1], xs[g * GROUP_COLS + 4]
+    return [
+        im
+        for im in page.images
+        if left <= (im["x0"] + im["x1"]) / 2 < right and abs(im["top"] - base) <= 6
+    ]
+
+
 def _parse_entry(
-    cells: list[Cell], header: PrPartyBlock | None, block: str, cfg: ElectionConfig, pno: int
+    cells: list[Cell],
+    header: PrPartyBlock | None,
+    block: str,
+    cfg: ElectionConfig,
+    pno: int,
+    *,
+    index: int,
+    images: list[dict],
 ) -> PrListEntry | None:
     list_rank_raw = squash(cells[0].text)
     name = squash("".join(c.text for c in cells[1:4]))
-    if not list_rank_raw and not name:
+    if not list_rank_raw and not name and not images:
         return None
     if header is None:
         raise ExtractError(f"{TABLE} p{pno}: 党派見出しのないグループに名簿行があります: {name!r}")
     list_rank = parse_int(list_rank_raw, field_name=f"{block} {header.party} 名簿順位")
     if list_rank is None:
         return None
+    if images:
+        key = (block, header.party, index)
+        override = cfg.pr_name_overrides.get(key)
+        if override is None:
+            raise ExtractError(
+                f"{TABLE} p{pno}: {block} {header.party} 名簿{list_rank} の氏名が"
+                f"画像として埋め込まれておりテキストから読めません。目視で確認し、"
+                f"elections.py の pr_name_overrides に {key!r} を追加してください。"
+            )
+        name = override
     if not name:
         raise ExtractError(f"{TABLE} p{pno}: {block} {header.party} 名簿{list_rank} の氏名が空です")
 

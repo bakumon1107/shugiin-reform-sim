@@ -77,12 +77,42 @@ def aggregate_party(party: str, certified: bool) -> str:
     return "無所属" if party == "無所属" else "諸派"
 
 
-def _mk(check_id: str, category: str, title: str, bad: list[str], total: int, note: str = "") -> Result:
+def _mk(
+    check_id: str,
+    category: str,
+    title: str,
+    bad: list[str],
+    total: int,
+    note: str = "",
+    allowed: dict[str, str] | None = None,
+) -> Result:
+    """``allowed`` に登録された対象（``"<対象>: …"`` の対象部分で照合）は WARN 扱いにする。
+
+    出典PDF自体に矛盾がある箇所を、抽出ミスと混同せずに記録するための仕組み。
+    """
+    known: list[str] = []
+    if allowed:
+        rest = []
+        for item in bad:
+            subject = item.split(":", 1)[0].strip()
+            if subject in allowed:
+                known.append(f"{subject} — {allowed[subject]}")
+            else:
+                rest.append(item)
+        bad = rest
+    if bad:
+        status = FAIL
+    elif known:
+        status = WARN
+    else:
+        status = PASS
+    if known:
+        note = (note + " / " if note else "") + "出典PDF側の既知の不整合: " + "; ".join(known)
     return Result(
         check_id=check_id,
         category=category,
         title=title,
-        status=PASS if not bad else FAIL,
+        status=status,
         subject_count=total,
         fail_count=len(bad),
         detail=note,
@@ -257,16 +287,15 @@ def check_b(data, cfg) -> list[Result]:
         else:
             bad.append(f"{did}: Σ得票={total} 没収点×10={want} 差={diff} 按分={has_frac}")
     out.append(
-        Result(
+        _mk(
             "B1",
             "B",
             "各選挙区: Σ候補者得票 = 供託物没収点 × 10",
-            PASS if not bad else FAIL,
+            bad,
             len(districts),
-            len(bad),
             f"完全一致 {exact} 区 / 按分票による端数差(0<差<1) {len(approx)} 区: "
             + ", ".join(a.split(":")[0] for a in approx),
-            bad[:8],
+            cfg.known_discrepancies.get("B1"),
         )
     )
 
@@ -392,7 +421,8 @@ def check_c(data, cfg) -> list[Result]:
             bad.append(f"{pref}: 表13={got3.get(pref)} 表8有効={want3.get(pref)} 差={diff}")
     out.append(
         _mk("C3", "C", "Σ表(13)得票（都道府県） = 表(8)有効投票数（按分端数 <1票 を許容）", bad, 47,
-            f"全国差 {(_sum(want3.get(p) for p in PREFECTURES)) - _sum(got3.get(p) for p in PREFECTURES)} 票")
+            f"全国差 {(_sum(want3.get(p) for p in PREFECTURES)) - _sum(got3.get(p) for p in PREFECTURES)} 票",
+            cfg.known_discrepancies.get("C3"))
     )
 
     # C4: Σ表(7)（都道府県） == 表(10)
