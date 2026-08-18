@@ -18,8 +18,23 @@ function siteUrl(): URL {
   return new URL("http://localhost:3000");
 }
 
+/**
+ * OGP画像は `opengraph-image.tsx` がビルド時に生成するが、静的エクスポートでは
+ * 拡張子の無い `out/opengraph-image` として出るため、Vercel が Content-Type を
+ * 判定できず `application/octet-stream` になる。それだと X が画像として扱わない。
+ * `postbuild` で `og.png` に複製し、こちらを参照する（リダイレクトも挟まらない）。
+ */
+const OG_IMAGE = {
+  url: "/og.png",
+  width: 1200,
+  height: 630,
+  alt: "衆院選 選挙制度改革シミュレータ",
+};
+
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
+  openGraph: { images: [OG_IMAGE], type: "website" },
+  twitter: { card: "summary_large_image", images: [OG_IMAGE] },
   title: "衆院選 選挙制度改革シミュレータ",
   description:
     "各党の衆議院選挙制度改革案を、実際の選挙結果に当てはめて議席を再計算し比較する。" +
