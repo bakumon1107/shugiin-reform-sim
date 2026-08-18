@@ -1,0 +1,47 @@
+[
+ {
+  "id": "r08-02-08",
+  "ordinal": 51,
+  "date": "2026-02-08",
+  "smdSeats": 289,
+  "prSeats": 176,
+  "totalSeats": 465,
+  "sourceUrl": "https://www.soumu.go.jp/main_content/001061492.pdf"
+ },
+ {
+  "id": "r06-10-27",
+  "ordinal": 50,
+  "date": "2024-10-27",
+  "smdSeats": 289,
+  "prSeats": 176,
+  "totalSeats": 465,
+  "sourceUrl": "https://www.soumu.go.jp/main_content/000979139.pdf"
+ },
+ {
+  "id": "r03-10-31",
+  "ordinal": 49,
+  "date": "2021-10-31",
+  "smdSeats": 289,
+  "prSeats": 176,
+  "totalSeats": 465,
+  "sourceUrl": "https://www.soumu.go.jp/main_content/000776985.pdf"
+ },
+ {
+  "id": "h29-10-22",
+  "ordinal": 48,
+  "date": "2017-10-22",
+  "smdSeats": 289,
+  "prSeats": 176,
+  "totalSeats": 465,
+  "sourceUrl": "https://www.soumu.go.jp/main_content/000516736.pdf"
+ },
+ {
+  "id": "h26-12-14",
+  "ordinal": 47,
+  "date": "2014-12-14",
+  "smdSeats": 295,
+  "prSeats": 180,
+  "totalSeats": 475,
+  "sourceUrl": "https://www.soumu.go.jp/main_content/000328960.pdf"
+ }
+]

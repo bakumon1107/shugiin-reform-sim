@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/*
+ * 色は「政党の識別」には使わない。政党は行ラベルで識別し、色は
+ *   ・増減の向き（青＝増／赤＝減）
+ *   ・議席の量（青の一色ランプ）
+ * だけに割り当てる。政党の数は選挙回によって14を超えるので、識別色を配ると
+ * どうしても色覚特性のある人が見分けられない組み合わせが出る。増減には必ず
+ * 符号（+7 / −12）を添えるので、色だけが意味を運ぶ場面はない。
+ */
+:root {
+  color-scheme: light;
+
+  --plane: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --hairline: rgba(11, 11, 11, 0.1);
+
+  --gain: #2a78d6;
+  --loss: #e34948;
+  --neutral: #f0efec;
+
+  --bar-100: #cde2fb;
+  --bar-250: #86b6ef;
+  --bar-450: #2a78d6;
+  --bar-600: #184f95;
+
+  --warning: #fab219;
+  --critical: #d03b3b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --plane: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --hairline: rgba(255, 255, 255, 0.1);
+
+    --gain: #3987e5;
+    --loss: #e66767;
+    --neutral: #383835;
+
+    --bar-100: #104281;
+    --bar-250: #184f95;
+    --bar-450: #3987e5;
+    --bar-600: #86b6ef;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --plane: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --ink-muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --hairline: rgba(255, 255, 255, 0.1);
+
+  --gain: #3987e5;
+  --loss: #e66767;
+  --neutral: #383835;
+
+  --bar-100: #104281;
+  --bar-250: #184f95;
+  --bar-450: #3987e5;
+  --bar-600: #86b6ef;
+}
+
+html {
+  background: var(--plane);
+}
+
+body {
+  background: var(--plane);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 表・軸ラベルなど縦に揃える必要がある数値だけ等幅数字にする */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+}
+
+/* 横に溢れる表・図は、ページ本体ではなく自分の中でスクロールさせる */
+.scroll-x {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+a {
+  color: var(--gain);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+summary {
+  cursor: pointer;
+}
+
+input[type="range"] {
+  accent-color: var(--gain);
+}
